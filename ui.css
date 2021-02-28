@@ -1,0 +1,23 @@
+:root {
+	--bg: #222;
+	--title: goldenrod;
+}
+
+body {
+	background: var(--bg);
+}
+
+h1 {
+	color: var(--title);
+}
+
+#error {
+	color: red;
+}
+
+@media (prefers-color-scheme: light) {
+	:root {
+		--bg: lightgray;
+		--title: tomato;
+	}
+}
