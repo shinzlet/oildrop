@@ -13,7 +13,12 @@
 
 		<main>
 			<section id="homepage" class="active">
-				<h2>Here's main content</h2>
+				<select id="filter-option" name="filter-option" title="Filter which scripts are listed">
+					<option value="all" selected>All scripts</option>
+					<option value="active">Scripts for this domain</option>
+					<option value="inactive">Inactive scripts</option>
+				</select>
+
 				<ul id="script-list">
 				</ul>
 			</section>

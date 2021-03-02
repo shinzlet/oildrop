@@ -1,6 +1,6 @@
 function saveScript(name, url, script) {
 	browser.storage.local.set({
-		[name]: {url, script, time: Date.now()}
+		[name]: {url, script, date: new Date()}
 	})
 }
 

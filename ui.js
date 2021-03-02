@@ -6,13 +6,26 @@ let scriptList = document.getElementById("script-list")
 
 let scriptPreview = document.getElementById("script-preview").content
 
-for(let i = 0; i < 10; i++) {
-	scriptList.appendChild(scriptPreview.cloneNode(true))
-}
+// for(let i = 0; i < 10; i++) {
+// 	scriptList.appendChild(scriptPreview.cloneNode(true))
+// }
 
 getAllScripts().then(scripts => {
+	for (const scriptName in scripts) {
+		let listItem = scriptPreview.cloneNode(true)
+		listItem.querySelector("h4").innerText = scriptName
 
+		let h3s = listItem.querySelectorAll("h4")
+		h3s[0].innerText = scripts[scriptName].url
+		h3s[1].innerText = scripts[scriptName].date.toLocaleDateString()
+
+		scriptList.appendChild(listItem)
+	}
 })
+
+// if ( Math.random() > 0.5 ) {
+// 	browser.tabs.create({url: "ui.html"})
+// }
 
 // saveScript("foobar", "*", `document.body.style.backgroundColor = "white"`)
 
