@@ -23,9 +23,7 @@ getAllScripts().then(scripts => {
 	}
 })
 
-// if ( Math.random() > 0.5 ) {
-// 	browser.tabs.create({url: "ui.html"})
-// }
+document.getElementById("debug-button").addEventListener("click", () => browser.tabs.create({url: "ui.html"}))
 
 // saveScript("foobar", "*", `document.body.style.backgroundColor = "white"`)
 

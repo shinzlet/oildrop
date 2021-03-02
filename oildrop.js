@@ -1,7 +1,10 @@
-function saveScript(name, url, script) {
-	browser.storage.local.set({
-		[name]: {url, script, date: new Date()}
-	})
+function createScript(name, matches, script) {
+	return {name, matches, code, date: new Date()}
+}
+
+function saveScript(script, scripts) {
+	let userscrips = (scripts + script).sort((a, b) => a.name.localeCompare(b.name))
+	browser.storage.set({userscripts})
 }
 
 function getAllScripts() {

@@ -3,12 +3,6 @@
 	"name": "Oildrop",
 	"version": "0.0.1",
 	"description": "An open-source userscript manager that you can audit on your own.",
-	"content_scripts": [
-		{
-			"matches": ["<all_urls>"],
-			"js": ["oildrop.js", "content-script.js"]
-		}
-	],
 	"permissions": [
 		"storage",
 		"tabs"
@@ -16,5 +10,8 @@
 	"browser_action": {
 		"default_title": "Oildrop",
 		"default_popup": "ui.html"
+	},
+	"background": {
+		"scripts": ["oildrop.js", "background.js"]
 	}
 }
