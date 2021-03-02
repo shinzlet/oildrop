@@ -1,18 +1,56 @@
 :root {
-	--bg: #222;
+	--bg: white;
 	--title: goldenrod;
+}
+
+* {
+	padding: 0px;
+	margin: 0px;
+	box-sizing: border-box;
 }
 
 body {
 	background: var(--bg);
+	width: 400px;
+	margin: 0px;
+	overflow: hidden;
+}
+
+header {
+	display: flex;
+	justify-content: space-between;
 }
 
 h1 {
 	color: var(--title);
 }
 
-#error {
-	color: red;
+#script-list li {
+	display: flex;
+	justify-content: space-between;
+}
+
+#script-list li div.description {
+	background: red;
+}
+
+#script-list li div.actions {
+	background: green;
+}
+
+#homepage { background: blue; }
+#editor { background: green; }
+
+main {
+	height: 500px;
+	overflow-y: scroll;
+}
+
+section#homepage, section#editor {
+}
+
+section:not(.active) {
+	display: none;
 }
 
 @media (prefers-color-scheme: light) {

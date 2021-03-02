@@ -1,15 +1,15 @@
-document.body.style.border = "5px solid blue";
+function saveScript(name, url, script) {
+	browser.storage.local.set({
+		[name]: {url, script, time: Date.now()}
+	})
+}
 
-browser.runtime.onMessage.addListener(message => {
-	console.log(message)
-})
+function getAllScripts() {
+	return browser.storage.local.get(null)
+}
 
 function getMatchingScripts(url) {
 	console.log(`checking ${url}`)
-}
-
-function saveUserScript(script, name) {
-	console.log(`saved ${script} as ${name}`)
 }
 
 function retrieveUserScript(name) {

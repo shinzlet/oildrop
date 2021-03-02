@@ -4,12 +4,42 @@
 		<meta charset="UTF-8">
 		<link rel="stylesheet" href="ui.css"/>
 	</head>
-
+	
 	<body>
-		<h1>update</h1>
-		<p id="error">no error</p>
-		<button id="test">Send message</button>
+		<header>
+			<h1>Oildrop</h1>
+			<input type="checkbox" title="Enable Oildrop">
+		</header>
 
+		<main>
+			<section id="homepage" class="active">
+				<h2>Here's main content</h2>
+				<ul id="script-list">
+				</ul>
+			</section>
+
+			<section id="editor">
+				<h2>Here's editor content</h2>
+			</section>
+		</main>
+
+		<!-- Template components for use in JS -->
+		<template id="script-preview">
+			<li>
+				<div class="description">
+					<h3>Script Name</h3>
+					<h4>*://*.org/*</h4>
+					<h4>March 1 2021</h4>
+				</div>
+
+				<div class="actions">
+					<input type="checkbox" name="enabled" title="Enable this script">
+					<button title="Edit this script">Edit</button>
+				</div>
+			</li>
+		</template>
+
+		<script src="oildrop.js" type="text/javascript"></script>
 		<script src="ui.js" type="text/javascript"></script>
 	</body>
 </html>
