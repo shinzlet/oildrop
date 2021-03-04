@@ -5,22 +5,24 @@ function createUUID() {
 	);
 }
 
-function createScript(name, matches, code) {
-	return {name, matches, code, date: new Date(), uuid: createUUID()}
+function createScript(name, enabled, matches, code) {
+	return {name, enabled, matches, code, date: new Date(), uuid: createUUID()}
 }
 
 function saveScript(script) {
 	return new Promise((resolve, reject) => {
-		getAllScripts().then(res => {
-			userscripts = res.userscripts || {}
-			userscripts[script.uuid] = script
-			browser.storage.local.set({userscripts})
-		})
+		browser.storage.local.set({[script.uuid]: script}).then(resolve).catch(reject)
 	})
 }
 
 function getAllScripts() {
-	return browser.storage.local.get("userscripts")
+	return browser.storage.local.get()
+}
+
+function saveDummyScripts() {
+	for (let i = 0; i < 5; i++) {
+		saveScript(createScript("Script " + i, Math.random() > 0.5, ["*"], "code here"))
+	}
 }
 
 function getMatchingScripts(url) {
