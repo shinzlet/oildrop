@@ -10,11 +10,13 @@ function createScript(name, matches, code) {
 }
 
 function saveScript(script) {
-	getAllScripts().then(res => {
-		res[userscripts] // TODO
+	return new Promise((resolve, reject) => {
+		getAllScripts().then(res => {
+			userscripts = res.userscripts || {}
+			userscripts[script.uuid] = script
+			browser.storage.local.set({userscripts})
+		})
 	})
-	let userscripts = [...scripts, script].sort((a, b) => a.name.localeCompare(b.name))
-	browser.storage.local.set({userscripts})
 }
 
 function getAllScripts() {
