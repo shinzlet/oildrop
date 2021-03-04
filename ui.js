@@ -6,21 +6,20 @@ let scriptList = document.getElementById("script-list")
 
 let scriptPreview = document.getElementById("script-preview").content
 
-// for(let i = 0; i < 10; i++) {
-// 	scriptList.appendChild(scriptPreview.cloneNode(true))
-// }
-
 getAllScripts().then(scripts => {
-	for (const scriptName in scripts) {
+	scripts.userscripts.forEach(script => {
+		console.log(scripts)
 		let listItem = scriptPreview.cloneNode(true)
-		listItem.querySelector("h4").innerText = scriptName
+		listItem.querySelector("h3").innerText = script.name
 
-		let h3s = listItem.querySelectorAll("h4")
-		h3s[0].innerText = scripts[scriptName].url
-		h3s[1].innerText = scripts[scriptName].date.toLocaleDateString()
+		let h4s = listItem.querySelectorAll("h4")
+		h4s[0].innerText = script.matches.toString()
+		h4s[1].innerText = script.date.toLocaleDateString()
+
+		listItem.
 
 		scriptList.appendChild(listItem)
-	}
+	})
 })
 
 document.getElementById("debug-button").addEventListener("click", () => browser.tabs.create({url: "ui.html"}))
