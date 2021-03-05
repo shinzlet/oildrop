@@ -11,7 +11,7 @@ let editorBody = {
 	name: document.getElementById("script-name"),
 	code: document.getElementById("script-code"),
 	matches: document.getElementById("script-matches"),
-	getType: () => { document.querySelector("input[name=script-type]:checked").value }
+	getType: () => document.querySelector("input[name=script-type]:checked").value
 }
 
 function onEnableChanged(script, enabled) {
@@ -32,12 +32,14 @@ function startEditor(script) {
 	editorBody.name.value = script.name
 	editorBody.code.value = script.code
 	editorBody.matches.value = script.matches.join()
+	document.querySelector(`input[value=${script.type}]`).checked = true
 }
 
 function onSavePressed() {
 	return getScript(editor.dataset.uuid).then(res => {
-		console.log(res)
-		let script = res[editor.dataset.uuid]
+		// Either modify an existing script or create a new one (enabled by default)
+		let script = res[editor.dataset.uuid] || {enabled: true}
+
 		script.code = editorBody.code.value
 		script.name = editorBody.name.value
 		script.matches = editorBody.matches.value.split(",").map(el => el.trim())
@@ -85,6 +87,11 @@ function showScripts() {
 document.getElementById("debug-button").addEventListener("click", () => browser.tabs.create({url: "ui.html"}))
 document.getElementById("leave-editor").addEventListener("click", leaveEditor)
 document.getElementById("save").addEventListener("click", onSavePressed)
+document.getElementById("create-script").addEventListener("click", () => {
+	// Populate the editor fields with dummy values. This will also provide a fresh uuid via createScript.
+	startEditor( createScript("", true, [""], "js", "") )
+})
+
 showScripts()
 
 // saveScript("foobar", "*", `document.body.style.backgroundColor = "white"`)

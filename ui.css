@@ -41,6 +41,11 @@ h1 {
 #homepage { background: blue; }
 #editor { background: green; }
 
+button#create-script {
+	display: block;
+	width: 100%;
+}
+
 main {
 	height: 500px;
 	overflow-y: scroll;
