@@ -5,8 +5,8 @@ function createUUID() {
 	);
 }
 
-function createScript(name, enabled, matches, code) {
-	return {name, enabled, matches, code, date: new Date(), uuid: createUUID()}
+function createScript(name, enabled, matches, type, code) {
+	return {name, enabled, matches, type, code, date: new Date(), uuid: createUUID()}
 }
 
 function saveScript(script) {
@@ -21,7 +21,7 @@ function getAllScripts() {
 
 function saveDummyScripts() {
 	for (let i = 0; i < 5; i++) {
-		saveScript(createScript("Script " + i, Math.random() > 0.5, ["*"], "code here"))
+		saveScript(createScript("Script " + i, Math.random() > 0.5, ["*"], "js", `function test() {console.log("yee haw!")}`))
 	}
 }
 
@@ -29,8 +29,8 @@ function getMatchingScripts(url) {
 	console.log(`checking ${url}`)
 }
 
-function retrieveUserScript(name) {
-	console.log(`retrieved ${name}`)
+function getScript(uuid) {
+	return browser.storage.local.get(uuid)
 }
 
 function deleteUserScript(name) {

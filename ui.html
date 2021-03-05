@@ -28,6 +28,16 @@
 			<section id="editor">
 				<h2>Here's editor content</h2>
 				<button id="leave-editor">Back</button>
+				<label for="script-name" title="The name you want to associate with this script. It does not need to be unique.">Name</label>
+				<input type="text" name="script-name" id="script-name">
+				<label for="script-matches" title="A comma separated list of web addresses. The most general is '*://*.*/*'.">Matches</label>
+				<input type="text" name="script-matches" id="script-matches">
+				<label for="script-code" title="The JavaScript or CSS you want to run on all pages that fit the matching pattern.">Code</label>
+				<textarea name="script-code" id="script-code"></textarea>
+				<input type="radio" name="script-type" value="js">JS</input>
+				<input type="radio" name="script-type" value="css">CSS</input>
+
+				<button id="save">Save</button>
 			</section>
 		</main>
 

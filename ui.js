@@ -7,6 +7,13 @@ let errorMessage = document.getElementById("error")
 
 let scriptPreview = document.getElementById("script-preview").content
 
+let editorBody = {
+	name: document.getElementById("script-name"),
+	code: document.getElementById("script-code"),
+	matches: document.getElementById("script-matches"),
+	getType: () => { document.querySelector("input[name=script-type]:checked").value }
+}
+
 function onEnableChanged(script, enabled) {
 	script.enabled = enabled
 
@@ -17,41 +24,68 @@ function onEnableChanged(script, enabled) {
 	// TODO: send a message to the background script to actually disable / enable the userscript
 }
 
-function onEditPressed(script) {
+function startEditor(script) {
 	homepage.classList.remove("active")
 	editor.classList.add("active")
+	editor.dataset.uuid = script.uuid
+
+	editorBody.name.value = script.name
+	editorBody.code.value = script.code
+	editorBody.matches.value = script.matches.join()
 }
 
-function onLeaveEditorPressed() {
+function onSavePressed() {
+	return getScript(editor.dataset.uuid).then(res => {
+		console.log(res)
+		let script = res[editor.dataset.uuid]
+		script.code = editorBody.code.value
+		script.name = editorBody.name.value
+		script.matches = editorBody.matches.value.split(",").map(el => el.trim())
+		script.date = new Date()
+		script.type = editorBody.getType()
+
+		// TODO: error handling
+		saveScript(script).then(() => {
+			showScripts().then(leaveEditor)
+		}).catch()
+	})
+}
+
+function leaveEditor() {
 	editor.classList.remove("active")
 	homepage.classList.add("active")
 }
 
-editor.querySelector("button#leave-editor").addEventListener("click", onLeaveEditorPressed)
+function showScripts() {
+	scriptList.replaceChildren()
 
-getAllScripts().then(scripts => {
-	Object.keys(scripts).forEach(uuid => {
-		let script = scripts[uuid]
-		let listItem = scriptPreview.cloneNode(true).children[0]
-
-		let h4s = listItem.querySelectorAll("h4")
-		let checkbox = listItem.querySelector("input[type=checkbox]")
-		let editButton = listItem.querySelector("button")
-
-		listItem.querySelector("h3").innerText = script.name
-		h4s[0].innerText = script.matches.toString()
-		h4s[1].innerText = script.date.toLocaleDateString()
-		checkbox.checked = script.enabled
-		listItem.dataset.uuid = uuid
-
-		checkbox.addEventListener("click", event => onEnableChanged(script, event.target.checked))
-		editButton.addEventListener("click", () => onEditPressed(script))
-
-		scriptList.appendChild(listItem)
-	})
-}).catch(err => { errorMessage.innerText = "Error loading scripts" })
+	return getAllScripts().then(scripts => {
+		Object.keys(scripts).forEach(uuid => {
+			let script = scripts[uuid]
+			let listItem = scriptPreview.cloneNode(true).children[0]
+	
+			let h4s = listItem.querySelectorAll("h4")
+			let checkbox = listItem.querySelector("input[type=checkbox]")
+			let editButton = listItem.querySelector("button")
+	
+			listItem.querySelector("h3").innerText = script.name
+			h4s[0].innerText = script.matches.toString()
+			h4s[1].innerText = script.date.toLocaleDateString()
+			checkbox.checked = script.enabled
+			listItem.dataset.uuid = uuid
+	
+			checkbox.addEventListener("click", event => onEnableChanged(script, event.target.checked))
+			editButton.addEventListener("click", () => startEditor(script))
+	
+			scriptList.appendChild(listItem)
+		})
+	}).catch(err => { errorMessage.innerText = "Error loading scripts" })
+}
 
 document.getElementById("debug-button").addEventListener("click", () => browser.tabs.create({url: "ui.html"}))
+document.getElementById("leave-editor").addEventListener("click", leaveEditor)
+document.getElementById("save").addEventListener("click", onSavePressed)
+showScripts()
 
 // saveScript("foobar", "*", `document.body.style.backgroundColor = "white"`)
 
