@@ -5,7 +5,8 @@
 	"description": "An open-source userscript manager that you can audit on your own.",
 	"permissions": [
 		"storage",
-		"tabs"
+		"tabs",
+		"<all_urls>"
 	],
 	"browser_action": {
 		"default_title": "Oildrop",
@@ -13,5 +14,6 @@
 	},
 	"background": {
 		"scripts": ["oildrop.js", "background.js"]
-	}
+	},
+	"user_scripts": {}
 }

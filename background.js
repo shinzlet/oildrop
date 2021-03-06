@@ -5,21 +5,18 @@
 let registrations = {}
 
 function registerScript(script) {
-    console.log("registering")
     return new Promise((resolve, reject) => {
         switch (script.type) {
             case "js":
                 uuid = script.uuid
 
-                if (registrations[uuid]) {
-                    reject("A script with this UUID was already registered!")
-                }
-
                 registrations[uuid] = browser.userScripts.register({
                     matches: script.matches,
-                    js: script.code,
+                    js: [{code: script.code}],
                     runAt: "document_start"
                 })
+
+                console.log(uuid)
 
                 resolve()
                 break
