@@ -48,6 +48,7 @@ function onSavePressed() {
 
 		// TODO: error handling
 		saveScript(script).then(() => {
+			browser.runtime.sendMessage({action: "register", script})
 			showScripts().then(leaveEditor)
 		}).catch()
 	})

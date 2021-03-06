@@ -5,7 +5,8 @@
 let registrations = {}
 
 function registerScript(script) {
-    return Promise.new((resolve, reject) => {
+    console.log("registering")
+    return new Promise((resolve, reject) => {
         switch (script.type) {
             case "js":
                 uuid = script.uuid
@@ -21,9 +22,9 @@ function registerScript(script) {
                 })
 
                 resolve()
-                break;
+                break
             case "css":
-                break;
+                break
         }
     })
 }
@@ -33,9 +34,9 @@ function unregisterScript(uuid) {
         case "js":
             registrations[uuid].unregister()
             delete registrations[uuid]
-            break;
+            break
         case "css":
-            break;
+            break
     }
 }
 
