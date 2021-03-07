@@ -21,7 +21,11 @@ function onEnableChanged(script, enabled) {
 		errorMessage.innerText = "Could not save changes!"
 	})
 
-	// TODO: send a message to the background script to actually disable / enable the userscript
+	if (enabled) {
+		browser.runtime.sendMessage({action: "register", script})
+	} else {
+		browser.runtime.sendMessage({action: "unregister", uuid: script.uuid})
+	}
 }
 
 function startEditor(script) {
@@ -38,7 +42,7 @@ function startEditor(script) {
 function onSavePressed() {
 	return getScript(editor.dataset.uuid).then(res => {
 		// Either modify an existing script or create a new one (enabled by default)
-		let script = res[editor.dataset.uuid] || {enabled: true}
+		let script = res[editor.dataset.uuid] || {enabled: true, uuid: editor.dataset.uuid}
 
 		script.code = editorBody.code.value
 		script.name = editorBody.name.value

@@ -4,21 +4,20 @@
 
 let registrations = {}
 
-function registerScript(script) {
+async function registerScript(script) {
     return new Promise((resolve, reject) => {
         switch (script.type) {
             case "js":
-                uuid = script.uuid
+                let uuid = script.uuid
 
-                registrations[uuid] = browser.userScripts.register({
+                browser.userScripts.register({
                     matches: script.matches,
                     js: [{code: script.code}],
                     runAt: "document_start"
+                }).then(registration => {
+                    registrations[uuid] = registration
+                    resolve()
                 })
-
-                console.log(uuid)
-
-                resolve()
                 break
             case "css":
                 break
@@ -29,6 +28,7 @@ function registerScript(script) {
 function unregisterScript(uuid) {
     switch (script.type) {
         case "js":
+            console.log(JSON.stringify(registrations))
             registrations[uuid].unregister()
             delete registrations[uuid]
             break
@@ -40,6 +40,7 @@ function unregisterScript(uuid) {
 getAllScripts().then(scripts => {
     for (const uuid in scripts) {
         script = scripts[uuid]
+
         if (script.enabled) {
             registerScript(script)
         }
