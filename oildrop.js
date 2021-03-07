@@ -19,20 +19,25 @@ function getAllScripts() {
 	return browser.storage.local.get()
 }
 
-function saveDummyScripts() {
-	for (let i = 0; i < 5; i++) {
-		saveScript(createScript("Script " + i, Math.random() > 0.5, ["*"], "js", `function test() {console.log("yee haw!")}`))
-	}
-}
-
-function getMatchingScripts(url) {
-	console.log(`checking ${url}`)
-}
-
 function getScript(uuid) {
 	return browser.storage.local.get(uuid)
 }
 
-function deleteUserScript(name) {
-	console.log(`deleted ${name}`)
+function splitUrl(url) {
+	let schemeSplit = url.indexOf("://")
+	let scheme = url.substring(0, schemeSplit)
+	let remainder = url.substring(schemeSplit+3)
+	let pathSplit = remainder.indexOf("/")
+	let host = remainder.substring(0, pathSplit)
+	let path = remainder.substring(pathSplit+1)
+
+	return {scheme, host, path}
+}
+
+function urlMatches(url, matches) {
+	matches.forEach(matchPattern => {
+		console.log(splitUrl(matchPattern))
+	})
+	
+	return false
 }

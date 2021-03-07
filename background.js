@@ -23,7 +23,6 @@ function registerScript(script) {
                 document.head.appendChild(link)
             })()
             `
-            console.log(code)
         }
 
         browser.userScripts.register({
