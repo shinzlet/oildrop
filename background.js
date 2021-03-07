@@ -4,31 +4,42 @@
 
 let registrations = {}
 
-async function registerScript(script) {
+function registerScript(script) {
     return new Promise((resolve, reject) => {
-        switch (script.type) {
-            case "js":
-                let uuid = script.uuid
+        let uuid = script.uuid
+        let code = script.code
 
-                browser.userScripts.register({
-                    matches: script.matches,
-                    js: [{code: script.code}],
-                    runAt: "document_start"
-                }).then(registration => {
-                    registrations[uuid] = registration
-                    resolve()
-                })
-                break
-            case "css":
-                break
+        if (registrations[uuid]) {
+            unregisterScript(uuid)
         }
+
+        if (script.type == "css") {
+            code = `
+            (function() {
+                let link = document.createElement("link")
+                link.setAttribute("rel", "stylesheet")
+                link.setAttribute("type", "text/css")
+                link.setAttribute("href", "data:text/css;charset=UTF-8,${encodeURIComponent(code)}")
+                document.head.appendChild(link)
+            })()
+            `
+            console.log(code)
+        }
+
+        browser.userScripts.register({
+            matches: script.matches,
+            js: [{code}],
+            // runAt: "document_start"
+        }).then(registration => {
+            registrations[uuid] = registration
+            resolve()
+        })
     })
 }
 
 function unregisterScript(uuid) {
     switch (script.type) {
         case "js":
-            console.log(JSON.stringify(registrations))
             registrations[uuid].unregister()
             delete registrations[uuid]
             break
