@@ -1,16 +1,23 @@
 :root {
-	--bg: white;
-	--title: goldenrod;
+	/* TODO: Change these to light colors */
+	--background: rgb(0, 0, 0);
+	--background-2: rgb(53, 62, 105);
+	--background-3: hsla(230, 41%, 60%, 1);
+	--background-text: hsla(52, 17%, 91%, 1);
+	--accent: hsla(351, 79%, 71%, 1);
+	--accent-text: hsl(0, 0%, 0%, 1);
 }
 
 * {
 	padding: 0px;
 	margin: 0px;
 	box-sizing: border-box;
+	font-family: "Noto Sans";
 }
 
 body {
-	background: var(--bg);
+	background: var(--background);
+	color: var(--background-text);
 	width: 400px;
 	margin: 0px;
 	overflow: hidden;
@@ -19,27 +26,30 @@ body {
 header {
 	display: flex;
 	justify-content: space-between;
+	color: var(--accent);
 }
 
-h1 {
-	color: var(--title);
+#overview-scripts li {
+	margin: 10px;
+	padding: 5px;
+	border-radius: 5px;
+	background: var(--background-2);
 }
 
-#script-list li {
+#overview-scripts li:nth-of-type(even) {
+	background: var(--background-3);
+}
+
+#overview-scripts li {
 	display: flex;
 	justify-content: space-between;
 }
 
-#script-list li div.description {
-	background: red;
+#overview-scripts li .overview-actions {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 }
-
-#script-list li div.actions {
-	background: green;
-}
-
-#homepage { background: blue; }
-#editor { background: green; }
 
 button#create-script {
 	display: block;
@@ -47,20 +57,20 @@ button#create-script {
 }
 
 main {
-	height: 500px;
+	max-height: 500px;
 	overflow-y: scroll;
-}
-
-section#homepage, section#editor {
 }
 
 section:not(.active) {
 	display: none;
 }
 
-@media (prefers-color-scheme: light) {
+@media (prefers-color-scheme: dark) {
 	:root {
-		--bg: lightgray;
-		--title: tomato;
+		/* --background: hsla(222, 11%, 18%, 1);
+		--background-2: hsla(230, 41%, 60%, 1);
+		--background-text: hsla(52, 17%, 91%, 1);
+		--accent: hsla(351, 79%, 71%, 1);
+		--accent-text: hsla(222, 11%, 18%, 1); */
 	}
 }

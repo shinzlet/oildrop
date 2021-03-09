@@ -10,9 +10,7 @@ function createScript(name, enabled, matches, type, code) {
 }
 
 function saveScript(script) {
-	return new Promise((resolve, reject) => {
-		browser.storage.local.set({[script.uuid]: script}).then(resolve).catch(reject)
-	})
+	return browser.storage.local.set({[script.uuid]: script})
 }
 
 function getAllScripts() {
@@ -20,7 +18,7 @@ function getAllScripts() {
 }
 
 function getScript(uuid) {
-	return browser.storage.local.get(uuid)
+	return browser.storage.local.get(uuid).then(res => res[uuid])
 }
 
 function splitUrl(url) {

@@ -1,116 +1,154 @@
-let main = document.getElementsByTagName("main")[0]
+const geid = document.getElementById.bind(document)
 
-let homepage = document.getElementById("homepage")
-let editor = document.getElementById("editor")
-let scriptList = document.getElementById("script-list")
-let errorMessage = document.getElementById("error")
-
-let scriptPreview = document.getElementById("script-preview").content
-
-let editorBody = {
-	name: document.getElementById("script-name"),
-	code: document.getElementById("script-code"),
-	matches: document.getElementById("script-matches"),
-	getType: () => document.querySelector("input[name=script-type]:checked").value
+const global = {
+	error: geid("global-error"),
+	enable: geid("global-enable")
 }
 
-function onEnableChanged(script, enabled) {
-	script.enabled = enabled
-
-	saveScript(script).catch(() => {
-		errorMessage.innerText = "Could not save changes!"
-	})
-
-	if (enabled) {
-		browser.runtime.sendMessage({action: "register", script})
-	} else {
-		browser.runtime.sendMessage({action: "unregister", uuid: script.uuid})
-	}
+const overview = {
+	root: geid("overview"),
+	filter: geid("overview-filter"),
+	createButton: geid("overview-create-script"),
+	scripts: geid("overview-scripts")
 }
 
-function startEditor(script) {
-	homepage.classList.remove("active")
-	editor.classList.add("active")
-	editor.dataset.uuid = script.uuid
-
-	editorBody.name.value = script.name
-	editorBody.code.value = script.code
-	editorBody.matches.value = script.matches.join()
-	document.querySelector(`input[value=${script.type}]`).checked = true
+const editor = {
+	root: geid("editor"),
+	exitButton: geid("editor-exit"),
+	name: geid("editor-name"),
+	matches: geid("editor-matches"),
+	code: geid("editor-code"),
+	type: {
+		get: () => { return document.querySelector("input[name=editor-type]:checked").value },
+		set: value => { document.querySelector(`input[value=${value}]`).checked = true }
+	},
+	saveButton: geid("editor-save"),
+	deleteButton: geid("editor-delete"),
+	currentScript: null
 }
 
-function onSavePressed() {
-	return getScript(editor.dataset.uuid).then(res => {
-		// Either modify an existing script or create a new one (enabled by default)
-		let script = res[editor.dataset.uuid] || {enabled: true, uuid: editor.dataset.uuid}
+const templates = {
+	script: geid("template-script-overview").content.children[0]
+}
 
-		script.code = editorBody.code.value
-		script.name = editorBody.name.value
-		script.matches = editorBody.matches.value.split(",").map(el => el.trim())
-		script.date = new Date()
-		script.type = editorBody.getType()
-
-		// TODO: error handling
-		saveScript(script).then(() => {
-			browser.runtime.sendMessage({action: "register", script})
-			showScripts().then(leaveEditor)
-		}).catch()
+function showEditorViaUUID(uuid) {
+	return getScript(uuid).then(script => {
+		showEditorViaScript(script)
 	})
 }
 
-function leaveEditor() {
-	editor.classList.remove("active")
-	homepage.classList.add("active")
+function showEditorViaScript(script) {
+	editor.name.value = script.name
+	editor.matches.value = script.matches.join()
+	editor.code.value = script.code
+	editor.type.set(script.type)
+	editor.currentScript = script
+
+	overview.root.classList.remove("active")
+	editor.root.classList.add("active")
 }
 
-function showScripts() {
-	scriptList.replaceChildren()
+function showOverview() {
+	return new Promise((resolve, reject) => {
+		overview.scripts.replaceChildren()
 
-	return getAllScripts().then(scripts => {
-		Object.keys(scripts).forEach(uuid => {
-			let script = scripts[uuid]
-			let listItem = scriptPreview.cloneNode(true).children[0]
-	
-			let h4s = listItem.querySelectorAll("h4")
-			let checkbox = listItem.querySelector("input[type=checkbox]")
-			let editButton = listItem.querySelector("button")
-	
-			listItem.querySelector("h3").innerText = script.name
-			h4s[0].innerText = script.matches.toString()
-			h4s[1].innerText = script.date.toLocaleDateString()
-			checkbox.checked = script.enabled
-			listItem.dataset.uuid = uuid
-	
-			checkbox.addEventListener("click", event => onEnableChanged(script, event.target.checked))
-			editButton.addEventListener("click", () => startEditor(script))
-	
-			scriptList.appendChild(listItem)
-		})
-	}).catch(err => { errorMessage.innerText = "Error loading scripts" })
+		getAllScripts().then(scripts => {
+			scripts = Object.values(scripts).sort((a, b) => {
+				let na = a.name.toLowerCase(),
+					nb = b.name.toLowerCase();
+			
+				if (na < nb) {
+					return -1;
+				}
+				if (na > nb) {
+					return 1;
+				}
+				return 0;
+			});
+
+			scripts.forEach(script => {
+				let el = templates.script.cloneNode(true)
+
+				el.querySelector(".overview-name").innerText = script.name
+				el.querySelector(".overview-matches").innerText = formatMatches(script.matches)
+				el.querySelector(".overview-date").innerText = script.date.toLocaleDateString()
+				el.querySelector(".overview-enable").checked = script.enabled
+				el.dataset.uuid = script.uuid
+
+				el.querySelector(".overview-edit").addEventListener("click", () => {
+					showEditorViaUUID(script.uuid)
+						.catch(() => { global.error.innerText = "Failed to open script" })
+				})
+
+				el.querySelector(".overview-delete").addEventListener("click", () => {
+					promptDeletion(script.uuid, script.name)
+				})
+
+				overview.scripts.appendChild(el)
+			})
+
+			editor.root.classList.remove("active")
+			overview.root.classList.add("active")
+
+			resolve()
+		}).catch(reject)
+	})
 }
 
-document.getElementById("debug-button").addEventListener("click", () => browser.tabs.create({url: "ui.html"}))
-document.getElementById("leave-editor").addEventListener("click", leaveEditor)
-document.getElementById("save").addEventListener("click", onSavePressed)
-document.getElementById("create-script").addEventListener("click", () => {
-	// Populate the editor fields with dummy values. This will also provide a fresh uuid via createScript.
-	startEditor( createScript("", true, [""], "js", "") )
+function saveEditor() {
+	let script = editor.currentScript
+
+	script.code = editor.code.value
+	script.name = editor.name.value
+	script.matches = editor.matches.value.split(",").map(el => el.trim())
+	script.date = new Date()
+	script.type = editor.type.get()
+
+	return saveScript(script)
+}
+
+function promptDeletion(uuid, name) {
+	return new Promise((resolve, reject) => {
+		if (confirm(`Delete "${name}"?`)) {
+			browser.runtime.sendMessage({action: "unregister", uuid}).catch()
+			browser.storage.local.remove(uuid)
+				.catch(() => { global.error.innerText = "Failed to remove script" })
+			resolve()
+		} else {
+			reject()
+		}
+	})
+}
+
+function formatMatches(matches) {
+	return matches.join()
+}
+
+// TODO: Debug code - should be removed.
+geid("debug-button").addEventListener("click", () => browser.tabs.create({url: "ui.html"}))
+
+overview.createButton.addEventListener("click", () => {
+	// Create new script
+	showEditorViaScript(createScript("", true, [""], "js", ""))
 })
 
-showScripts()
+editor.exitButton.addEventListener("click", () => {
+	showOverview()
+		.catch(() => { global.error.innerText = "Failed to show overview" })
+})
 
-// saveScript("foobar", "*", `document.body.style.backgroundColor = "white"`)
+editor.saveButton.addEventListener("click", () => {
+	saveEditor()
+		.catch(() => { global.error.innerText = "Failed to save script" })
+		.then(showOverview)
+		.catch(() => { global.error.innerText = "Failed to show overview" })
+		
+})
 
-// document.getElementById("test").addEventListener("click", event => {
-// 	browser.tabs.query({active: true, currentWindow: true}).then(tabs => {
-// 		browser.tabs.sendMessage(tabs[0].id, {
-// 			command: "save_script",
-// 			name: "test",
-// 			content: "content"
-// 		}).then(response => {
-// 			error.innerText = "worked"
-// 		}).catch(error => {
-// 			error.innerText = "didn't work"
-// 		})
-// 	})
-// })
+editor.deleteButton.addEventListener("click", () => {
+	promptDeletion(editor.currentScript.uuid, editor.name.value)
+		.then(showOverview)
+		.catch(() => { global.error.innerText = "Failed to show overview" })
+})
+
+showOverview()

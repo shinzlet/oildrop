@@ -1,7 +1,3 @@
-// Load all saved scripts and register
-// Keep track of registered scripts so they can be unregistered
-// Allow scripts to be registered/unregistered via the popup (must accept messages)
-
 let registrations = {}
 
 function registerScript(script) {
@@ -27,7 +23,7 @@ function registerScript(script) {
 
         browser.userScripts.register({
             matches: script.matches,
-            js: [{code}],
+            js: [{ code }],
             // runAt: "document_start"
         }).then(registration => {
             registrations[uuid] = registration
@@ -37,13 +33,9 @@ function registerScript(script) {
 }
 
 function unregisterScript(uuid) {
-    switch (script.type) {
-        case "js":
-            registrations[uuid].unregister()
-            delete registrations[uuid]
-            break
-        case "css":
-            break
+    if (registrations[uuid]) {
+        registrations[uuid].unregister()
+        delete registrations[uuid]
     }
 }
 
@@ -64,6 +56,9 @@ browser.runtime.onMessage.addListener(message => {
             break
         case "unregister":
             unregisterScript(message.uuid)
+            break
+        case "debug":
+            console.log(registrations)
             break
     }
 })

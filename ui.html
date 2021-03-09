@@ -2,68 +2,85 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<link rel="stylesheet" href="ui.css"/>
+		<link rel="stylesheet" href="ui.css" />
 	</head>
 	
 	<body>
 		<header>
 			<h1>Oildrop</h1>
-			<input type="checkbox" title="Enable Oildrop">
-			<button id="debug-button">Open in Window</button>
-			<span id="error"></span>
+
+			<input id="global-enable" title="Enable Oildrop" type="checkbox">
+			
+			<span id="global-error"></span>
 		</header>
 
+		<button id="debug-button">Open in Window</button>
+
 		<main>
-			<section id="homepage" class="active">
-				<select id="filter-option" name="filter-option" title="Filter which scripts are listed">
+			<!-- A panel that shows a list of sortable scripts -->
+			<section id="overview" class="active">
+				<select id="overview-filter" title="Filter which scripts are listed">
 					<option value="all" selected>All scripts</option>
 					<option value="active">Scripts for this domain</option>
 					<option value="inactive">Inactive scripts</option>
 				</select>
 
-				<button id="create-script">Create script</button>
+				<button id="overview-create-script">Create script</button>
 
-				<ul id="script-list">
+				<ul id="overview-scripts">
+					test
 				</ul>
 			</section>
 
+			<!-- A panel that exposes script details and allows management -->
 			<section id="editor">
-				<h2>Here's editor content</h2>
-				<button id="leave-editor">Back</button>
-				<label for="script-name" title="The name you want to associate with this script. It does not need to be unique.">Name</label>
-				<input type="text" name="script-name" id="script-name">
-				<label for="script-matches" title="A comma separated list of web addresses. The most general is '*://*.*/*'.">Matches</label>
-				<input type="text" name="script-matches" id="script-matches">
-				<label for="script-code" title="The JavaScript or CSS you want to run on all pages that fit the matching pattern.">Code</label>
-				<textarea name="script-code" id="script-code"></textarea>
-				<input type="radio" name="script-type" value="js">JS</input>
-				<input type="radio" name="script-type" value="css">CSS</input>
+				<button id="editor-exit">Back</button>
 
-				<button id="save">Save</button>
+				<label for="editor-name" title="The name you want to associate with this script. It does not need to be unique.">Name</label>
+				<input type="text" id="editor-name">
+
+				<label for="editor-matches" title="A comma separated list of web addresses. The most general is '*://*.*/*'.">Matches</label>
+				<input type="text" id="editor-matches">
+
+				<label for="editor-code" title="The JavaScript or CSS you want to run on all pages that fit the matching pattern.">Code</label>
+				<textarea id="editor-code"></textarea>
+
+
+				<fieldset>
+					<legend title="The type of script you're writing - javascript or CSS.">Language</legend>
+
+					<label for="editor-type-js">JS</label>
+					<input type="radio" id="editor-type-js" name="editor-type" value="js">
+
+					<label for="editor-type-css">CSS</label>
+					<input type="radio" id="editor-type-css" name="editor-type" value="css">
+				</fieldset>
+
+
+				<button id="editor-save">Save</button>
+				<button id="editor-delete">Delete</button>
 			</section>
 		</main>
 
+		<footer>
+			github links, credits, license info 
+		</footer>
+
 		<!-- Template components for use in JS -->
-		<template id="script-preview">
+		<template id="template-script-overview">
 			<li>
-				<div class="description">
-					<h3>Script Name</h3>
-					<h4>*://*.org/*</h4>
-					<h4>March 1 2021</h4>
+				<div class="overview-description">
+					<h3 class="overview-name">Script Name</h3>
+					<h4 class="overview-matches">*://*.org/*</h4>
+					<h4 class="overview-date">March 1 2021</h4>
 				</div>
 
-				<div class="actions">
-					<input type="checkbox" name="enabled" title="Enable this script">
-					<button title="Edit this script">Edit</button>
-				</div>
-			</li>
-		</template>
+				<div class="overview-actions">
+					<input class="overview-enable" title="Enable this script" type="checkbox">
 
-		<template id="create-script">
-			<li>
-				<button>
-					<h3>Create Script</h3>
-				</button>
+					<button class="overview-edit" title="Edit this script">Edit</button>
+					<button class="overview-delete" title="Delete this script">Delete</button>
+				</div>
 			</li>
 		</template>
 
