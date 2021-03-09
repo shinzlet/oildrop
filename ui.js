@@ -48,6 +48,22 @@ function showEditorViaScript(script) {
 	editor.root.classList.add("active")
 }
 
+function onEnableChanged(script, enabled) {
+	script.enabled = enabled
+
+	return saveScript(script).catch(() => {
+		global.error.innerText = "Failed to save changes!"
+	}).then(() => {
+		if (enabled) {
+			browser.runtime.sendMessage({action: "register", script})
+		} else {
+			browser.runtime.sendMessage({action: "unregister", uuid: script.uuid})
+		}
+	}).catch(() => {
+		global.error.innerText = `Failed to ${enabled ? "" : "un"}register script!`
+	})
+}
+
 function showOverview() {
 	return new Promise((resolve, reject) => {
 		overview.scripts.replaceChildren()
@@ -82,6 +98,12 @@ function showOverview() {
 
 				el.querySelector(".overview-delete").addEventListener("click", () => {
 					promptDeletion(script.uuid, script.name)
+						.then(showOverview)
+						.catch(() => { global.error.innerText = "Failed to show overview" })
+				})
+
+				el.querySelector(".overview-enable").addEventListener("click", event => {
+					onEnableChanged(script, event.target.checked)
 				})
 
 				overview.scripts.appendChild(el)
@@ -104,7 +126,9 @@ function saveEditor() {
 	script.date = new Date()
 	script.type = editor.type.get()
 
-	return saveScript(script)
+	return saveScript(script).then(() => {
+		browser.runtime.sendMessage({action: "register", script})
+	})
 }
 
 function promptDeletion(uuid, name) {
