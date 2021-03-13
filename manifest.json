@@ -15,5 +15,9 @@
 	"background": {
 		"scripts": ["oildrop.js", "background.js"]
 	},
+	"content_scripts": {
+		"matches": ["*://*/*.user.js"],
+		"js": ["prompt-install.js"]
+	},
 	"user_scripts": {}
 }
