@@ -20,6 +20,11 @@ of its code in less than ten minutes.
 - [ ] Import / Export userscripts
 - [ ] Sort scripts
 
-## Features that might add too much bloat
-- [ ] Integration with a third party code editor
-- [ ] Ability to sync scripts across devices
+## Compatibility
+Currently, Oildrop does not implement the `GM_` functions that are part of the
+GreaseMonkey API, nor does it use a metadata block. Although this is not very limiting for any new userscripts you write or port, it will likely break
+large GreaseMonkey userscripts.
+
+Because Oildrop's primary purpose is to help privacy-cautious users only run code
+they trust, fixing this is not a very high priority for me. I'm totally open to
+discussing this, however!
