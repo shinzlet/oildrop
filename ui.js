@@ -64,56 +64,82 @@ function onEnableChanged(script, enabled) {
 	})
 }
 
-function showOverview() {
+async function showOverview() {
 	return new Promise((resolve, reject) => {
 		overview.scripts.replaceChildren()
 
 		getAllScripts().then(scripts => {
-			scripts = Object.values(scripts).sort((a, b) => {
-				let na = a.name.toLowerCase(),
-					nb = b.name.toLowerCase();
-			
-				if (na < nb) {
-					return -1;
-				}
-				if (na > nb) {
-					return 1;
-				}
-				return 0;
-			});
-
-			scripts.forEach(script => {
-				let el = templates.script.cloneNode(true)
-
-				el.querySelector(".overview-name").innerText = script.name
-				el.querySelector(".overview-matches").innerText = formatMatches(script.matches)
-				el.querySelector(".overview-date").innerText = script.date.toLocaleDateString()
-				el.querySelector(".overview-enable").checked = script.enabled
-				el.dataset.uuid = script.uuid
-
-				el.querySelector(".overview-edit").addEventListener("click", () => {
-					showEditorViaUUID(script.uuid)
-						.catch(() => { global.error.innerText = "Failed to open script" })
+			filterAndSortScripts(scripts, overview.filter.value).then(filtered => {
+				filtered.forEach(script => {
+					let el = templates.script.cloneNode(true)
+	
+					el.querySelector(".overview-name").innerText = script.name
+					el.querySelector(".overview-matches").innerText = formatMatches(script.matches)
+					el.querySelector(".overview-date").innerText = script.date.toLocaleDateString()
+					el.querySelector(".overview-enable").checked = script.enabled
+					el.dataset.uuid = script.uuid
+	
+					el.querySelector(".overview-edit").addEventListener("click", () => {
+						showEditorViaUUID(script.uuid)
+							.catch(() => { global.error.innerText = "Failed to open script" })
+					})
+	
+					el.querySelector(".overview-delete").addEventListener("click", () => {
+						promptDeletion(script.uuid, script.name)
+							.then(showOverview)
+							.catch(() => { global.error.innerText = "Failed to show overview" })
+					})
+	
+					el.querySelector(".overview-enable").addEventListener("click", event => {
+						onEnableChanged(script, event.target.checked)
+					})
+	
+					overview.scripts.appendChild(el)
 				})
-
-				el.querySelector(".overview-delete").addEventListener("click", () => {
-					promptDeletion(script.uuid, script.name)
-						.then(showOverview)
-						.catch(() => { global.error.innerText = "Failed to show overview" })
-				})
-
-				el.querySelector(".overview-enable").addEventListener("click", event => {
-					onEnableChanged(script, event.target.checked)
-				})
-
-				overview.scripts.appendChild(el)
+	
+				editor.root.classList.remove("active")
+				overview.root.classList.add("active")
+	
+				resolve()
 			})
-
-			editor.root.classList.remove("active")
-			overview.root.classList.add("active")
-
-			resolve()
 		}).catch(reject)
+	})
+}
+
+function filterAndSortScripts(scripts, method) {
+	return browser.tabs.query({active: true, currentWindow: true}).then(tab => {
+		let url = tab[0].url
+
+		switch(method) {
+			case "all": {
+				return Object.values(scripts).sort((a, b) => {
+					return 0
+				})
+			}
+
+			case "active": {
+				return Object.values(scripts)
+					.filter(script => urlMatches(url, script.matches))
+					.sort((a, b) => {
+					let na = a.name.toLowerCase(),
+						nb = b.name.toLowerCase();
+				
+					if (na > nb) {
+						return -1;
+					}
+					if (na < nb) {
+						return 1;
+					}
+					return 0;
+				})
+			}
+			
+			case "inactive": {
+				return Object.values(scripts).sort((a, b) => {
+					return Math.round(Math.random()*2 - 1)
+				})
+			}
+		}
 	})
 }
 
@@ -151,28 +177,34 @@ function formatMatches(matches) {
 // TODO: Debug code - should be removed.
 geid("debug-button").addEventListener("click", () => browser.tabs.create({url: "ui.html"}))
 
+// Allows the user to create a new script
 overview.createButton.addEventListener("click", () => {
-	// Create new script
 	showEditorViaScript(createScript("", true, [""], "js", ""))
+})
+
+// Reloads the overview when filter option changed
+overview.filter.addEventListener("change", () => {
+	showOverview()
+		.catch(() => { global.error.innerText = "Failed to change filter option" })
 })
 
 editor.exitButton.addEventListener("click", () => {
 	showOverview()
-		.catch(() => { global.error.innerText = "Failed to show overview" })
+		.catch(() => { global.error.innerText = "Failed to exit editor" })
 })
 
 editor.saveButton.addEventListener("click", () => {
 	saveEditor()
 		.catch(() => { global.error.innerText = "Failed to save script" })
 		.then(showOverview)
-		.catch(() => { global.error.innerText = "Failed to show overview" })
+		.catch(() => { global.error.innerText = "Failed to return to overview" })
 		
 })
 
 editor.deleteButton.addEventListener("click", () => {
 	promptDeletion(editor.currentScript.uuid, editor.name.value)
 		.then(showOverview)
-		.catch(() => { global.error.innerText = "Failed to show overview" })
+		.catch(() => { global.error.innerText = "Failed to return to overview" })
 })
 
 showOverview()

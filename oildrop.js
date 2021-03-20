@@ -32,10 +32,28 @@ function splitUrl(url) {
 	return {scheme, host, path}
 }
 
+function urlComponentMatches(source, pattern) {
+	// We want to convert something like "*.domain.com" into the regex
+	// /^.*\.domain\.com$/i, which will allow us to actually check.
+	let re = new RegExp(`^${pattern.replace(".", "\\.").replace("*", ".*")}$`, "i")
+	return source.match(re)
+}
+
 function urlMatches(url, matches) {
-	matches.forEach(matchPattern => {
-		console.log(splitUrl(matchPattern))
-	})
+	let urlParts = splitUrl(url)
+
+	for (pattern of matches) {
+		let patternParts = splitUrl(pattern)
+
+		if (urlComponentMatches(urlParts.scheme, patternParts.scheme)
+			&& urlComponentMatches(urlParts.host, patternParts.host)
+			&& urlComponentMatches(urlParts.path, patternParts.path)) {
+			
+			return true
+		}
+	}
+
+	console.log(`${url} does not match ${matches[0]}`)
 	
 	return false
 }
