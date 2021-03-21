@@ -65,81 +65,77 @@ function onEnableChanged(script, enabled) {
 }
 
 async function showOverview() {
-	return new Promise((resolve, reject) => {
-		overview.scripts.replaceChildren()
+	overview.scripts.replaceChildren()
+	let url = await browser.tabs.query({active: true, currentWindow: true}).then(tab => tab[0].url)
 
-		getAllScripts().then(scripts => {
-			filterAndSortScripts(scripts, overview.filter.value).then(filtered => {
-				filtered.forEach(script => {
-					let el = templates.script.cloneNode(true)
-	
-					el.querySelector(".overview-name").innerText = script.name
-					el.querySelector(".overview-matches").innerText = formatMatches(script.matches)
-					el.querySelector(".overview-date").innerText = script.date.toLocaleDateString()
-					el.querySelector(".overview-enable").checked = script.enabled
-					el.dataset.uuid = script.uuid
-	
-					el.querySelector(".overview-edit").addEventListener("click", () => {
-						showEditorViaUUID(script.uuid)
-							.catch(() => { global.error.innerText = "Failed to open script" })
-					})
-	
-					el.querySelector(".overview-delete").addEventListener("click", () => {
-						promptDeletion(script.uuid, script.name)
-							.then(showOverview)
-							.catch(() => { global.error.innerText = "Failed to show overview" })
-					})
-	
-					el.querySelector(".overview-enable").addEventListener("click", event => {
-						onEnableChanged(script, event.target.checked)
-					})
-	
-					overview.scripts.appendChild(el)
-				})
-	
-				editor.root.classList.remove("active")
-				overview.root.classList.add("active")
-	
-				resolve()
+	return getAllScripts()
+		.then(scripts => filterScripts(scripts, overview.filter.value, url))
+		.then(filtered => sortScripts(filtered, url).forEach(script => {
+			let el = templates.script.cloneNode(true)
+
+			el.querySelector(".overview-name").innerText = script.name
+			el.querySelector(".overview-matches").innerText = formatMatches(script.matches)
+			el.querySelector(".overview-date").innerText = script.date.toLocaleDateString()
+			el.querySelector(".overview-enable").checked = script.enabled
+			el.dataset.uuid = script.uuid
+
+			el.querySelector(".overview-edit").addEventListener("click", () => {
+				showEditorViaUUID(script.uuid)
+					.catch(() => { global.error.innerText = "Failed to open script" })
 			})
-		}).catch(reject)
-	})
+
+			el.querySelector(".overview-delete").addEventListener("click", () => {
+				promptDeletion(script.uuid, script.name)
+					.then(showOverview)
+					.catch(() => { global.error.innerText = "Failed to show overview" })
+			})
+
+			el.querySelector(".overview-enable").addEventListener("click", event => {
+				onEnableChanged(script, event.target.checked)
+			})
+
+			overview.scripts.appendChild(el)
+
+			editor.root.classList.remove("active")
+			overview.root.classList.add("active")
+		}))
 }
 
-function filterAndSortScripts(scripts, method) {
-	return browser.tabs.query({active: true, currentWindow: true}).then(tab => {
-		let url = tab[0].url
-
-		switch(method) {
-			case "all": {
-				return Object.values(scripts).sort((a, b) => {
-					return 0
-				})
-			}
-
-			case "active": {
-				return Object.values(scripts)
-					.filter(script => urlMatches(url, script.matches))
-					.sort((a, b) => {
-					let na = a.name.toLowerCase(),
-						nb = b.name.toLowerCase();
-				
-					if (na > nb) {
-						return -1;
-					}
-					if (na < nb) {
-						return 1;
-					}
-					return 0;
-				})
-			}
-			
-			case "inactive": {
-				return Object.values(scripts).sort((a, b) => {
-					return Math.round(Math.random()*2 - 1)
-				})
-			}
+function filterScripts(scripts, method, url) {
+	switch(method) {
+		case "all": {
+			return Object.values(scripts)
 		}
+
+		case "active": {
+			return Object.values(scripts)
+				.filter(script => urlMatches(url, script.matches))
+		}
+		
+		case "inactive": {
+			return Object.values(scripts)
+				.filter(script => !urlMatches(url, script.matches))
+		}
+	}
+}
+
+function sortScripts(scripts, url) {
+	return scripts.sort((a, b) => {
+		// Scripts that are active always go first
+		let disparity = urlMatches(url, b.matches) - urlMatches(url, a.matches)
+		if (disparity != 0) {
+			return disparity
+		}
+
+		// A disabled script that applies to the local domain has
+		// higher priority than an enabled script that isn't for this domain
+		disparity = b.enabled - a.enabled
+		if (disparity != 0) {
+			return disparity
+		}
+
+		// If all else is equal, sort alphabetically
+		return a.name.localeCompare(b.name)
 	})
 }
 

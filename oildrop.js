@@ -52,8 +52,6 @@ function urlMatches(url, matches) {
 			return true
 		}
 	}
-
-	console.log(`${url} does not match ${matches[0]}`)
 	
 	return false
 }
