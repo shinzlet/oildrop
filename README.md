@@ -15,10 +15,10 @@ of its code in less than ten minutes.
 - [x] Working prototype
 - [x] CSS Injection
 - [x] Javascript Injection
+- [x] Sort scripts
 - [ ] Clean, modern design
 - [ ] Dark / Light UI Toggle
 - [ ] Import / Export userscripts
-- [ ] Sort scripts
 
 ## Compatibility
 Currently, Oildrop does not implement the `GM_` functions that are part of the
