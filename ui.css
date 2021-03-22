@@ -1,10 +1,9 @@
 :root {
-	/* TODO: Change these to light colors */
-	--background: rgb(0, 0, 0);
-	--background-2: rgb(53, 62, 105);
-	--background-3: hsla(230, 41%, 60%, 1);
-	--background-text: hsla(52, 17%, 91%, 1);
-	--accent: hsla(351, 79%, 71%, 1);
+	--background: rgb(255, 251, 251);
+	--background-2: rgb(187, 187, 187);
+	--background-3: rgb(156, 156, 156);
+	--background-text: rgb(46, 46, 46);
+	--accent: rgb(209, 69, 90);
 	--accent-text: hsl(0, 0%, 0%, 1);
 }
 
@@ -23,8 +22,10 @@ body {
 	overflow: hidden;
 }
 
-header {
+#uppermost {
+	width: 100%;
 	display: flex;
+	align-items: center;
 	justify-content: space-between;
 	color: var(--accent);
 }
@@ -32,7 +33,7 @@ header {
 #overview-scripts li {
 	margin: 10px;
 	padding: 5px;
-	border-radius: 5px;
+	border-radius: 3px;
 	background: var(--background-2);
 }
 
@@ -65,12 +66,29 @@ section:not(.active) {
 	display: none;
 }
 
+input, button, select, textarea, fieldset {
+	background-color: var(--background-3);
+	border: none;
+	box-shadow: -1px -1px 1px 1px rgba(255, 255, 255, 0.4),
+				 1px  1px 1px 1px rgba(0, 0, 0, 0.5);
+	margin: 5px;
+}
+
+#editor textarea {
+	display: block;
+}
+
+#editor label {
+	display: block;
+}
+
 @media (prefers-color-scheme: dark) {
 	:root {
-		/* --background: hsla(222, 11%, 18%, 1);
-		--background-2: hsla(230, 41%, 60%, 1);
-		--background-text: hsla(52, 17%, 91%, 1);
-		--accent: hsla(351, 79%, 71%, 1);
-		--accent-text: hsla(222, 11%, 18%, 1); */
+		--background: rgb(27, 10, 10);
+		--background-2: rgb(61, 32, 32);
+		--background-3: rgb(134, 76, 76);
+		--background-text: rgb(204, 180, 159);
+		--accent: rgb(219, 140, 94);
+		--accent-text: hsl(0, 0%, 0%, 1);
 	}
 }

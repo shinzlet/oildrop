@@ -170,9 +170,6 @@ function formatMatches(matches) {
 	return matches.join()
 }
 
-// TODO: Debug code - should be removed.
-geid("debug-button").addEventListener("click", () => browser.tabs.create({url: "ui.html"}))
-
 // Allows the user to create a new script
 overview.createButton.addEventListener("click", () => {
 	showEditorViaScript(createScript("", true, [""], "js", ""))
@@ -204,3 +201,6 @@ editor.deleteButton.addEventListener("click", () => {
 })
 
 showOverview()
+
+// TODO: Debug code - should be removed.
+geid("debug-button").addEventListener("click", () => browser.tabs.create({url: "ui.html"}))

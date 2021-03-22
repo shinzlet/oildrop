@@ -20,6 +20,11 @@ of its code in less than ten minutes.
 - [ ] Dark / Light UI Toggle
 - [ ] Import / Export userscripts
 
+## Appearance
+Oildrop isn't pretty, yet. I do plan to do a full overhaul of all the styling, and I'm
+even considering bringing a real designer on board (good software is as pretty as it
+is free, and Oildrop is GPLv3, after all).
+
 ## Compatibility
 Currently, Oildrop does not implement the `GM_` functions that are part of the
 GreaseMonkey API, nor does it use a metadata block. Although this is not very limiting for any new userscripts you write or port, it will likely break
