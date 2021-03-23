@@ -11,6 +11,9 @@ most essential features, while keeping a small, clean codebase. The core goal
 of Oildrop is that anyone who is slightly familiar with Javascript can read all
 of its code in less than ten minutes.
 
+## Demonstration (not final design, not complete)
+<img src="https://raw.githubusercontent.com/shinzlet/oildrop/media/preview.gif" width=512 height=512 alt="Preview of oildrop being used">
+
 ## Project status
 - [x] Working prototype
 - [x] CSS Injection
