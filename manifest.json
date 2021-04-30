@@ -12,7 +12,7 @@
 	],
 	"browser_action": {
 		"default_title": "Oildrop",
-		"default_popup": "ui.html"
+		"default_popup": "prototype.html"
 	},
 	"background": {
 		"scripts": ["oildrop.js", "background.js"]
