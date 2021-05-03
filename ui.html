@@ -1,92 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<link rel="stylesheet" href="ui.css" />
-	</head>
-	
-	<body>
-		<header>
-			<div id="uppermost">
-				<h1>Oildrop</h1>
+    <head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="ui.css" />
+    </head>
+    
+    <body>
+	<main id="home">
+	    <header id="options">
+		<span>Oildrop</span>
+		<input type="checkbox">
+		<button></button>
+	    </header>
 
-				<input id="global-enable" title="Enable Oildrop" type="checkbox">
-			</div>
-			
-			<span id="global-error"></span>
-		</header>
+	    <hr>
 
-		<!-- <button id="debug-button">Open in Window</button> -->
+	    <section id="overview-controls">
+		<input id="global-pause" type="checkbox" checked>
 
-		<main>
-			<!-- A panel that shows a list of sortable scripts -->
-			<section id="overview" class="active">
-				<select id="overview-filter" title="Filter which scripts are listed">
-					<option value="all" selected>All scripts</option>
-					<option value="active">Scripts for this domain</option>
-					<option value="inactive">Inactive scripts</option>
-				</select>
+		<!-- I really don't like having to use a wrapper here,
+		but the CSS support for select tags is really poor. In order
+		to add a custom selector icon, I needed to wrap this so I can
+		use a ::before tag. In theory it could also be done with a background
+		image, but that would prevent it from recoloring on hover. -->
+		<div id="filter-wrapper">
+		    <select id="filter" title="Filter which scripts are listed">
+			<option value="all" selected>All scripts</option>
+			<option value="active">Scripts for this domain</option>
+			<option value="inactive">Inactive scripts</option>
+		    </select>
+		</div>
 
-				<button id="overview-create-script">Create script</button>
+		<button id="new-script">New script</button>
+	    </section>
 
-				<ul id="overview-scripts">
-				</ul>
-			</section>
+	    <section id="overview">
 
-			<!-- A panel that exposes script details and allows management -->
-			<section id="editor">
-				<button id="editor-exit">Back</button>
+		<button id="foo">do action</button>
+		<button id="bar">do other action</button>
+	    </section>
 
-				<label for="editor-name" title="The name you want to associate with this script. It does not need to be unique.">Name</label>
-				<input type="text" id="editor-name">
+	    <div id="snackbar">
+		Scripts are running
+	    </div>
 
-				<label for="editor-matches" title="A comma separated list of web addresses. The most general is '*://*.*/*'.">Matches</label>
-				<input type="text" id="editor-matches">
+	    <footer id="footer">
+		<span>Oildrop is alpha software</span>
 
-				<label for="editor-code" title="The JavaScript or CSS you want to run on all pages that fit the matching pattern.">Code</label>
-				<textarea id="editor-code"></textarea>
+		<a href="https://github.com/shinzlet/oildrop">
+		    <img src="github" alt="GitHub">
+		</a>
+	    </footer>
+	</main>
 
+	<div id="editor-wrapper">
+	    This is the editor
+	    <img src="https://picsum.photos/200/300" alt="">
+	</div>
 
-				<fieldset>
-					<legend title="The type of script you're writing - javascript or CSS.">Language</legend>
+	<div id="settings-wrapper">
+	    This is settings
+	    <img src="https://picsum.photos/200/300" alt="">
+	</div>
+		    
 
-					<label for="editor-type-js">JS</label>
-					<input type="radio" id="editor-type-js" name="editor-type" value="js">
-
-					<label for="editor-type-css">CSS</label>
-					<input type="radio" id="editor-type-css" name="editor-type" value="css">
-				</fieldset>
-
-
-				<button id="editor-save">Save</button>
-				<button id="editor-delete">Delete</button>
-			</section>
-		</main>
-
-		<footer>
-			Oildrop is currently alpha software.
-			Developed by <a href="https://github.com/shinzlet/oildrop">Seth Hinz</a>
-		</footer>
-
-		<!-- Template components for use in JS -->
-		<template id="template-script-overview">
-			<li>
-				<div class="overview-description">
-					<h3 class="overview-name">Script Name</h3>
-					<h4 class="overview-matches">*://*.org/*</h4>
-					<h4 class="overview-date">March 1 2021</h4>
-				</div>
-
-				<div class="overview-actions">
-					<input class="overview-enable" title="Enable this script" type="checkbox">
-
-					<button class="overview-edit" title="Edit this script">Edit</button>
-					<button class="overview-delete" title="Delete this script">Delete</button>
-				</div>
-			</li>
-		</template>
-
-		<script src="oildrop.js" type="text/javascript"></script>
-		<script src="ui.js" type="text/javascript"></script>
-	</body>
+	<script src="oildrop.js" type="text/javascript"></script>
+	<script src="ui.js" type="text/javascript"></script>
+    </body>
 </html>

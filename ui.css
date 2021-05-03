@@ -1,94 +1,193 @@
+@font-face {
+  font-family: "Poppins";
+  src: url("./assets/poppins/Poppins-Regular.ttf");
+  font-weight: normal;
+}
+@font-face {
+  font-family: "Poppins";
+  src: url("./assets/poppins/Poppins-Medium.ttf");
+  font-weight: bold;
+}
 :root {
-	--background: rgb(255, 251, 251);
-	--background-2: rgb(187, 187, 187);
-	--background-3: rgb(156, 156, 156);
-	--background-text: rgb(46, 46, 46);
-	--accent: rgb(209, 69, 90);
-	--accent-text: hsl(0, 0%, 0%, 1);
+  --primary-1: #F3F3F3;
+  --primary-2: #E4E4E4;
+  --primary-3: #D0D0D0;
+  --primary-4: #A6A8B1;
+  --primary-5: #1A3C66;
+  --primary-6: #171C3A;
+  --primary-7: #090D28;
+  --accent-dark: #FFD969;
+  --accent-bright: #FFAB86;
+  --accent-gradient: linear-gradient(120deg, var(--accent-dark), var(--accent-bright));
+  --accent-text: #52433F;
+  --accent-text-focus: var(--primary-7);
+  --gap: 1rem;
+  --options-height: 3rem;
+  --control-radius: 0.3rem;
 }
 
 * {
-	padding: 0px;
-	margin: 0px;
-	box-sizing: border-box;
-	font-family: "Noto Sans";
+  font-family: "Poppins";
+}
+
+html {
+  padding: 0px;
+  font-size: 10pt;
 }
 
 body {
-	background: var(--background);
-	color: var(--background-text);
-	width: 400px;
-	margin: 0px;
-	overflow: hidden;
+  display: flex;
+  justify-content: center;
+  margin: 0px;
+  width: 450px;
+  height: 585px;
+  overflow: hidden;
+  background-color: var(--primary-7);
+  background-image: url("./assets/background_dark.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
-#uppermost {
-	width: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	color: var(--accent);
+button {
+  display: inline-flex;
+  padding: 0 1.3rem;
 }
 
-#overview-scripts li {
-	margin: 10px;
-	padding: 5px;
-	border-radius: 3px;
-	background: var(--background-2);
+button, select, #global-pause {
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-size: 1.2rem;
+  border-radius: var(--control-radius);
+  border: none;
+  cursor: pointer;
+}
+#home {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 2 * var(--gap));
+  height: 100%;
+  padding-top: calc(var(--gap) / 2);
+  padding-bottom: calc(var(--gap) / 2);
+  box-sizing: border-box;
 }
 
-#overview-scripts li:nth-of-type(even) {
-	background: var(--background-3);
+#home > * {
+  margin-top: calc(var(--gap) / 2);
+  margin-bottom: calc(var(--gap) / 2);
 }
 
-#overview-scripts li {
-	display: flex;
-	justify-content: space-between;
+#overview-controls {
+  display: flex;
+  justify-content: space-between;
+}
+#overview-controls, #overview-controls > * {
+  height: var(--options-height);
 }
 
-#overview-scripts li .overview-actions {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
+#global-pause {
+  height: var(--options-height);
+  width: var(--options-height);
+  margin: 0;
 }
 
-button#create-script {
-	display: block;
-	width: 100%;
+#filter-wrapper {
+  flex-grow: 1;
+  position: relative;
+  margin: 0 var(--gap);
+  font-size: 1.2rem;
+}
+#filter-wrapper > * {
+  width: 100%;
+  height: 100%;
+}
+#filter-wrapper::before {
+  mask-image: url("./assets/dropdown_icon.svg");
+  mask-size: contain;
+  mask-position: center;
+  content: "";
+  display: block;
+  position: absolute;
+  pointer-events: none;
+  width: 1em;
+  height: 1em;
+  right: 1em;
+  background: var(--primary-4);
+  top: calc(50% - 0.5em);
+}
+#filter-wrapper:hover::before {
+  background: var(--primary-2);
 }
 
-main {
-	max-height: 500px;
-	overflow-y: scroll;
+#filter {
+  padding-left: 1em;
+  appearance: none;
+  background: var(--primary-6);
+  border: none;
+  border-radius: var(--control-radius);
+  color: var(--primary-4);
+  font-weight: bold;
+  font-size: 1em;
+}
+#filter:hover {
+  color: var(--primary-2);
 }
 
-section:not(.active) {
-	display: none;
+#new-script {
+  justify-content: space-between;
+  background: var(--accent-gradient);
+  color: var(--accent-text);
+  text-transform: uppercase;
+  font-weight: bold;
+  white-space: nowrap;
+}
+#new-script::before {
+  mask-image: url("./assets/new_script_icon.svg");
+  mask-size: contain;
+  mask-position: center;
+  content: "";
+  display: block;
+  width: 0.8em;
+  height: 0.8em;
+  margin-right: 0.5em;
+  margin-bottom: 0.2em;
+  /* This just slightly tweaks vertical alignment. */
+  background: var(--accent-text);
+}
+#new-script:hover {
+  color: var(--primary-7);
+}
+#new-script:hover::before {
+  background: var(--primary-7);
 }
 
-input, button, select, textarea, fieldset {
-	background-color: var(--background-3);
-	border: none;
-	box-shadow: -1px -1px 1px 1px rgba(255, 255, 255, 0.4),
-				 1px  1px 1px 1px rgba(0, 0, 0, 0.5);
-	margin: 5px;
+hr {
+  width: 100%;
 }
 
-#editor textarea {
-	display: block;
+#overview {
+  flex-grow: 1;
+  scrollbar-width: thin;
+  scrollbar-color: black goldenrod;
+  overflow-y: scroll;
 }
 
-#editor label {
-	display: block;
+#snackbar {
+  text-align: center;
+  vertical-align: center;
 }
 
-@media (prefers-color-scheme: dark) {
-	:root {
-		--background: rgb(27, 10, 10);
-		--background-2: rgb(61, 32, 32);
-		--background-3: rgb(134, 76, 76);
-		--background-text: rgb(204, 180, 159);
-		--accent: rgb(219, 140, 94);
-		--accent-text: hsl(0, 0%, 0%, 1);
-	}
+#footer {
+  display: flex;
+  justify-content: space-between;
+  vertical-align: center;
+}
+
+#editor-wrapper {
+  display: none;
+}
+
+#settings-wrapper {
+  display: none;
 }

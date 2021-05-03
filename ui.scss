@@ -1,0 +1,240 @@
+// Define mixins
+
+// This is used to create icons that have their text color tied to
+// the background color of an element (usually ::before or ::after).
+// In Oildrop, this is frequently used to add icons to text or buttons.
+@mixin mask-icon($path) {
+    mask-image: url($path);
+    mask-size: contain;
+    mask-position: center;
+}
+
+// Load & configure fonts
+@font-face {
+    font-family: "Poppins";
+    src: url("./assets/poppins/Poppins-Regular.ttf");
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: "Poppins";
+    src: url("./assets/poppins/Poppins-Medium.ttf");
+    font-weight: bold;
+}
+
+:root {
+    --primary-1: #F3F3F3;
+    --primary-2: #E4E4E4;
+    --primary-3: #D0D0D0;
+    --primary-4: #A6A8B1;
+    --primary-5: #1A3C66;
+    --primary-6: #171C3A;
+    --primary-7: #090D28;
+
+    // Oildrop's orange gradient
+    --accent-dark: #FFD969;
+    --accent-bright: #FFAB86;
+    --accent-gradient: linear-gradient(120deg, var(--accent-dark), var(--accent-bright));
+
+    // The text color to use on top of the accent color.
+    --accent-text: #52433F;
+    --accent-text-focus: var(--primary-7);
+
+    --gap: 1rem;
+    --options-height: 3rem;
+    --control-radius: 0.3rem;
+}
+
+* {
+    font-family: "Poppins";
+}
+
+html {
+    padding: 0px;
+    font-size: 10pt;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+
+    margin: 0px;
+    width: 450px;
+    height: 585px;
+
+    overflow: hidden;
+
+    background-color: var(--primary-7);
+    background-image: url("./assets/background_dark.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+button {
+    display: inline-flex;
+    padding: 0 1.3rem;
+}
+
+button, select, #global-pause {
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+
+    font-size: 1.2rem;
+    border-radius: var(--control-radius);
+    border: none;
+    cursor: pointer;
+
+    &:active, &:hover, &:focus {
+        // TODO: find an outline, maybe?
+    }
+}
+
+#home {
+    display: flex;
+    flex-direction: column;
+
+    width: calc(100% - 2 * var(--gap));
+    height: 100%;
+    padding-top: calc(var(--gap) / 2);
+    padding-bottom: calc(var(--gap) / 2);
+    box-sizing: border-box;
+}
+
+#home > * {
+    margin-top: calc(var(--gap) / 2);
+    margin-bottom: calc(var(--gap) / 2);
+}
+
+#overview-controls {
+    display: flex;
+    justify-content: space-between;
+
+    &, & > * {
+        height: var(--options-height);
+    }
+}
+
+#global-pause {
+    height: var(--options-height);
+    width: var(--options-height);
+    margin: 0;
+}
+
+#filter-wrapper {
+    flex-grow: 1;
+    position: relative;
+
+    margin: 0 var(--gap);
+
+    font-size: 1.2rem;
+
+    // We need to tell #filter to fill this whole element,
+    // but doing so in #filter itself would make it impossible
+    // to reuse.
+    & > * {
+        width: 100%;
+        height: 100%;
+    }
+
+    &::before {
+        @include mask-icon("./assets/dropdown_icon.svg");
+
+        content: '';
+        display: block;
+        position: absolute;
+        pointer-events: none;
+
+        width: 1em;
+        height: 1em;
+
+        right: 1em;
+        background: var(--primary-4);
+        top: calc(50% - 0.5em);
+    }
+
+    &:hover::before {
+        background: var(--primary-2);
+    }
+}
+
+#filter {
+    padding-left: 1em;
+
+    appearance: none;
+    background: var(--primary-6);
+    border: none;
+    border-radius: var(--control-radius);
+    color: var(--primary-4);
+    font-weight: bold;
+    font-size: 1em;
+
+    &:hover {
+        color: var(--primary-2);
+    }
+}
+
+#new-script {
+    justify-content: space-between;
+
+    background: var(--accent-gradient);
+    color: var(--accent-text);
+
+    text-transform: uppercase;
+    font-weight: bold;
+    white-space: nowrap;
+    
+    &::before {
+        @include mask-icon("./assets/new_script_icon.svg");
+
+        content: '';
+        display: block;
+
+        width: 0.8em;
+        height: 0.8em;
+
+        margin-right: 0.5em;
+        margin-bottom: 0.2em; /* This just slightly tweaks vertical alignment. */
+        background: var(--accent-text);
+    }
+
+    &:hover {
+        color: var(--primary-7);
+
+        &::before {
+            background: var(--primary-7);
+        }
+    }
+}
+
+hr {
+    width: 100%;
+}
+
+#overview {
+    flex-grow: 1;
+    scrollbar-width: thin;
+    scrollbar-color: black goldenrod;
+
+    overflow-y: scroll;
+}
+
+#snackbar {
+    text-align: center;
+    vertical-align: center;
+}
+
+#footer {
+    display: flex;
+    justify-content: space-between;
+    vertical-align: center;
+}
+
+#editor-wrapper {
+    display: none;
+}
+
+#settings-wrapper {
+    display: none;
+}
