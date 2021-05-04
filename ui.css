@@ -9,6 +9,7 @@
   font-weight: bold;
 }
 :root {
+  --primary-0: #FFFFFF;
   --primary-1: #F3F3F3;
   --primary-2: #E4E4E4;
   --primary-3: #D0D0D0;
@@ -24,10 +25,35 @@
   --gap: 1rem;
   --options-height: 3rem;
   --control-radius: 0.3rem;
+  --text-normal: var(--primary-5);
+  --text-highlight: var(--primary-6);
+  --background-1: var(--primary-0);
+  --background-2: var(--primary-1);
+  --background-3: var(--primary-2);
+  --scroll-track: var(--primary-1);
+  --scroll-thumb: var(--primary-3);
+  --hr-color: var(--primary-3);
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-normal: var(--primary-4);
+    --text-highlight: var(--primary-2);
+    --background-1: var(--primary-7);
+    --background-2: var(--primary-6);
+    --background-3: var(--primary-5);
+    --scroll-track: var(--primary-6);
+    --scroll-thumb: var(--primary-4);
+    --hr-color: var(--primary-4);
+  }
+
+  body {
+    background-image: url("./assets/background_dark.png");
+  }
+}
 * {
   font-family: "Poppins";
+  color: var(--text-normal);
 }
 
 html {
@@ -42,8 +68,8 @@ body {
   width: 450px;
   height: 585px;
   overflow: hidden;
-  background-color: var(--primary-7);
-  background-image: url("./assets/background_dark.png");
+  background-image: url("./assets/background_light.png");
+  background-color: var(--background-1);
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
@@ -94,11 +120,12 @@ button, select, #global-pause {
   margin: 0;
   height: var(--options-height);
   width: var(--options-height);
-  background: var(--primary-6);
+  background: var(--background-2);
   border-radius: var(--control-radius);
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 #global-pause-icon::before {
   content: "";
@@ -108,11 +135,14 @@ button, select, #global-pause {
   mask-position: center;
   width: 1em;
   height: 1em;
-  background: var(--primary-4);
+  background: var(--text-normal);
   mask-image: url("./assets/pause_icon.svg");
 }
+#global-pause-icon:hover {
+  background: var(--background-3);
+}
 #global-pause-icon:hover::before {
-  background: var(--primary-2);
+  background: var(--text-highlight);
 }
 #global-pause:checked + #global-pause-icon::before {
   mask-image: url("./assets/play_icon.svg");
@@ -144,25 +174,25 @@ button, select, #global-pause {
   height: 1em;
   right: 1em;
   top: calc(50% - 0.5em);
-  background: var(--primary-4);
+  background: var(--text-normal);
   mask-image: url("./assets/dropdown_icon.svg");
 }
 #filter-wrapper:hover::before {
-  background: var(--primary-2);
+  background: var(--text-highlight);
 }
 
 #filter {
   padding-left: 1em;
   appearance: none;
-  background: var(--primary-6);
+  background: var(--background-2);
   border: none;
   border-radius: var(--control-radius);
-  color: var(--primary-4);
   font-weight: bold;
   font-size: 1em;
 }
 #filter:hover {
-  color: var(--primary-2);
+  color: var(--text-highlight);
+  background: var(--background-3);
 }
 
 #new-script {
@@ -190,22 +220,22 @@ button, select, #global-pause {
   mask-image: url("./assets/new_script_icon.svg");
 }
 #new-script:hover {
-  color: var(--primary-7);
+  color: var(--accent-text-focus);
 }
 #new-script:hover::before {
-  background: var(--primary-7);
+  background: var(--accent-text-focus);
 }
 
 hr {
   width: 100%;
-  color: var(--primary-3);
   opacity: 0.5;
+  color: var(--hr-color);
 }
 
 #overview {
   flex-grow: 1;
   scrollbar-width: thin;
-  scrollbar-color: var(--primary-3) var(--primary-6);
+  scrollbar-color: var(--scroll-thumb) var(--scroll-track);
   overflow-y: scroll;
 }
 
