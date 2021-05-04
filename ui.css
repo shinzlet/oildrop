@@ -87,34 +87,65 @@ button, select, #global-pause {
 }
 
 #global-pause {
+  display: none;
+}
+
+#global-pause-icon {
+  margin: 0;
   height: var(--options-height);
   width: var(--options-height);
-  margin: 0;
+  background: var(--primary-6);
+  border-radius: var(--control-radius);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#global-pause-icon::before {
+  content: "";
+  display: block;
+  pointer-events: none;
+  mask-size: contain;
+  mask-position: center;
+  width: 1em;
+  height: 1em;
+  background: var(--primary-4);
+  mask-image: url("./assets/pause_icon.svg");
+}
+#global-pause-icon:hover::before {
+  background: var(--primary-2);
+}
+#global-pause:checked + #global-pause-icon::before {
+  mask-image: url("./assets/play_icon.svg");
+}
+
+.input-wrapper {
+  position: relative;
+}
+.input-wrapper > * {
+  width: 100%;
+  height: 100%;
+}
+.input-wrapper::before {
+  position: absolute;
 }
 
 #filter-wrapper {
   flex-grow: 1;
-  position: relative;
   margin: 0 var(--gap);
   font-size: 1.2rem;
 }
-#filter-wrapper > * {
-  width: 100%;
-  height: 100%;
-}
 #filter-wrapper::before {
-  mask-image: url("./assets/dropdown_icon.svg");
-  mask-size: contain;
-  mask-position: center;
   content: "";
   display: block;
-  position: absolute;
   pointer-events: none;
+  mask-size: contain;
+  mask-position: center;
   width: 1em;
   height: 1em;
   right: 1em;
-  background: var(--primary-4);
   top: calc(50% - 0.5em);
+  background: var(--primary-4);
+  mask-image: url("./assets/dropdown_icon.svg");
 }
 #filter-wrapper:hover::before {
   background: var(--primary-2);
@@ -143,17 +174,20 @@ button, select, #global-pause {
   white-space: nowrap;
 }
 #new-script::before {
-  mask-image: url("./assets/new_script_icon.svg");
+  content: "";
+  display: block;
+  pointer-events: none;
   mask-size: contain;
   mask-position: center;
   content: "";
   display: block;
-  width: 0.8em;
-  height: 0.8em;
+  width: 0.9em;
+  height: 0.9em;
   margin-right: 0.5em;
   margin-bottom: 0.2em;
   /* This just slightly tweaks vertical alignment. */
   background: var(--accent-text);
+  mask-image: url("./assets/new_script_icon.svg");
 }
 #new-script:hover {
   color: var(--primary-7);
@@ -164,12 +198,14 @@ button, select, #global-pause {
 
 hr {
   width: 100%;
+  color: var(--primary-3);
+  opacity: 0.5;
 }
 
 #overview {
   flex-grow: 1;
   scrollbar-width: thin;
-  scrollbar-color: black goldenrod;
+  scrollbar-color: var(--primary-3) var(--primary-6);
   overflow-y: scroll;
 }
 

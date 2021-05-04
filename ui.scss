@@ -1,10 +1,14 @@
 // Define mixins
 
-// This is used to create icons that have their text color tied to
-// the background color of an element (usually ::before or ::after).
+// This is used to create icons out of pseudoelements, which use
+// a mask to allow icon recoloring within the CSS. The icon can be
+// later set via `mask-image`.
 // In Oildrop, this is frequently used to add icons to text or buttons.
-@mixin mask-icon($path) {
-    mask-image: url($path);
+@mixin mask-icon() {
+    content: '';
+    display: block;
+    pointer-events: none;
+
     mask-size: contain;
     mask-position: center;
 }
@@ -117,21 +121,44 @@ button, select, #global-pause {
 }
 
 #global-pause {
-    height: var(--options-height);
-    width: var(--options-height);
-    margin: 0;
+    display: none;
 }
 
-#filter-wrapper {
-    flex-grow: 1;
+#global-pause-icon {
+    margin: 0;
+    height: var(--options-height);
+    width: var(--options-height);
+
+    background: var(--primary-6);
+    border-radius: var(--control-radius);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &::before {
+        @include mask-icon;
+
+        width: 1em;
+        height: 1em;
+        background: var(--primary-4);
+        mask-image: url("./assets/pause_icon.svg");
+    }
+
+    &:hover::before {
+        background: var(--primary-2);
+    }
+
+    #global-pause:checked + &::before {
+        mask-image: url("./assets/play_icon.svg");
+    }
+}
+
+.input-wrapper {
     position: relative;
 
-    margin: 0 var(--gap);
-
-    font-size: 1.2rem;
-
-    // We need to tell #filter to fill this whole element,
-    // but doing so in #filter itself would make it impossible
+    // We need to tell the wrapped element to fill this whole element,
+    // but doing so in the child itself would make it impossible
     // to reuse.
     & > * {
         width: 100%;
@@ -139,19 +166,27 @@ button, select, #global-pause {
     }
 
     &::before {
-        @include mask-icon("./assets/dropdown_icon.svg");
 
-        content: '';
-        display: block;
         position: absolute;
-        pointer-events: none;
+    }
+}
+
+#filter-wrapper {
+    flex-grow: 1;
+
+    margin: 0 var(--gap);
+    font-size: 1.2rem;
+
+    &::before {
+        @include mask-icon;
 
         width: 1em;
         height: 1em;
-
         right: 1em;
-        background: var(--primary-4);
         top: calc(50% - 0.5em);
+
+        background: var(--primary-4);
+        mask-image: url("./assets/dropdown_icon.svg");
     }
 
     &:hover::before {
@@ -186,17 +221,18 @@ button, select, #global-pause {
     white-space: nowrap;
     
     &::before {
-        @include mask-icon("./assets/new_script_icon.svg");
+        @include mask-icon;
 
         content: '';
         display: block;
 
-        width: 0.8em;
-        height: 0.8em;
+        width: 0.9em;
+        height: 0.9em;
 
         margin-right: 0.5em;
         margin-bottom: 0.2em; /* This just slightly tweaks vertical alignment. */
         background: var(--accent-text);
+        mask-image: url("./assets/new_script_icon.svg");
     }
 
     &:hover {
@@ -210,12 +246,14 @@ button, select, #global-pause {
 
 hr {
     width: 100%;
+    color: var(--primary-3);
+    opacity: 0.5;
 }
 
 #overview {
     flex-grow: 1;
     scrollbar-width: thin;
-    scrollbar-color: black goldenrod;
+    scrollbar-color: var(--primary-3) var(--primary-6);
 
     overflow-y: scroll;
 }

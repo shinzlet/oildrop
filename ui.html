@@ -16,17 +16,19 @@
 	    <hr>
 
 	    <section id="overview-controls">
-		<input id="global-pause" type="checkbox" checked>
+		<!-- I often use css masks and psuedoselectors to recolor SVG
+      icons throughout my work.  However, input and select tags do not support
+      pseudoelements, which means they have to be wrapped.-->
 
-		<!-- I really don't like having to use a wrapper here,
-		but the CSS support for select tags is really poor. In order
-		to add a custom selector icon, I needed to wrap this so I can
-		use a ::before tag. In theory it could also be done with a background
-		image, but that would prevent it from recoloring on hover. -->
-		<div id="filter-wrapper">
-		    <select id="filter" title="Filter which scripts are listed">
+		<label>
+		    <input id="global-pause" type="checkbox" checked>
+		    <div id="global-pause-icon"></div>
+		</label>
+
+		<div id="filter-wrapper" class="input-wrapper">
+		    <select id="filter" title="Filter which scripts are listed. 'Active' scripts are ones which apply to this domain, regardless of if they are running.">
 			<option value="all" selected>All scripts</option>
-			<option value="active">Scripts for this domain</option>
+			<option value="active">Active scripts</option>
 			<option value="inactive">Inactive scripts</option>
 		    </select>
 		</div>
@@ -38,6 +40,12 @@
 
 		<button id="foo">do action</button>
 		<button id="bar">do other action</button>
+		Dolor quam blanditiis explicabo eos illo Necessitatibus omnis accusamus magnam provident rerum officia. Repellat quasi dolore quia neque earum Culpa quae animi provident aliquid laudantium deleniti Consequatur voluptatibus ipsa delectus
+		Consectetur aspernatur fugit saepe placeat blanditiis quibusdam natus nobis Quae laboriosam adipisci nobis labore explicabo nemo rerum Quam quo quaerat reprehenderit magnam asperiores. Harum ducimus asperiores corrupti impedit qui ducimus
+		Dolor ipsa pariatur obcaecati in excepturi? Rem adipisci tempore iste totam necessitatibus? Laborum temporibus enim praesentium placeat libero, aut accusamus. Illum provident numquam eaque suscipit dicta adipisci. Sint consequatur labore
+		Dolor quam blanditiis explicabo eos illo Necessitatibus omnis accusamus magnam provident rerum officia. Repellat quasi dolore quia neque earum Culpa quae animi provident aliquid laudantium deleniti Consequatur voluptatibus ipsa delectus
+		Consectetur aspernatur fugit saepe placeat blanditiis quibusdam natus nobis Quae laboriosam adipisci nobis labore explicabo nemo rerum Quam quo quaerat reprehenderit magnam asperiores. Harum ducimus asperiores corrupti impedit qui ducimus
+		Dolor ipsa pariatur obcaecati in excepturi? Rem adipisci tempore iste totam necessitatibus? Laborum temporibus enim praesentium placeat libero, aut accusamus. Illum provident numquam eaque suscipit dicta adipisci. Sint consequatur labore
 	    </section>
 
 	    <div id="snackbar">
