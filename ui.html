@@ -8,9 +8,11 @@
     <body>
 	<main id="home">
 	    <header id="options">
-		<span>Oildrop</span>
-		<input type="checkbox">
-		<button></button>
+		<div id="logo" aria-hidden="true">Oildrop</div>
+		<div>
+		    <input type="checkbox">
+		    <button id="settings-button"></button>
+		</div>
 	    </header>
 
 	    <hr>
@@ -25,7 +27,7 @@
 		    <div id="global-pause-icon"></div>
 		</label>
 
-		<div id="filter-wrapper" class="input-wrapper">
+		<div class="select-wrapper">
 		    <select id="filter" title="Filter which scripts are listed. 'Active' scripts are ones which apply to this domain, regardless of if they are running.">
 			<option value="all" selected>All scripts</option>
 			<option value="active">Active scripts</option>
@@ -36,17 +38,134 @@
 		<button id="new-script">New script</button>
 	    </section>
 
-	    <section id="overview">
+	    <ul id="overview">
+		<li class="script-card">
+		    <div class="script-description">
+			<span class="script-name">Script Name</span>
+			<span class="script-matches">*://*.org/*</span>
+			<span class="script-date">March 1 2021</span>
+		    </div>
 
-		<button id="foo">do action</button>
-		<button id="bar">do other action</button>
-		Dolor quam blanditiis explicabo eos illo Necessitatibus omnis accusamus magnam provident rerum officia. Repellat quasi dolore quia neque earum Culpa quae animi provident aliquid laudantium deleniti Consequatur voluptatibus ipsa delectus
-		Consectetur aspernatur fugit saepe placeat blanditiis quibusdam natus nobis Quae laboriosam adipisci nobis labore explicabo nemo rerum Quam quo quaerat reprehenderit magnam asperiores. Harum ducimus asperiores corrupti impedit qui ducimus
-		Dolor ipsa pariatur obcaecati in excepturi? Rem adipisci tempore iste totam necessitatibus? Laborum temporibus enim praesentium placeat libero, aut accusamus. Illum provident numquam eaque suscipit dicta adipisci. Sint consequatur labore
-		Dolor quam blanditiis explicabo eos illo Necessitatibus omnis accusamus magnam provident rerum officia. Repellat quasi dolore quia neque earum Culpa quae animi provident aliquid laudantium deleniti Consequatur voluptatibus ipsa delectus
-		Consectetur aspernatur fugit saepe placeat blanditiis quibusdam natus nobis Quae laboriosam adipisci nobis labore explicabo nemo rerum Quam quo quaerat reprehenderit magnam asperiores. Harum ducimus asperiores corrupti impedit qui ducimus
-		Dolor ipsa pariatur obcaecati in excepturi? Rem adipisci tempore iste totam necessitatibus? Laborum temporibus enim praesentium placeat libero, aut accusamus. Illum provident numquam eaque suscipit dicta adipisci. Sint consequatur labore
-	    </section>
+		    <div class="script-actions">
+			<input class="script-enable" title="Enable this script" type="checkbox">
+
+			<button class="script-edit" title="Edit this script">Edit</button>
+			<button class="script-delete" title="Delete this script">Delete</button>
+		    </div>
+		</li>
+		<li class="script-card">
+		    <div class="script-description">
+			<span class="script-name">Script Name</span>
+			<span class="script-matches">*://*.org/*</span>
+			<span class="script-date">March 1 2021</span>
+		    </div>
+
+		    <div class="script-actions">
+			<input class="script-enable" title="Enable this script" type="checkbox">
+
+			<button class="script-edit" title="Edit this script">Edit</button>
+			<button class="script-delete" title="Delete this script">Delete</button>
+		    </div>
+		</li>
+		<li class="script-card">
+		    <div class="script-description">
+			<span class="script-name">Script Name</span>
+			<span class="script-matches">*://*.org/*</span>
+			<span class="script-date">March 1 2021</span>
+		    </div>
+
+		    <div class="script-actions">
+			<input class="script-enable" title="Enable this script" type="checkbox">
+
+			<button class="script-edit" title="Edit this script">Edit</button>
+			<button class="script-delete" title="Delete this script">Delete</button>
+		    </div>
+		</li>
+		<li class="script-card">
+		    <div class="script-description">
+			<span class="script-name">Script Name</span>
+			<span class="script-matches">*://*.org/*</span>
+			<span class="script-date">March 1 2021</span>
+		    </div>
+
+		    <div class="script-actions">
+			<input class="script-enable" title="Enable this script" type="checkbox">
+
+			<button class="script-edit" title="Edit this script">Edit</button>
+			<button class="script-delete" title="Delete this script">Delete</button>
+		    </div>
+		</li>
+		<li class="script-card">
+		    <div class="script-description">
+			<span class="script-name">Script Name</span>
+			<span class="script-matches">*://*.org/*</span>
+			<span class="script-date">March 1 2021</span>
+		    </div>
+
+		    <div class="script-actions">
+			<input class="script-enable" title="Enable this script" type="checkbox">
+
+			<button class="script-edit" title="Edit this script">Edit</button>
+			<button class="script-delete" title="Delete this script">Delete</button>
+		    </div>
+		</li>
+		<li class="script-card">
+		    <div class="script-description">
+			<span class="script-name">Script Name</span>
+			<span class="script-matches">*://*.org/*</span>
+			<span class="script-date">March 1 2021</span>
+		    </div>
+
+		    <div class="script-actions">
+			<input class="script-enable" title="Enable this script" type="checkbox">
+
+			<button class="script-edit" title="Edit this script">Edit</button>
+			<button class="script-delete" title="Delete this script">Delete</button>
+		    </div>
+		</li>
+		<li class="script-card">
+		    <div class="script-description">
+			<span class="script-name">Script Name</span>
+			<span class="script-matches">*://*.org/*</span>
+			<span class="script-date">March 1 2021</span>
+		    </div>
+
+		    <div class="script-actions">
+			<input class="script-enable" title="Enable this script" type="checkbox">
+
+			<button class="script-edit" title="Edit this script">Edit</button>
+			<button class="script-delete" title="Delete this script">Delete</button>
+		    </div>
+		</li>
+		<li class="script-card">
+		    <div class="script-description">
+			<span class="script-name">Script Name</span>
+			<span class="script-matches">*://*.org/*</span>
+			<span class="script-date">March 1 2021</span>
+		    </div>
+
+		    <div class="script-actions">
+			<input class="script-enable" title="Enable this script" type="checkbox">
+
+			<button class="script-edit" title="Edit this script">Edit</button>
+			<button class="script-delete" title="Delete this script">Delete</button>
+		    </div>
+		</li>
+		<li class="script-card">
+		    <div class="script-description">
+			<span class="script-name">Script Name</span>
+			<span class="script-matches">*://*.org/*</span>
+			<span class="script-date">March 1 2021</span>
+		    </div>
+
+		    <div class="script-actions">
+			<input class="script-enable" title="Enable this script" type="checkbox">
+
+			<button class="script-edit" title="Edit this script">Edit</button>
+			<button class="script-delete" title="Delete this script">Delete</button>
+		    </div>
+		</li>
+	    </ul>
 
 	    <div id="snackbar">
 		Scripts are running
@@ -70,6 +189,23 @@
 	    This is settings
 	    <img src="https://picsum.photos/200/300" alt="">
 	</div>
+
+	<template id="script-card-template">
+	    <li class="script-card">
+		<div class="script-description">
+		    <span class="script-name">Script Name</span>
+		    <span class="script-matches">*://*.org/*</span>
+		    <span class="script-date">March 1 2021</span>
+		</div>
+
+		<div class="script-actions">
+		    <input class="script-enable" title="Enable this script" type="checkbox">
+
+		    <button class="script-edit" title="Edit this script">Edit</button>
+		    <button class="script-delete" title="Delete this script">Delete</button>
+		</div>
+	    </li>
+	</template>
 		    
 
 	<script src="oildrop.js" type="text/javascript"></script>

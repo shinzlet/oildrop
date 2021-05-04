@@ -8,6 +8,10 @@
   src: url("./assets/poppins/Poppins-Medium.ttf");
   font-weight: bold;
 }
+@font-face {
+  font-family: "Bebas Neue";
+  src: url("./assets/bebas_neue/BebasNeue-Regular.otf");
+}
 :root {
   --primary-0: #FFFFFF;
   --primary-1: #F3F3F3;
@@ -80,7 +84,7 @@ button {
   padding: 0 1.3rem;
 }
 
-button, select, #global-pause {
+button {
   align-items: center;
   justify-content: center;
   overflow: hidden;
@@ -104,12 +108,57 @@ button, select, #global-pause {
   margin-bottom: calc(var(--gap) / 2);
 }
 
+#options {
+  display: flex;
+  justify-content: space-between;
+  height: var(--options-height);
+}
+
+#logo {
+  font-family: "Bebas Neue";
+  font-size: 2rem;
+  vertical-align: center;
+  display: flex;
+  align-items: center;
+}
+#logo::before {
+  content: "";
+  display: block;
+  pointer-events: none;
+  mask-size: contain;
+  mask-position: center;
+  mask-image: url("./assets/play_icon.svg");
+  mask-repeat: no-repeat;
+  background: gray;
+  width: 0.4em;
+  height: 0.4em;
+  margin-right: 1ch;
+}
+
+#settings-button {
+  mask-size: contain;
+  mask-position: center;
+  mask-image: url("./assets/settings_icon.svg");
+  mask-repeat: no-repeat;
+  width: var(--options-height);
+  height: var(--options-height);
+  background: var(--text-normal);
+  mask-size: 80%;
+}
+#settings-button:hover {
+  background: var(--text-highlight);
+}
+
 #overview-controls {
   display: flex;
   justify-content: space-between;
 }
 #overview-controls, #overview-controls > * {
   height: var(--options-height);
+}
+#overview-controls > .select-wrapper {
+  flex-grow: 1;
+  margin: 0 var(--gap);
 }
 
 #global-pause {
@@ -133,10 +182,11 @@ button, select, #global-pause {
   pointer-events: none;
   mask-size: contain;
   mask-position: center;
+  mask-image: url("./assets/pause_icon.svg");
+  mask-repeat: no-repeat;
   width: 1em;
   height: 1em;
   background: var(--text-normal);
-  mask-image: url("./assets/pause_icon.svg");
 }
 #global-pause-icon:hover {
   background: var(--background-3);
@@ -148,41 +198,32 @@ button, select, #global-pause {
   mask-image: url("./assets/play_icon.svg");
 }
 
-.input-wrapper {
+.select-wrapper {
   position: relative;
 }
-.input-wrapper > * {
-  width: 100%;
-  height: 100%;
-}
-.input-wrapper::before {
-  position: absolute;
-}
-
-#filter-wrapper {
-  flex-grow: 1;
-  margin: 0 var(--gap);
-  font-size: 1.2rem;
-}
-#filter-wrapper::before {
+.select-wrapper::before {
   content: "";
   display: block;
   pointer-events: none;
   mask-size: contain;
   mask-position: center;
-  width: 1em;
-  height: 1em;
-  right: 1em;
-  top: calc(50% - 0.5em);
-  background: var(--text-normal);
   mask-image: url("./assets/dropdown_icon.svg");
+  mask-repeat: no-repeat;
+  position: absolute;
+  width: 1.4em;
+  height: 1.4em;
+  right: 1em;
+  top: calc(50% - 0.7em);
+  background: var(--text-normal);
 }
-#filter-wrapper:hover::before {
+.select-wrapper:hover::before {
   background: var(--text-highlight);
 }
-
-#filter {
+.select-wrapper > select {
+  box-sizing: border-box;
   padding-left: 1em;
+  width: 100%;
+  height: 100%;
   appearance: none;
   background: var(--background-2);
   border: none;
@@ -190,9 +231,13 @@ button, select, #global-pause {
   font-weight: bold;
   font-size: 1em;
 }
-#filter:hover {
+.select-wrapper > select:hover {
   color: var(--text-highlight);
   background: var(--background-3);
+}
+
+#filter {
+  font-size: 1.2rem;
 }
 
 #new-script {
@@ -209,6 +254,8 @@ button, select, #global-pause {
   pointer-events: none;
   mask-size: contain;
   mask-position: center;
+  mask-image: url("./assets/new_script_icon.svg");
+  mask-repeat: no-repeat;
   content: "";
   display: block;
   width: 0.9em;
@@ -217,7 +264,6 @@ button, select, #global-pause {
   margin-bottom: 0.2em;
   /* This just slightly tweaks vertical alignment. */
   background: var(--accent-text);
-  mask-image: url("./assets/new_script_icon.svg");
 }
 #new-script:hover {
   color: var(--accent-text-focus);
@@ -237,6 +283,20 @@ hr {
   scrollbar-width: thin;
   scrollbar-color: var(--scroll-thumb) var(--scroll-track);
   overflow-y: scroll;
+  list-style-type: none;
+  padding: 0px;
+  padding-right: var(--gap);
+  mask-image: url("./assets/vignette.svg");
+  mask-size: contain;
+  mask-position: center;
+  mask-repeat: repeat-x;
+}
+
+.script-card {
+  background: var(--background-2);
+  border-radius: var(--control-radius);
+  margin-bottom: var(--gap);
+  padding: var(--gap);
 }
 
 #snackbar {

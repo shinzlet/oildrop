@@ -1,16 +1,21 @@
 // Define mixins
 
-// This is used to create icons out of pseudoelements, which use
-// a mask to allow icon recoloring within the CSS. The icon can be
-// later set via `mask-image`.
-// In Oildrop, this is frequently used to add icons to text or buttons.
-@mixin mask-icon() {
+// This is a set of rules that need to occur in pseudoelements
+// that only serve to show an icon.
+@mixin pseudo-icon() {
     content: '';
     display: block;
     pointer-events: none;
+}
 
+// The icons in oildrop are implemented via svg masks over
+// elements. This allows icon color to be changed with the element's
+// `background-color` property.
+@mixin mask-icon($path) {
     mask-size: contain;
     mask-position: center;
+    mask-image: url($path);
+    mask-repeat: no-repeat;
 }
 
 // Load & configure fonts
@@ -24,6 +29,11 @@
     font-family: "Poppins";
     src: url("./assets/poppins/Poppins-Medium.ttf");
     font-weight: bold;
+}
+
+@font-face {
+    font-family: "Bebas Neue";
+    src: url("./assets/bebas_neue/BebasNeue-Regular.otf");
 }
 
 :root {
@@ -108,7 +118,7 @@ button {
     padding: 0 1.3rem;
 }
 
-button, select, #global-pause {
+button {
     align-items: center;
     justify-content: center;
     overflow: hidden;
@@ -139,12 +149,54 @@ button, select, #global-pause {
     margin-bottom: calc(var(--gap) / 2);
 }
 
+#options {
+    display: flex;
+    justify-content: space-between;
+    height: var(--options-height);
+}
+
+#logo {
+    font-family: 'Bebas Neue';
+    font-size: 2rem;
+    vertical-align: center;
+    display: flex;
+    align-items: center;
+
+    &::before {
+        @include pseudo-icon;
+        @include mask-icon("./assets/play_icon.svg");
+        background: gray;
+        width: 0.4em;
+        height: 0.4em;
+        margin-right: 1ch;
+    }
+}
+
+#settings-button {
+    @include mask-icon("./assets/settings_icon.svg");
+
+    width: var(--options-height);
+    height: var(--options-height);
+
+    background: var(--text-normal);
+    mask-size: 80%;
+
+    &:hover {
+        background: var(--text-highlight);
+    }
+}
+
 #overview-controls {
     display: flex;
     justify-content: space-between;
 
     &, & > * {
         height: var(--options-height);
+    }
+
+    & > .select-wrapper {
+        flex-grow: 1;
+        margin: 0 var(--gap);
     }
 }
 
@@ -166,12 +218,12 @@ button, select, #global-pause {
     cursor: pointer;
 
     &::before {
-        @include mask-icon;
+        @include pseudo-icon;
+        @include mask-icon("./assets/pause_icon.svg");
 
         width: 1em;
         height: 1em;
         background: var(--text-normal);
-        mask-image: url("./assets/pause_icon.svg");
     }
 
     &:hover {
@@ -187,60 +239,49 @@ button, select, #global-pause {
     }
 }
 
-.input-wrapper {
+.select-wrapper {
     position: relative;
 
-    // We need to tell the wrapped element to fill this whole element,
-    // but doing so in the child itself would make it impossible
-    // to reuse.
-    & > * {
-        width: 100%;
-        height: 100%;
-    }
-
     &::before {
+        @include pseudo-icon;
+        @include mask-icon("./assets/dropdown_icon.svg");
 
         position: absolute;
-    }
-}
 
-#filter-wrapper {
-    flex-grow: 1;
-
-    margin: 0 var(--gap);
-    font-size: 1.2rem;
-
-    &::before {
-        @include mask-icon;
-
-        width: 1em;
-        height: 1em;
+        width: 1.4em;
+        height: 1.4em;
         right: 1em;
-        top: calc(50% - 0.5em);
+        top: calc(50% - 0.7em);
 
         background: var(--text-normal);
-        mask-image: url("./assets/dropdown_icon.svg");
     }
 
     &:hover::before {
         background: var(--text-highlight);
     }
+
+    & > select {
+        box-sizing: border-box;
+        padding-left: 1em;
+        width: 100%;
+        height: 100%;
+
+        appearance: none;
+        background: var(--background-2);
+        border: none;
+        border-radius: var(--control-radius);
+        font-weight: bold;
+        font-size: 1em;
+
+        &:hover {
+            color: var(--text-highlight);
+            background: var(--background-3);
+        }
+    }
 }
 
 #filter {
-    padding-left: 1em;
-
-    appearance: none;
-    background: var(--background-2);
-    border: none;
-    border-radius: var(--control-radius);
-    font-weight: bold;
-    font-size: 1em;
-
-    &:hover {
-        color: var(--text-highlight);
-        background: var(--background-3);
-    }
+    font-size: 1.2rem;
 }
 
 #new-script {
@@ -254,7 +295,8 @@ button, select, #global-pause {
     white-space: nowrap;
     
     &::before {
-        @include mask-icon;
+        @include pseudo-icon;
+        @include mask-icon("./assets/new_script_icon.svg");
 
         content: '';
         display: block;
@@ -265,7 +307,6 @@ button, select, #global-pause {
         margin-right: 0.5em;
         margin-bottom: 0.2em; /* This just slightly tweaks vertical alignment. */
         background: var(--accent-text);
-        mask-image: url("./assets/new_script_icon.svg");
     }
 
     &:hover {
@@ -289,6 +330,21 @@ hr {
     scrollbar-color: var(--scroll-thumb) var(--scroll-track);
 
     overflow-y: scroll;
+    list-style-type: none;
+    padding: 0px;
+    padding-right: var(--gap);
+
+    mask-image: url("./assets/vignette.svg");
+    mask-size: contain;
+    mask-position: center;
+    mask-repeat: repeat-x;
+}
+
+.script-card {
+    background: var(--background-2);
+    border-radius: var(--control-radius);
+    margin-bottom: var(--gap);
+    padding: var(--gap);
 }
 
 #snackbar {
