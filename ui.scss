@@ -28,6 +28,12 @@
 @font-face {
     font-family: "Poppins";
     src: url("./assets/poppins/Poppins-Medium.ttf");
+    font-weight: semibold;
+}
+
+@font-face {
+    font-family: "Poppins";
+    src: url("./assets/poppins/Poppins-SemiBold.ttf");
     font-weight: bold;
 }
 
@@ -67,27 +73,16 @@
     --scroll-track: var(--primary-1);
     --scroll-thumb: var(--primary-3);
     --hr-color: var(--primary-3);
-}
-
-@media (prefers-color-scheme: dark) {
-    :root {
-        --text-normal: var(--primary-4);
-        --text-highlight: var(--primary-2);
-        --background-1: var(--primary-7);
-        --background-2: var(--primary-6);
-        --background-3: var(--primary-5);
-        --scroll-track: var(--primary-6);
-        --scroll-thumb: var(--primary-4);
-        --hr-color: var(--primary-4);
-    }
-
-    body {
-        background-image: url("./assets/background_dark.png");
-    }
+    --card-action-background: var(--primary-2);
+    --card-action-background-hover: var(--primary-3);
+    --snackbar-active: linear-gradient(20deg, #2AF598, #009EFD);
+    --snackbar-inactive: linear-gradient(20deg, #FF6480, #F22E63);
+    --snackbar-text: rgba(255, 255, 255, 0.8);
 }
 
 * {
     font-family: "Poppins";
+    font-weight: normal;
     color: var(--text-normal);
 }
 
@@ -110,7 +105,12 @@ body {
     background-color: var(--background-1);
     background-position: center;
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover;
+}
+
+::selection {
+    color: white;
+    background: black;
 }
 
 button {
@@ -270,7 +270,7 @@ button {
         background: var(--background-2);
         border: none;
         border-radius: var(--control-radius);
-        font-weight: bold;
+        font-weight: semibold;
         font-size: 1em;
 
         &:hover {
@@ -290,8 +290,7 @@ button {
     background: var(--accent-gradient);
     color: var(--accent-text);
 
-    text-transform: uppercase;
-    font-weight: bold;
+    font-weight: semibold;
     white-space: nowrap;
     
     &::before {
@@ -328,11 +327,10 @@ hr {
     flex-grow: 1;
     scrollbar-width: thin;
     scrollbar-color: var(--scroll-thumb) var(--scroll-track);
-
     overflow-y: scroll;
     list-style-type: none;
     padding: 0px;
-    padding-right: var(--gap);
+    padding-right: calc(var(--gap) / 2);
 
     mask-image: url("./assets/vignette.svg");
     mask-size: contain;
@@ -345,17 +343,113 @@ hr {
     border-radius: var(--control-radius);
     margin-bottom: var(--gap);
     padding: var(--gap);
+    display: flex;
+    justify-content: space-between;
+
+    --button-size: 3rem;
+    --actions-width: calc(3 * var(--button-size) + 3 * var(--gap));
+}
+
+.script-description {
+    width: calc(100% - var(--actions-width));
+
+    & p {
+        margin: 0;
+    }
+}
+
+.script-name {
+    font-size: 1.4rem;
+    font-weight: bolder;
+    color: var(--text-highlight);
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.script-matches {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100%;
+}
+
+.script-date {
+    font-size: 0.9rem;
+    color: var(--primary-4);
+    opacity: 0.7;
+    display: flex;
+    align-items: center;
+
+    &::before {
+        @include pseudo-icon;
+        @include mask-icon("./assets/calendar_icon.svg");
+        width: 0.8em;
+        height: 0.8em;
+        background: var(--primary-4);
+        margin-bottom: 0.2em;
+        margin-right: 0.5em;
+    }
+}
+
+.script-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: var(--actions-width);
+    padding-left: var(--gap);
+}
+
+.round-button {
+    width: var(--button-size);
+    height: var(--button-size);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0px;
+    border-radius: 50%;
+    background: var(--card-action-background);
+
+    &:hover {
+        background: var(--card-action-background-hover);
+    }
+
+    &::before {
+        @include pseudo-icon;
+        background: var(--text-normal);
+
+        width: 1.5em;
+        height: 1.5em;
+    }
+
+    &:hover::before {
+        background: var(--text-highlight);
+    }
+}
+
+.script-edit::before {
+    @include mask-icon("./assets/edit_icon.svg");
+}
+
+.script-delete::before {
+    @include mask-icon("./assets/delete_icon.svg");
 }
 
 #snackbar {
     text-align: center;
     vertical-align: center;
+    background: var(--snackbar-active);
+    color: var(--snackbar-text);
+    border-radius: var(--control-radius);
 }
 
 #footer {
     display: flex;
     justify-content: space-between;
     vertical-align: center;
+    opacity: 0.8;
 }
 
 #editor-wrapper {
@@ -366,3 +460,26 @@ hr {
     display: none;
 }
 
+@media (prefers-color-scheme: dark) {
+    body {
+        background-image: url("./assets/background_dark.png");
+    }
+
+    :root {
+        --text-normal: var(--primary-4);
+        --text-highlight: var(--primary-2);
+        --background-1: var(--primary-7);
+        --background-2: var(--primary-6);
+        --background-3: var(--primary-5);
+        --scroll-track: var(--primary-6);
+        --scroll-thumb: var(--primary-4);
+        --hr-color: var(--primary-4);
+        --card-action-background: var(--primary-7);
+        --card-action-background-hover: var(--primary-5);
+    }
+
+    ::selection {
+        color: black;
+        background: rgba(255, 255, 255, 0.5);
+    }
+}

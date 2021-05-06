@@ -22,7 +22,7 @@
       icons throughout my work.  However, input and select tags do not support
       pseudoelements, which means they have to be wrapped.-->
 
-		<label>
+		<label title="Globally pause or unpause Oildrop. If paused, Oildrop will not inject any scripts. If unpaused, Oildrop will operate normally. This will not change which scripts are individually enabled or disabled.">
 		    <input id="global-pause" type="checkbox" checked>
 		    <div id="global-pause-icon"></div>
 		</label>
@@ -35,134 +35,21 @@
 		    </select>
 		</div>
 
-		<button id="new-script">New script</button>
+		<button id="new-script" title="Create a new script">New script</button>
 	    </section>
 
 	    <ul id="overview">
 		<li class="script-card">
 		    <div class="script-description">
-			<span class="script-name">Script Name</span>
-			<span class="script-matches">*://*.org/*</span>
-			<span class="script-date">March 1 2021</span>
+			<p class="script-name">Script Name</p>
+			<p class="script-matches">*://crystal-lang.org/api/*</p>
+			<p class="script-date">03/24/2021</p>
 		    </div>
 
 		    <div class="script-actions">
 			<input class="script-enable" title="Enable this script" type="checkbox">
-
-			<button class="script-edit" title="Edit this script">Edit</button>
-			<button class="script-delete" title="Delete this script">Delete</button>
-		    </div>
-		</li>
-		<li class="script-card">
-		    <div class="script-description">
-			<span class="script-name">Script Name</span>
-			<span class="script-matches">*://*.org/*</span>
-			<span class="script-date">March 1 2021</span>
-		    </div>
-
-		    <div class="script-actions">
-			<input class="script-enable" title="Enable this script" type="checkbox">
-
-			<button class="script-edit" title="Edit this script">Edit</button>
-			<button class="script-delete" title="Delete this script">Delete</button>
-		    </div>
-		</li>
-		<li class="script-card">
-		    <div class="script-description">
-			<span class="script-name">Script Name</span>
-			<span class="script-matches">*://*.org/*</span>
-			<span class="script-date">March 1 2021</span>
-		    </div>
-
-		    <div class="script-actions">
-			<input class="script-enable" title="Enable this script" type="checkbox">
-
-			<button class="script-edit" title="Edit this script">Edit</button>
-			<button class="script-delete" title="Delete this script">Delete</button>
-		    </div>
-		</li>
-		<li class="script-card">
-		    <div class="script-description">
-			<span class="script-name">Script Name</span>
-			<span class="script-matches">*://*.org/*</span>
-			<span class="script-date">March 1 2021</span>
-		    </div>
-
-		    <div class="script-actions">
-			<input class="script-enable" title="Enable this script" type="checkbox">
-
-			<button class="script-edit" title="Edit this script">Edit</button>
-			<button class="script-delete" title="Delete this script">Delete</button>
-		    </div>
-		</li>
-		<li class="script-card">
-		    <div class="script-description">
-			<span class="script-name">Script Name</span>
-			<span class="script-matches">*://*.org/*</span>
-			<span class="script-date">March 1 2021</span>
-		    </div>
-
-		    <div class="script-actions">
-			<input class="script-enable" title="Enable this script" type="checkbox">
-
-			<button class="script-edit" title="Edit this script">Edit</button>
-			<button class="script-delete" title="Delete this script">Delete</button>
-		    </div>
-		</li>
-		<li class="script-card">
-		    <div class="script-description">
-			<span class="script-name">Script Name</span>
-			<span class="script-matches">*://*.org/*</span>
-			<span class="script-date">March 1 2021</span>
-		    </div>
-
-		    <div class="script-actions">
-			<input class="script-enable" title="Enable this script" type="checkbox">
-
-			<button class="script-edit" title="Edit this script">Edit</button>
-			<button class="script-delete" title="Delete this script">Delete</button>
-		    </div>
-		</li>
-		<li class="script-card">
-		    <div class="script-description">
-			<span class="script-name">Script Name</span>
-			<span class="script-matches">*://*.org/*</span>
-			<span class="script-date">March 1 2021</span>
-		    </div>
-
-		    <div class="script-actions">
-			<input class="script-enable" title="Enable this script" type="checkbox">
-
-			<button class="script-edit" title="Edit this script">Edit</button>
-			<button class="script-delete" title="Delete this script">Delete</button>
-		    </div>
-		</li>
-		<li class="script-card">
-		    <div class="script-description">
-			<span class="script-name">Script Name</span>
-			<span class="script-matches">*://*.org/*</span>
-			<span class="script-date">March 1 2021</span>
-		    </div>
-
-		    <div class="script-actions">
-			<input class="script-enable" title="Enable this script" type="checkbox">
-
-			<button class="script-edit" title="Edit this script">Edit</button>
-			<button class="script-delete" title="Delete this script">Delete</button>
-		    </div>
-		</li>
-		<li class="script-card">
-		    <div class="script-description">
-			<span class="script-name">Script Name</span>
-			<span class="script-matches">*://*.org/*</span>
-			<span class="script-date">March 1 2021</span>
-		    </div>
-
-		    <div class="script-actions">
-			<input class="script-enable" title="Enable this script" type="checkbox">
-
-			<button class="script-edit" title="Edit this script">Edit</button>
-			<button class="script-delete" title="Delete this script">Delete</button>
+			<button class="round-button script-edit" title="Edit this script"></button>
+			<button class="round-button script-delete" title="Delete this script"></button>
 		    </div>
 		</li>
 	    </ul>
