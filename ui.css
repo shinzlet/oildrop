@@ -161,14 +161,13 @@ button {
   margin: 0 var(--gap);
 }
 
-#global-pause {
+label > input[type=checkbox].wrapped-checkbox {
   display: none;
 }
 
-#global-pause-icon {
-  margin: 0;
-  height: var(--options-height);
-  width: var(--options-height);
+.checkbox-proxy {
+  height: var(--element-size);
+  width: var(--element-size);
   background: var(--background-2);
   border-radius: var(--control-radius);
   display: flex;
@@ -176,26 +175,33 @@ button {
   align-items: center;
   cursor: pointer;
 }
-#global-pause-icon::before {
+.checkbox-proxy::before {
   content: "";
   display: block;
   pointer-events: none;
   mask-size: contain;
   mask-position: center;
-  mask-image: url("./assets/pause_icon.svg");
+  mask-image: url("");
   mask-repeat: no-repeat;
+  mask-image: var(--unchecked-icon);
   width: 1em;
   height: 1em;
   background: var(--text-normal);
 }
-#global-pause-icon:hover {
+.checkbox-proxy:hover {
   background: var(--background-3);
 }
-#global-pause-icon:hover::before {
+.checkbox-proxy:hover::before {
   background: var(--text-highlight);
 }
-#global-pause:checked + #global-pause-icon::before {
-  mask-image: url("./assets/play_icon.svg");
+#global-pause:checked + .checkbox-proxy::before {
+  mask-image: var(--checked-icon);
+}
+
+#global-pause-icon {
+  --element-size: var(--options-height);
+  --checked-icon: url("./assets/play_icon.svg");
+  --unchecked-icon: url("./assets/pause_icon.svg");
 }
 
 .select-wrapper {

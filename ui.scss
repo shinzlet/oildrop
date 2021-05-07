@@ -200,14 +200,17 @@ button {
     }
 }
 
-#global-pause {
+// In Oildrop, I use checkboxes wrapped in labels
+// in order to style them. A label that contains a checkbox
+// will, when clicked, toggle the checkbox, which lets us
+// style a div instead of the checkbox itself.
+label > input[type=checkbox].wrapped-checkbox {
     display: none;
 }
 
-#global-pause-icon {
-    margin: 0;
-    height: var(--options-height);
-    width: var(--options-height);
+.checkbox-proxy {
+    height: var(--element-size);
+    width: var(--element-size);
 
     background: var(--background-2);
     border-radius: var(--control-radius);
@@ -219,7 +222,8 @@ button {
 
     &::before {
         @include pseudo-icon;
-        @include mask-icon("./assets/pause_icon.svg");
+        @include mask-icon("");
+        mask-image: var(--unchecked-icon);
 
         width: 1em;
         height: 1em;
@@ -235,8 +239,14 @@ button {
     }
 
     #global-pause:checked + &::before {
-        mask-image: url("./assets/play_icon.svg");
+        mask-image: var(--checked-icon);
     }
+}
+
+#global-pause-icon {
+    --element-size: var(--options-height);
+    --checked-icon: url("./assets/play_icon.svg");
+    --unchecked-icon: url("./assets/pause_icon.svg");
 }
 
 .select-wrapper {
