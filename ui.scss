@@ -212,7 +212,7 @@ label > input[type=checkbox].wrapped-checkbox {
     height: var(--element-size);
     width: var(--element-size);
 
-    background: var(--background-2);
+    background: var(--element-background);
     border-radius: var(--control-radius);
 
     display: flex;
@@ -238,13 +238,14 @@ label > input[type=checkbox].wrapped-checkbox {
         }
     }
 
-    #global-pause:checked + &::before {
+    .wrapped-checkbox:checked + &::before {
         mask-image: var(--checked-icon);
     }
 }
 
 #global-pause-icon {
     --element-size: var(--options-height);
+    --element-background: var(--background-2);
     --checked-icon: url("./assets/play_icon.svg");
     --unchecked-icon: url("./assets/pause_icon.svg");
 }
@@ -355,13 +356,14 @@ hr {
     padding: var(--gap);
     display: flex;
     justify-content: space-between;
+    align-items: stretch;
 
     --button-size: 3rem;
-    --actions-width: calc(3 * var(--button-size) + 3 * var(--gap));
+    --details-width: calc(100% - 2.5 * var(--button-size) - 4 * var(--gap));
 }
 
 .script-description {
-    width: calc(100% - var(--actions-width));
+    width: var(--details-width);
 
     & p {
         margin: 0;
@@ -406,10 +408,24 @@ hr {
 .script-actions {
     display: flex;
     align-items: center;
+    flex-grow: 1;
     justify-content: space-between;
+    position: relative;
 
     width: var(--actions-width);
     padding-left: var(--gap);
+
+    &::before {
+        @include pseudo-icon;
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 0.15em;
+
+        background: var(--text-normal);
+        opacity: 0.5;
+    }
 }
 
 .round-button {
@@ -445,6 +461,41 @@ hr {
 
 .script-delete::before {
     @include mask-icon("./assets/delete_icon.svg");
+}
+
+.script-enable-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.script-enable-icon {
+    --element-size: 2em;
+    --checked-icon: url("./assets/check_icon.svg");
+    --element-background: transparent;
+    box-shadow: 0 0 0 0.15em var(--text-normal);
+    margin-right: var(--gap);
+
+    &::before {
+        width: 80%;
+        height: 80%;
+        background: transparent;
+    }
+
+    &:hover {
+        box-shadow: 0 0 0 0.15em var(--text-highlight);
+
+        &::before {
+            background: transparent;
+        }
+    }
+
+    .wrapped-checkbox:checked + &::before {
+        background: var(--text-normal);
+    }
+
+    .wrapped-checkbox:checked + &:hover::before {
+        background: var(--text-highlight);
+    }
 }
 
 #snackbar {

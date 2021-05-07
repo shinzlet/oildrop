@@ -168,7 +168,7 @@ label > input[type=checkbox].wrapped-checkbox {
 .checkbox-proxy {
   height: var(--element-size);
   width: var(--element-size);
-  background: var(--background-2);
+  background: var(--element-background);
   border-radius: var(--control-radius);
   display: flex;
   justify-content: center;
@@ -194,12 +194,13 @@ label > input[type=checkbox].wrapped-checkbox {
 .checkbox-proxy:hover::before {
   background: var(--text-highlight);
 }
-#global-pause:checked + .checkbox-proxy::before {
+.wrapped-checkbox:checked + .checkbox-proxy::before {
   mask-image: var(--checked-icon);
 }
 
 #global-pause-icon {
   --element-size: var(--options-height);
+  --element-background: var(--background-2);
   --checked-icon: url("./assets/play_icon.svg");
   --unchecked-icon: url("./assets/pause_icon.svg");
 }
@@ -304,12 +305,13 @@ hr {
   padding: var(--gap);
   display: flex;
   justify-content: space-between;
+  align-items: stretch;
   --button-size: 3rem;
-  --actions-width: calc(3 * var(--button-size) + 3 * var(--gap));
+  --details-width: calc(100% - 2.5 * var(--button-size) - 4 * var(--gap));
 }
 
 .script-description {
-  width: calc(100% - var(--actions-width));
+  width: var(--details-width);
 }
 .script-description p {
   margin: 0;
@@ -357,9 +359,23 @@ hr {
 .script-actions {
   display: flex;
   align-items: center;
+  flex-grow: 1;
   justify-content: space-between;
+  position: relative;
   width: var(--actions-width);
   padding-left: var(--gap);
+}
+.script-actions::before {
+  content: "";
+  display: block;
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0.15em;
+  background: var(--text-normal);
+  opacity: 0.5;
 }
 
 .round-button {
@@ -399,6 +415,36 @@ hr {
   mask-position: center;
   mask-image: url("./assets/delete_icon.svg");
   mask-repeat: no-repeat;
+}
+
+.script-enable-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.script-enable-icon {
+  --element-size: 2em;
+  --checked-icon: url("./assets/check_icon.svg");
+  --element-background: transparent;
+  box-shadow: 0 0 0 0.15em var(--text-normal);
+  margin-right: var(--gap);
+}
+.script-enable-icon::before {
+  width: 80%;
+  height: 80%;
+  background: transparent;
+}
+.script-enable-icon:hover {
+  box-shadow: 0 0 0 0.15em var(--text-highlight);
+}
+.script-enable-icon:hover::before {
+  background: transparent;
+}
+.wrapped-checkbox:checked + .script-enable-icon::before {
+  background: var(--text-normal);
+}
+.wrapped-checkbox:checked + .script-enable-icon:hover::before {
+  background: var(--text-highlight);
 }
 
 #snackbar {
