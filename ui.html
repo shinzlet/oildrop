@@ -9,8 +9,11 @@
 	<main id="home">
 	    <header id="options">
 		<div id="logo" aria-hidden="true">Oildrop</div>
-		<div>
-		    <input type="checkbox">
+		<div class="icon-bar">
+		    <label>
+			<input id="theme-toggle" class="wrapped-checkbox" type="checkbox">
+			<div class="checkbox-proxy" id="theme-toggle-icon"></div>
+		    </label>
 		    <button id="settings-button"></button>
 		</div>
 	    </header>
@@ -39,23 +42,6 @@
 	    </section>
 
 	    <ul id="overview">
-		<li class="script-card">
-		    <label class="script-enable-wrapper" title="Enable this script">
-			<input class="wrapped-checkbox script-enable" type="checkbox">
-			<div class="checkbox-proxy script-enable-icon"></div>
-		    </label>
-
-		    <div class="script-description">
-			<p class="script-name">Script Name</p>
-			<p class="script-matches">*://crystal-lang.org/api/*</p>
-			<p class="script-date">03/24/2021</p>
-		    </div>
-
-		    <div class="script-actions">
-			<button class="round-button script-edit" title="Edit this script"></button>
-			<button class="round-button script-delete" title="Delete this script"></button>
-		    </div>
-		</li>
 	    </ul>
 
 	    <div id="snackbar">
@@ -83,17 +69,20 @@
 
 	<template id="script-card-template">
 	    <li class="script-card">
+		<label class="script-enable-wrapper" title="Enable this script">
+		    <input class="wrapped-checkbox script-enable" type="checkbox">
+		    <div class="checkbox-proxy script-enable-icon"></div>
+		</label>
+
 		<div class="script-description">
-		    <span class="script-name">Script Name</span>
-		    <span class="script-matches">*://*.org/*</span>
-		    <span class="script-date">March 1 2021</span>
+		    <p class="script-name">Script Name</p>
+		    <p class="script-matches">*://crystal-lang.org/api/*</p>
+		    <p class="script-date">03/24/2021</p>
 		</div>
 
 		<div class="script-actions">
-		    <input class="script-enable" title="Enable this script" type="checkbox">
-
-		    <button class="script-edit" title="Edit this script">Edit</button>
-		    <button class="script-delete" title="Delete this script">Delete</button>
+		    <button class="round-button script-edit" title="Edit this script"></button>
+		    <button class="round-button script-delete" title="Delete this script"></button>
 		</div>
 	    </li>
 	</template>

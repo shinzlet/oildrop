@@ -55,7 +55,7 @@ browser.runtime.onMessage.addListener(message => {
             registerScript(message.script)
             break
         case "unregister":
-            unregisterScript(message.uuid)
+            unregisterScript(message.uuid || message.script.uuid)
             break
         case "debug":
             console.log(registrations)
