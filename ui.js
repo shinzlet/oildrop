@@ -1,10 +1,16 @@
 const geid = document.getElementById.bind(document)
 
+const home = geid("home")
+
 const overview = {
 	filter: geid("filter"),
 	createButton: geid("new-script"),
 	scripts: geid("overview"),
 	globalPause: geid("global-pause")
+}
+
+const editor = {
+	wrapper: geid("editor-wrapper")
 }
 
 const templates = {
@@ -25,6 +31,23 @@ function setScriptActivity(script, enabled) {
 		.catch(() => alert(`Failed to ${action} script!`))
 }
 
+function showEditorViaUUID(uuid) {
+	return getScript(uuid).then(script => {
+		showEditorViaScript(script)
+	})
+}
+
+function showEditorViaScript(script) {
+//	editor.name.value = script.name
+//	editor.matches.value = script.matches.join()
+//	editor.code.value = script.code
+//	editor.type.set(script.type)
+//	editor.currentScript = script
+
+	home.classList.add("grayout")
+	editor.wrapper.classList.add("active")
+}
+
 function showOverview() {
 	return new Promise((resolve, reject) => {
 		overview.scripts.replaceChildren()
@@ -43,7 +66,7 @@ function showOverview() {
 
 			let name = el.querySelector(".script-name")
 			name.innerText = script.name
-			name.classList.toggle(script.type + "-badge")
+			name.classList.add(script.type + "-badge")
 
 			el.querySelector(".script-matches").innerText = script.matches
 			el.querySelector(".script-date").innerText = script.date.toLocaleDateString()
@@ -62,8 +85,9 @@ function showOverview() {
 
 			overview.scripts.appendChild(el)
 
-			// editor.root.classList.remove("active")
-			// overview.root.classList.add("active")
+			home.classList.remove("grayout")
+			// TODO: add this: settings.wrapper.classList.remove("active")
+			editor.wrapper.classList.remove("active")
 		}))
 
 		resolve()
@@ -109,6 +133,10 @@ function sortScripts(scripts, url) {
 }
 
 showOverview()
+
+document.querySelectorAll(".dismiss-panels").forEach(el => {
+	el.addEventListener("click", showOverview)
+})
 
 // saveScript(createScript("the javascript one", true, "google", "js", "window"))
 // saveScript(createScript("the css one with a really really really long name!", false, "googlegooglegooglegooglegooglegooglegooglegooglegoogle", "css", "window"))

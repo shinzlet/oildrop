@@ -9,7 +9,7 @@
 	<main id="home">
 	    <header id="options">
 		<div id="logo" aria-hidden="true">Oildrop</div>
-		<div class="icon-bar">
+		<div class="bar dense-bar">
 		    <label>
 			<input id="theme-toggle" class="wrapped-checkbox" type="checkbox">
 			<div class="checkbox-proxy" id="theme-toggle-icon"></div>
@@ -20,7 +20,7 @@
 
 	    <hr>
 
-	    <section id="overview-controls">
+	    <section id="overview-controls" class="bar dense-bar">
 		<!-- I often use css masks and psuedoselectors to recolor SVG
       icons throughout my work.  However, input and select tags do not support
       pseudoelements, which means they have to be wrapped.-->
@@ -38,7 +38,7 @@
 		    </select>
 		</div>
 
-		<button id="new-script" title="Create a new script">New script</button>
+		<button id="new-script" class="accent-button" title="Create a new script">New script</button>
 	    </section>
 
 	    <ul id="overview">
@@ -57,14 +57,25 @@
 	    </footer>
 	</main>
 
-	<div id="editor-wrapper">
-	    This is the editor
-	    <img src="https://picsum.photos/200/300" alt="">
+	<div class="panel" id="editor-wrapper">
+	    <section id="editor">
+		<button class="dismiss-icon dismiss-panels" title="Delete changes and and close editor"></button>
+		<p class="">Edit script</p>
+		<div class="bar">
+		    <button class="dismiss-panels" title="Delete changes and and close editor">
+			Close
+		    </button>
+
+		    <button id="editor-save" class="accent-button" title="Save changes and and close editor">
+			Save
+		    </button>
+		</div>
+	    </section>
 	</div>
 
-	<div id="settings-wrapper">
-	    This is settings
-	    <img src="https://picsum.photos/200/300" alt="">
+	<div class="panel" id="settings-wrapper">
+	    <section id="settings">
+	    </section>
 	</div>
 
 	<template id="script-card-template">
