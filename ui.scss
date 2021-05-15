@@ -61,12 +61,35 @@
     --accent-text: #52433F;
     --accent-text-focus: var(--primary-7);
 
+    --width: 450px;
+    --height: 585px;
     --gap: 1rem;
     --bar-height: 3rem;
     --control-radius: 0.3rem;
+    --focus-weight: 0.15rem;
+    --anim-time: 150ms;
+    --panel-height: calc(var(--height) - var(--bar-height) - 2 * var(--gap));
 
-    --width: 450px;
-    --height: 585px;
+    --snackbar-active: linear-gradient(20deg, #2AF598, #009EFD);
+    --snackbar-inactive: linear-gradient(20deg, #FF6480, #F22E63);
+    --snackbar-text: rgba(255, 255, 255, 0.8);
+    --focus-color: rgba(255, 255, 255, 0.5);
+
+    --text-normal: var(--primary-4);
+    --text-highlight: var(--primary-2);
+    --background-1: var(--primary-7);
+    --background-2: var(--primary-6);
+    --background-3: var(--primary-5);
+    --scroll-track: var(--primary-6);
+    --scroll-thumb: var(--primary-4);
+    --hr-color: var(--primary-4);
+    --card-action-background: var(--primary-7);
+    --card-action-background-hover: var(--primary-5);
+    --selection-color: black;
+    --selection-background: rgba(255, 255, 255, 0.5);
+}
+
+body.light {
     --text-normal: var(--primary-5);
     --text-highlight: var(--primary-6);
     --background-1: var(--primary-0);
@@ -77,13 +100,15 @@
     --hr-color: var(--primary-3);
     --card-action-background: var(--primary-2);
     --card-action-background-hover: var(--primary-3);
-    --snackbar-active: linear-gradient(20deg, #2AF598, #009EFD);
-    --snackbar-inactive: linear-gradient(20deg, #FF6480, #F22E63);
-    --snackbar-text: rgba(255, 255, 255, 0.8);
-    --focus-color: rgba(255, 255, 255, 0.5);
-    --focus-weight: 0.15rem;
-    --anim-time: 150ms;
-    --panel-height: calc(var(--height) - var(--bar-height) - 2 * var(--gap));
+    --selection-color: white;
+    --selection-background: black;
+
+    background-image: url("./assets/background_light.png");
+}
+
+::selection {
+    color: var(--selection-color);
+    background: var(--selection-background);
 }
 
 * {
@@ -107,16 +132,11 @@ body {
 
     overflow: hidden;
 
-    background-image: url("./assets/background_light.png");
+    background-image: url("./assets/background_dark.png");
     background-color: var(--background-1);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-}
-
-::selection {
-    color: white;
-    background: black;
 }
 
 button {
@@ -216,7 +236,7 @@ button {
     }
 }
 
-#theme-toggle-icon {
+#light-toggle-icon {
     --element-size: var(--bar-height);
     --checked-icon: url("./assets/dark_mode_icon.svg");
     --unchecked-icon: url("./assets/light_mode_icon.svg");
@@ -652,29 +672,5 @@ hr {
         &:hover {
             background: var(--background-3);
         }
-    }
-}
-
-@media (prefers-color-scheme: dark) {
-    body {
-        background-image: url("./assets/background_dark.png");
-    }
-
-    :root {
-        --text-normal: var(--primary-4);
-        --text-highlight: var(--primary-2);
-        --background-1: var(--primary-7);
-        --background-2: var(--primary-6);
-        --background-3: var(--primary-5);
-        --scroll-track: var(--primary-6);
-        --scroll-thumb: var(--primary-4);
-        --hr-color: var(--primary-4);
-        --card-action-background: var(--primary-7);
-        --card-action-background-hover: var(--primary-5);
-    }
-
-    ::selection {
-        color: black;
-        background: rgba(255, 255, 255, 0.5);
     }
 }

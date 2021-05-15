@@ -1,3 +1,5 @@
+const defaultSettings = { isLight: false }
+
 function createUUID() {
 	// Adapted from https://stackoverflow.com/a/2117523
 	return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
@@ -14,11 +16,24 @@ function saveScript(script) {
 }
 
 function getAllScripts() {
-	return browser.storage.local.get()
+	return browser.storage.local.get().then(data => {
+		delete data["oildrop"] // Remove the settings object
+		return data
+	})
 }
 
 function getScript(uuid) {
 	return browser.storage.local.get(uuid).then(res => res[uuid])
+}
+
+function getSettings() {
+	return browser.storage.local.get("oildrop").then(data => data.oildrop || defaultSettings)
+}
+
+function updateSettings(new_settings) {
+	return getSettings().then(settings => {
+		browser.storage.local.set({"oildrop": Object.assign(settings, new_settings)})
+	})
 }
 
 function splitUrl(url) {

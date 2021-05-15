@@ -2,6 +2,11 @@ const geid = document.getElementById.bind(document)
 
 const home = geid("home")
 
+const options = {
+	lightToggle: geid("light-toggle"),
+	settingsButton: geid("settings-button")
+}
+
 const overview = {
 	filter: geid("filter"),
 	createButton: geid("new-script"),
@@ -16,6 +21,22 @@ const editor = {
 const templates = {
 	script: geid("script-card-template").content.children[0]
 }
+
+if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+	document.body.classList.add("dark")
+}
+
+function setTheme(isLight) {
+	document.body.classList.toggle("light", isLight)
+	return updateSettings({isLight})
+}
+
+getSettings().then(settings => {
+	setTheme(settings.isLight)
+	options.lightToggle.checked = settings.isLight
+})
+
+options.lightToggle.addEventListener("change", e => setTheme(e.target.checked))
 
 // Marks a script as enabled or disabled, saves the change, and tells
 // the background script to update userscript registration accordingly.
