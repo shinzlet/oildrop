@@ -58,6 +58,7 @@
 }
 
 body.light {
+  --focus-color: rgba(0, 0, 0, 0.5);
   --text-normal: var(--primary-5);
   --text-highlight: var(--primary-6);
   --background-1: var(--primary-0);
@@ -120,6 +121,20 @@ button {
 button:hover {
   background: var(--background-3);
   color: var(--text-highlight);
+}
+
+input, .select-wrapper {
+  display: block;
+  height: var(--bar-height);
+}
+
+input, textarea {
+  appearance: none;
+  border: none;
+  padding: 0 0 0 1em;
+  background: var(--background-2);
+  border-radius: var(--control-radius);
+  resize: none;
 }
 
 #home {
@@ -593,14 +608,58 @@ hr {
 .panel.active {
   height: var(--panel-height);
 }
+.panel header {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: var(--bar-height);
+  margin-bottom: var(--gap);
+  padding-bottom: var(--gap);
+}
+.panel header h1 {
+  margin: 0;
+  margin-top: 0.3em;
+  font-weight: normal;
+}
+.panel header > .dismiss-panels {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.panel header::after {
+  content: "";
+  display: block;
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 0.125em;
+  background: var(--text-normal);
+  opacity: 0.3;
+  border-radius: 0.625em;
+}
+.panel label {
+  display: block;
+  margin-top: var(--gap);
+}
+.panel label:first-of-type {
+  margin-top: 0;
+}
 
 #editor-wrapper #editor button.dismiss-icon {
-  background: transparent;
+  background: var(--background-2);
   border-radius: 50%;
   width: var(--bar-height);
   height: var(--bar-height);
+  padding: 0;
 }
-#editor-wrapper #editor button.dismiss-icon:before {
+#editor-wrapper #editor button.dismiss-icon:hover {
+  background: var(--background-3);
+}
+#editor-wrapper #editor button.dismiss-icon::before {
   content: "";
   display: block;
   pointer-events: none;
@@ -608,23 +667,38 @@ hr {
   mask-position: center;
   mask-image: url("./assets/dismiss_icon.svg");
   mask-repeat: no-repeat;
-  width: 80%;
-  height: 80%;
+  width: 50%;
+  height: 50%;
   background: var(--text-normal);
+}
+#editor-wrapper #editor button.dismiss-icon:hover::before {
+  background: var(--text-highlight);
 }
 
 #editor {
   width: 100%;
   box-sizing: border-box;
   height: var(--panel-height);
-  background: var(--background-2);
-  padding: var(--gap);
-}
-#editor button:not(.accent-button) {
   background: var(--background-1);
+  padding: var(--gap);
+  display: flex;
+  flex-direction: column;
 }
-#editor button:not(.accent-button):hover {
-  background: var(--background-3);
+#editor #editor-code {
+  flex-grow: 1;
+}
+#editor .bar {
+  margin-top: var(--gap);
+}
+#editor label[title]::after {
+  content: "(?)";
+  display: inline-block;
+  height: 0.7em;
+  font-size: 0.7em;
+  opacity: 0.5;
+  margin-left: 0.5ch;
+  margin-bottom: 0.3em;
+  cursor: help;
 }
 
 /*# sourceMappingURL=ui.css.map */

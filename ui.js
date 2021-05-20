@@ -159,5 +159,12 @@ document.querySelectorAll(".dismiss-panels").forEach(el => {
 	el.addEventListener("click", showOverview)
 })
 
-// saveScript(createScript("the javascript one", true, "google", "js", "window"))
-// saveScript(createScript("the css one with a really really really long name!", false, "googlegooglegooglegooglegooglegooglegooglegooglegoogle", "css", "window"))
+// This is only useful during debugging
+// TODO: remove
+getAllScripts().then(scripts => {
+	if(Object.keys(scripts).length == 0) {
+		saveScript(createScript("the javascript one", true, "google", "js", "window"))
+		saveScript(createScript("the css one with a really really really long name!", false, "googlegooglegooglegooglegooglegooglegooglegooglegoogle", "css", "window"))
+		showOverview()
+	}
+})

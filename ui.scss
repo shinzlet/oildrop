@@ -1,8 +1,8 @@
 // Define mixins
 
 // This is a set of rules that need to occur in pseudoelements
-// that only serve to show an icon.
-@mixin pseudo-icon() {
+// that only add visual elements.
+@mixin pseudo-vis() {
     content: '';
     display: block;
     pointer-events: none;
@@ -73,8 +73,8 @@
     --snackbar-active: linear-gradient(20deg, #2AF598, #009EFD);
     --snackbar-inactive: linear-gradient(20deg, #FF6480, #F22E63);
     --snackbar-text: rgba(255, 255, 255, 0.8);
-    --focus-color: rgba(255, 255, 255, 0.5);
 
+    --focus-color: rgba(255, 255, 255, 0.5);
     --text-normal: var(--primary-4);
     --text-highlight: var(--primary-2);
     --background-1: var(--primary-7);
@@ -90,6 +90,7 @@
 }
 
 body.light {
+    --focus-color: rgba(0, 0, 0, 0.5);
     --text-normal: var(--primary-5);
     --text-highlight: var(--primary-6);
     --background-1: var(--primary-0);
@@ -161,6 +162,20 @@ button {
     }
 }
 
+input, .select-wrapper {
+    display: block;
+    height: var(--bar-height);
+}
+
+input, textarea {
+    appearance: none;
+    border: none;
+    padding: 0 0 0 1em;
+    background: var(--background-2);
+    border-radius: var(--control-radius);
+    resize: none;
+}
+
 #home {
     display: flex;
     flex-direction: column;
@@ -214,7 +229,7 @@ button {
     align-items: center;
 
     &::before {
-        @include pseudo-icon;
+        @include pseudo-vis;
         @include mask-icon("./assets/play_icon.svg");
         background: gray;
         width: 0.4em;
@@ -258,7 +273,7 @@ button {
     }
 
     &::before {
-        @include pseudo-icon;
+        @include pseudo-vis;
         @include mask-icon("./assets/settings_icon.svg");
         background: var(--text-normal);
         width: 2rem;
@@ -305,7 +320,7 @@ label > input[type=checkbox].wrapped-checkbox {
     cursor: pointer;
 
     &::before {
-        @include pseudo-icon;
+        @include pseudo-vis;
         @include mask-icon("");
         mask-image: var(--unchecked-icon);
 
@@ -350,7 +365,7 @@ select {
     position: relative;
 
     &::before {
-        @include pseudo-icon;
+        @include pseudo-vis;
         @include mask-icon("./assets/dropdown_icon.svg");
 
         position: absolute;
@@ -407,7 +422,7 @@ select {
     white-space: nowrap;
     
     &::before {
-        @include pseudo-icon;
+        @include pseudo-vis;
         @include mask-icon("./assets/new_script_icon.svg");
 
         width: 0.9em;
@@ -479,7 +494,7 @@ hr {
     float: left;
 
     &::before {
-        @include pseudo-icon;
+        @include pseudo-vis;
         width: 1.2em;
         height: 1.2em;
         margin-right: 0.5ch;
@@ -509,7 +524,7 @@ hr {
     align-items: center;
 
     &::before {
-        @include pseudo-icon;
+        @include pseudo-vis;
         @include mask-icon("./assets/calendar_icon.svg");
         width: 0.8em;
         height: 0.8em;
@@ -530,7 +545,7 @@ hr {
     padding-left: var(--gap);
 
     &::before {
-        @include pseudo-icon;
+        @include pseudo-vis;
         position: absolute;
         left: 0;
         top: 0;
@@ -558,7 +573,7 @@ hr {
     }
 
     &::before {
-        @include pseudo-icon;
+        @include pseudo-vis;
         background: var(--text-normal);
 
         width: 1.5em;
@@ -642,20 +657,75 @@ hr {
     &.active {
         height: var(--panel-height);
     }
+
+    header {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        width: 100%;
+        height: var(--bar-height);
+        margin-bottom: var(--gap);
+        padding-bottom: var(--gap);
+
+        h1 {
+            margin: 0;
+            margin-top: 0.3em;
+            font-weight: normal;
+        }
+
+        & > .dismiss-panels {
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+
+        &::after {
+            @include pseudo-vis;
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 0.125em;
+
+            background: var(--text-normal);
+            opacity: 0.3;
+            border-radius: 0.625em;
+        }
+    }
+
+    label {
+        display: block;
+        margin-top: var(--gap);
+
+        &:first-of-type {
+            margin-top: 0;
+        }
+    }
 }
 
 #editor-wrapper #editor button.dismiss-icon {
-    background: transparent;
+    background: var(--background-2);
     border-radius: 50%;
     width: var(--bar-height);
     height: var(--bar-height);
+    padding: 0;
 
-    &:before {
-        @include pseudo-icon;
+    &:hover {
+        background: var(--background-3);
+    }
+
+    &::before {
+        @include pseudo-vis;
         @include mask-icon("./assets/dismiss_icon.svg");
-        width: 80%;
-        height: 80%;
+        width: 50%;
+        height: 50%;
         background: var(--text-normal);
+    }
+
+    &:hover::before {
+        background: var(--text-highlight);
     }
 }
 
@@ -663,14 +733,27 @@ hr {
     width: 100%;
     box-sizing: border-box;
     height: var(--panel-height);
-    background: var(--background-2);
+    background: var(--background-1);
     padding: var(--gap);
+    display: flex;
+    flex-direction: column;
 
-    button:not(.accent-button) {
-        background: var(--background-1);
+    #editor-code {
+        flex-grow: 1;
+    }
 
-        &:hover {
-            background: var(--background-3);
-        }
+    .bar {
+        margin-top: var(--gap);
+    }
+
+    label[title]::after {
+        content: '(?)';
+        display: inline-block;
+        height: 0.7em;
+        font-size: 0.7em;
+        opacity: 0.5;
+        margin-left: 0.5ch;
+        margin-bottom: 0.3em;
+        cursor: help;
     }
 }

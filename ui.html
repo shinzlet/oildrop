@@ -59,8 +59,28 @@
 
 	<div class="panel" id="editor-wrapper">
 	    <section id="editor">
-		<button class="dismiss-icon dismiss-panels" title="Delete changes and and close editor"></button>
-		<p class="">Edit script</p>
+		<header>
+		    <h1>Edit script</h1>
+		    <button class="dismiss-icon dismiss-panels" title="Delete changes and and close editor"></button>
+		</header>
+
+		<label for="editor-name" title="The name you want to associate with this script. It does not need to be unique.">Name</label>
+		<input type="text" id="editor-name">
+
+		<label for="editor-matches" title="A comma separated list of web addresses. The most general is '*://*.*/*'.">Run on</label>
+		<input type="text" id="editor-matches">
+
+		<label for="editor-code" title="The JavaScript or CSS you want to run on all pages that fit the matching pattern.">Code</label>
+		<textarea id="editor-code"></textarea>
+
+		<label title="The type of script you're writing - JavaScript or CSS.">Script Language</label>
+		<div class="select-wrapper">
+		    <select id="editor-language" title="Filter which scripts are listed. 'Active' scripts are ones which apply to this domain, regardless of if they are running.">
+			<option value="js" selected>JavaScript</option>
+			<option value="css">CSS</option>
+		    </select>
+		</div>
+
 		<div class="bar">
 		    <button class="dismiss-panels" title="Delete changes and and close editor">
 			Close
