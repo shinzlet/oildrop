@@ -42,6 +42,13 @@
     src: url("./assets/bebas_neue/BebasNeue-Regular.otf");
 }
 
+@font-face {
+    font-family: "Space Mono";
+    font-style: normal;
+    font-weight: normal;
+    src: url("./assets/space_mono/SpaceMono-Regular.ttf");
+}
+
 :root {
     --primary-0: #FFFFFF;
     --primary-1: #F3F3F3;
@@ -61,13 +68,13 @@
     --accent-text: #52433F;
     --accent-text-focus: var(--primary-7);
 
-    --width: 450px;
-    --height: 585px;
+    --width: 500px;
+    --height: 600px;
     --gap: 1rem;
     --bar-height: 3rem;
     --control-radius: 0.3rem;
     --focus-weight: 0.15rem;
-    --anim-time: 150ms;
+    --anim-time: 200ms;
     --panel-height: calc(var(--height) - var(--bar-height) - 2 * var(--gap));
 
     --snackbar-active: linear-gradient(20deg, #2AF598, #009EFD);
@@ -628,12 +635,38 @@ hr {
     }
 }
 
+#snackbar-wrapper {
+    height: 1.7em;
+    overflow: hidden;
+    border-radius: 0.1em;
+    margin: 0px;
+    flex-shrink: 0;
+
+    &.hidden:not(:hover) {
+        & > div {
+            color: rgba(0,0,0,0) !important;
+            transform: scaleY(0.1) translateY(8em);
+            border-radius: 0.4em;
+        }
+    }
+
+    & > div {
+        border-radius: var(--control-radius);
+        transition: all var(--anim-time) ease;
+        transform: none;
+    }
+}
+
 #snackbar {
     text-align: center;
     vertical-align: center;
     background: var(--snackbar-active);
     color: var(--snackbar-text);
-    border-radius: var(--control-radius);
+    height: 1.7em;
+
+    &.inactive {
+        background: var(--snackbar-inactive);
+    }
 }
 
 #footer {
@@ -740,6 +773,8 @@ hr {
 
     #editor-code {
         flex-grow: 1;
+        font-family: "Space Mono";
+        padding: 1ch;
     }
 
     .bar {

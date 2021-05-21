@@ -26,7 +26,7 @@
       pseudoelements, which means they have to be wrapped.-->
 
 		<label title="Globally pause or unpause Oildrop. If paused, Oildrop will not inject any scripts. If unpaused, Oildrop will operate normally. This will not change which scripts are individually enabled or disabled.">
-		    <input id="global-pause" class="wrapped-checkbox" type="checkbox" checked>
+		    <input id="global-pause" class="wrapped-checkbox" type="checkbox">
 		    <div id="global-pause-icon" class="checkbox-proxy"></div>
 		</label>
 
@@ -44,8 +44,10 @@
 	    <ul id="overview">
 	    </ul>
 
-	    <div id="snackbar">
-		Scripts are running
+	    <div id="snackbar-wrapper">
+		<div id="snackbar">
+		    Snackbar initialization failed
+		</div>
 	    </div>
 
 	    <footer id="footer">
@@ -70,7 +72,7 @@
 		<label for="editor-matches" title="A comma separated list of web addresses. The most general is '*://*.*/*'.">Run on</label>
 		<input type="text" id="editor-matches">
 
-		<label for="editor-code" title="The JavaScript or CSS you want to run on all pages that fit the matching pattern.">Code</label>
+		<label for="editor-code" title="The JavaScript or CSS you want to run on the sites listed above. Because Oildrop is designed to be user-auditable, this is not a code editor - just a text box. Please write your code elsewhere and paste it in here.">Code</label>
 		<textarea id="editor-code"></textarea>
 
 		<label title="The type of script you're writing - JavaScript or CSS.">Script Language</label>

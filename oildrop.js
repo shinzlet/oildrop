@@ -1,4 +1,4 @@
-const defaultSettings = { isLight: false }
+const defaultSettings = { isLight: false, active: true }
 
 function createUUID() {
 	// Adapted from https://stackoverflow.com/a/2117523
@@ -7,8 +7,8 @@ function createUUID() {
 	);
 }
 
-function createScript(name, enabled, matches, type, code) {
-	return {name, enabled, matches, type, code, date: new Date(), uuid: createUUID()}
+function createScript(name, enabled, matches, language, code) {
+	return {name, enabled, matches, language, code, date: new Date(), uuid: createUUID()}
 }
 
 function saveScript(script) {

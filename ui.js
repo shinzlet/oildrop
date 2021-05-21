@@ -14,13 +14,51 @@ const overview = {
 	globalPause: geid("global-pause")
 }
 
-const editor = {
-	wrapper: geid("editor-wrapper")
-}
+const editor = (function() {
+	lang = geid("editor-language")
+
+	return {
+		wrapper: geid("editor-wrapper"),
+		name: geid("editor-name"),
+		matches: geid("editor-matches"),
+		code: geid("editor-code"),
+		language: {
+			get: () => lang.value,
+			set: v => lang.value = v
+		},
+		saveButton: geid("editor-save")
+	}
+})()
 
 const templates = {
 	script: geid("script-card-template").content.children[0]
 }
+
+const snackbar = (function() {
+	let elem = geid("snackbar")
+	let wrapper = geid("snackbar-wrapper")
+	let timer = undefined
+	let show = message => {
+		geid("snackbar").innerText = message;
+		geid("snackbar-wrapper").classList.remove("hidden")
+
+		clearTimeout(timer) // This acts as a debouncer
+		timer = window.setTimeout(() => {
+			geid("snackbar-wrapper").classList.add("hidden")
+		}, 2000)
+	}
+
+	return {
+		setActivity: state => {
+			elem.classList.toggle("inactive", !state)
+			if (state) {
+				show("Scripts are running")
+			} else {
+				show("Scripts are paused")
+			}
+		}
+	}
+})()
 
 if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
 	document.body.classList.add("dark")
@@ -30,13 +68,6 @@ function setTheme(isLight) {
 	document.body.classList.toggle("light", isLight)
 	return updateSettings({isLight})
 }
-
-getSettings().then(settings => {
-	setTheme(settings.isLight)
-	options.lightToggle.checked = settings.isLight
-})
-
-options.lightToggle.addEventListener("change", e => setTheme(e.target.checked))
 
 // Marks a script as enabled or disabled, saves the change, and tells
 // the background script to update userscript registration accordingly.
@@ -48,7 +79,13 @@ function setScriptActivity(script, enabled) {
 
 	return saveScript(script)
 		.catch(() => alert(`Failed to ${enabled ? "en" : "dis"}able script!`))
-		.then(() => browser.runtime.sendMessage({action, script}))
+		.then(getSettings)
+		.then(oildrop => {
+			if (oildrop.active) {
+				console.log("tried")
+				browser.runtime.sendMessage({action, script})
+			}
+		})
 		.catch(() => alert(`Failed to ${action} script!`))
 }
 
@@ -59,14 +96,28 @@ function showEditorViaUUID(uuid) {
 }
 
 function showEditorViaScript(script) {
-//	editor.name.value = script.name
-//	editor.matches.value = script.matches.join()
-//	editor.code.value = script.code
-//	editor.type.set(script.type)
-//	editor.currentScript = script
+	editor.name.value = script.name
+	editor.matches.value = script.matches.join(", ")
+	editor.code.value = script.code
+	editor.language.set(script.language)
+	editor.currentScript = script
 
 	home.classList.add("grayout")
 	editor.wrapper.classList.add("active")
+}
+
+function saveEditor() {
+	let script = editor.currentScript
+
+	script.code = editor.code.value
+	script.name = editor.name.value
+	script.matches = editor.matches.value.split(",").map(el => el.trim())
+	script.date = new Date()
+	script.language = editor.language.get()
+
+	return saveScript(script).then(() => {
+		browser.runtime.sendMessage({action: "register", script})
+	})
 }
 
 function showOverview() {
@@ -86,10 +137,11 @@ function showOverview() {
 			enable.addEventListener("click", e => setScriptActivity(script, e.target.checked))
 
 			let name = el.querySelector(".script-name")
-			name.innerText = script.name
-			name.classList.add(script.type + "-badge")
+			name.innerText = script.name || "Unnamed Script"
+			name.classList.add(script.language + "-badge")
 
-			el.querySelector(".script-matches").innerText = script.matches
+			console.log(script.matches)
+			el.querySelector(".script-matches").innerText = script.matches.join(", ") || "(No domains)"
 			el.querySelector(".script-date").innerText = script.date.toLocaleDateString()
 
 			el.querySelector(".script-edit").addEventListener("click", () => {
@@ -99,6 +151,7 @@ function showOverview() {
 
 			el.querySelector(".script-delete").addEventListener("click", () => {
 				promptDeletion(script.uuid, script.name)
+					.catch(() => {}) // Drop the error
 					.then(showOverview)
 					.catch(() => alert("Failed to show overview"))
 			})
@@ -153,18 +206,71 @@ function sortScripts(scripts, url) {
 	})
 }
 
+function promptDeletion(uuid, name) {
+	return new Promise((resolve, reject) => {
+		if (confirm(`Delete "${name}"?`)) {
+			browser.runtime.sendMessage({action: "unregister", uuid}).catch()
+			browser.storage.local.remove(uuid)
+				.catch(() => alert("Failed to remove script"))
+			resolve()
+		} else {
+			reject()
+		}
+	})
+}
+
+function setGlobalActivity(activity) {
+	return getAllScripts().then(scripts => {
+		Object.keys(scripts).forEach(uuid => {
+			if(scripts[uuid].enabled) {
+				let action = (activity ? "" : "un") + "register"
+				browser.runtime.sendMessage({action, uuid}).catch()
+			}
+		})
+	})
+}
+
 showOverview()
+
+getSettings().then(settings => {
+	setTheme(settings.isLight)
+	options.lightToggle.checked = settings.isLight
+	overview.globalPause.checked = !settings.active
+	snackbar.setActivity(settings.active)
+})
+
+
+options.lightToggle.addEventListener("change", e => setTheme(e.target.checked))
 
 document.querySelectorAll(".dismiss-panels").forEach(el => {
 	el.addEventListener("click", showOverview)
 })
 
-// This is only useful during debugging
-// TODO: remove
-getAllScripts().then(scripts => {
-	if(Object.keys(scripts).length == 0) {
-		saveScript(createScript("the javascript one", true, "google", "js", "window"))
-		saveScript(createScript("the css one with a really really really long name!", false, "googlegooglegooglegooglegooglegooglegooglegooglegoogle", "css", "window"))
-		showOverview()
-	}
+editor.saveButton.addEventListener("click", () => {
+	saveEditor()
+		.catch(() => alert("Failed to save script"))
+		.then(showOverview)
+		.catch(() => alert("Failed to return to overview"))
 })
+
+// Allows the user to create a new script
+overview.createButton.addEventListener("click", () => {
+	showEditorViaScript(createScript("", true, [""], "js", ""))
+})
+
+// Reloads the overview when filter option changed
+overview.filter.addEventListener("change", () => {
+	showOverview()
+		.catch(() => alert("Failed to change filter option"))
+})
+
+overview.globalPause.addEventListener("change", event => {
+	let activity = !event.target.checked
+	updateSettings({active: activity})
+	snackbar.setActivity(activity)
+	setGlobalActivity(activity).catch(() => {
+		alert("Failed to set global activity")
+	})
+})
+
+snackbar.setActivity(!overview.globalPause.checked)
