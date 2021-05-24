@@ -79,7 +79,8 @@
 
     --snackbar-active: linear-gradient(20deg, #2AF598, #009EFD);
     --snackbar-inactive: linear-gradient(20deg, #FF6480, #F22E63);
-    --snackbar-text: rgba(255, 255, 255, 0.8);
+    --snackbar-active-text: rgba(0, 0, 0, 0.8);
+    --snackbar-inactive-text: rgba(255, 255, 255, 0.6);
 
     --focus-color: rgba(255, 255, 255, 0.5);
     --text-normal: var(--primary-4);
@@ -237,11 +238,12 @@ input, textarea {
 
     &::before {
         @include pseudo-vis;
-        @include mask-icon("./assets/play_icon.svg");
-        background: gray;
-        width: 0.4em;
-        height: 0.4em;
-        margin-right: 1ch;
+        @include mask-icon("./assets/oildrop_droplet.svg");
+        background: var(--text-normal);
+        width: 0.6em;
+        height: 0.6em;
+        margin-right: 0.2em;
+        margin-bottom: 0.1em;
     }
 }
 
@@ -513,8 +515,8 @@ hr {
     }
 }
 
-.js-badge::before { background-image: url("./assets/js-badge.png"); }
-.css-badge::before { background-image: url("./assets/css-badge.png"); }
+.js-badge::before { background-image: url("./assets/js_badge.png"); }
+.css-badge::before { background-image: url("./assets/css_badge.png"); }
 
 .script-matches {
     text-overflow: ellipsis;
@@ -644,15 +646,18 @@ hr {
 
     &.hidden:not(:hover) {
         & > div {
-            color: rgba(0,0,0,0) !important;
-            transform: scaleY(0.1) translateY(8em);
+            // color: rgba(0,0,0,0) !important;
+            font-size: 0;
+            transform: scaleY(0.1);
             border-radius: 0.4em;
         }
     }
 
     & > div {
         border-radius: var(--control-radius);
-        transition: all var(--anim-time) ease;
+        transition-property: transform, font-size;
+        transition-duration: var(--anim-time);
+        transition-timing-function: ease;
         transform: none;
     }
 }
@@ -661,11 +666,12 @@ hr {
     text-align: center;
     vertical-align: center;
     background: var(--snackbar-active);
-    color: var(--snackbar-text);
-    height: 1.7em;
+    color: var(--snackbar-active-text);
+    height: 100%;
 
     &.inactive {
         background: var(--snackbar-inactive);
+        color: var(--snackbar-inactive-text);
     }
 }
 

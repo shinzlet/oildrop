@@ -23,5 +23,9 @@
 			"js": ["prompt-install.js"]
 		}
 	],
+	"icons": {
+		"48": "assets/oildrop_icon@48px.png",
+		"96": "assets/oildrop_icon@96px.png"
+	},
 	"user_scripts": {}
 }
