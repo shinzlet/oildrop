@@ -255,8 +255,12 @@ input, textarea {
 }
 
 .dense-bar {
-    & > *:not(:first-child) {
-        margin-left: var(--gap);
+    & > * {
+        flex-grow: 1;
+
+        &:not(:first-child) {
+            margin-left: var(--gap);
+        }
     }
 }
 
@@ -359,6 +363,10 @@ label > input[type=checkbox].wrapped-checkbox {
     outline: var(--focus-weight) var(--focus-color) solid;
 }
 
+#global-pause-wrapper {
+    flex-grow: 0;
+}
+
 #global-pause-icon {
     --element-size: var(--bar-height);
     --element-background: var(--background-2);
@@ -429,6 +437,7 @@ select {
     justify-content: space-between;
     font-weight: semibold;
     white-space: nowrap;
+    flex-grow: 0;
     
     &::before {
         @include pseudo-vis;
@@ -682,7 +691,7 @@ hr {
     opacity: 0.8;
 }
 
-.panel {
+.panel-wrapper {
     display: block;
     position: absolute;
     left: 0;
@@ -691,13 +700,29 @@ hr {
     height: 0;
     transition: height var(--anim-time) ease;
     border-radius: var(--control-radius) var(--control-radius) 0 0;
+    background: var(--background-1);
     overflow: hidden;
     
     &.active {
         height: var(--panel-height);
     }
+}
 
-    header {
+.panel {
+    width: 100%;
+    box-sizing: border-box;
+    height: var(--panel-height);
+    padding: var(--gap);
+    display: flex;
+    flex-direction: column;
+
+    h1 {
+        margin: 0;
+        margin-top: 0.3em;
+        font-weight: normal;
+    }
+
+    & > header:first-of-type {
         position: relative;
         display: flex;
         justify-content: center;
@@ -708,16 +733,22 @@ hr {
         margin-bottom: var(--gap);
         padding-bottom: var(--gap);
 
-        h1 {
-            margin: 0;
-            margin-top: 0.3em;
-            font-weight: normal;
-        }
-
         & > .dismiss-panels {
+            --button-size: var(--bar-height);
+
             position: absolute;
             right: 0;
             top: 0;
+
+            background: var(--background-2);
+
+            &:hover {
+                background: var(--background-3);
+            }
+
+            &::before {
+                @include mask-icon("./assets/dismiss_icon.svg");
+            }
         }
 
         &::after {
@@ -744,39 +775,7 @@ hr {
     }
 }
 
-#editor-wrapper #editor button.dismiss-icon {
-    background: var(--background-2);
-    border-radius: 50%;
-    width: var(--bar-height);
-    height: var(--bar-height);
-    padding: 0;
-
-    &:hover {
-        background: var(--background-3);
-    }
-
-    &::before {
-        @include pseudo-vis;
-        @include mask-icon("./assets/dismiss_icon.svg");
-        width: 50%;
-        height: 50%;
-        background: var(--text-normal);
-    }
-
-    &:hover::before {
-        background: var(--text-highlight);
-    }
-}
-
 #editor {
-    width: 100%;
-    box-sizing: border-box;
-    height: var(--panel-height);
-    background: var(--background-1);
-    padding: var(--gap);
-    display: flex;
-    flex-direction: column;
-
     #editor-code {
         flex-grow: 1;
         font-family: "Space Mono";

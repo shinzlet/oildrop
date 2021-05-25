@@ -8,6 +8,7 @@
 		"tabs",
 		"webRequest",
 		"webRequestBlocking",
+		"downloads",
 		"<all_urls>"
 	],
 	"browser_action": {

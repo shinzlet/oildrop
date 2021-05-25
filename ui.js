@@ -30,6 +30,11 @@ const editor = (function() {
 	}
 })()
 
+const settings = {
+	wrapper: geid("settings-wrapper"),
+	button: geid("settings-button")
+}
+
 const templates = {
 	script: geid("script-card-template").content.children[0]
 }
@@ -159,12 +164,14 @@ function showOverview() {
 
 			overview.scripts.appendChild(el)
 
+		})).then(() => {
 			home.classList.remove("grayout")
-			// TODO: add this: settings.wrapper.classList.remove("active")
-			editor.wrapper.classList.remove("active")
-		}))
 
-		resolve()
+			editor.wrapper.classList.remove("active")
+			settings.wrapper.classList.remove("active")
+
+			resolve()
+		})
 	})
 }
 
@@ -230,15 +237,30 @@ function setGlobalActivity(activity) {
 	})
 }
 
+function showSettings() {
+	return getSettings().then(oSettings => {
+		settings.wrapper.classList.add("active")
+		home.classList.add("grayout")
+		// TODO
+	})
+}
+
+function downloadData() {
+				browser.storage.local.get().then(data => {
+								let file = new Blob([JSON.stringify(data)], {type: "text/plain"})
+								let url = URL.createObjectURL(file)
+								browser.downloads.download({url, filename: "oildrop.json", saveAs: true})
+				})
+}
+
 showOverview()
 
-getSettings().then(settings => {
-	setTheme(settings.isLight)
-	options.lightToggle.checked = settings.isLight
-	overview.globalPause.checked = !settings.active
-	snackbar.setActivity(settings.active)
+getSettings().then(oSettings => {
+	setTheme(oSettings.isLight)
+	options.lightToggle.checked = oSettings.isLight
+	overview.globalPause.checked = !oSettings.active
+	snackbar.setActivity(oSettings.active)
 })
-
 
 options.lightToggle.addEventListener("change", e => setTheme(e.target.checked))
 
@@ -251,6 +273,11 @@ editor.saveButton.addEventListener("click", () => {
 		.catch(() => alert("Failed to save script"))
 		.then(showOverview)
 		.catch(() => alert("Failed to return to overview"))
+})
+
+settings.button.addEventListener("click", () => {
+	showSettings()
+		.catch(() => alert("Failed to display settings"))
 })
 
 // Allows the user to create a new script

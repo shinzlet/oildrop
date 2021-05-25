@@ -25,7 +25,7 @@
       icons throughout my work.  However, input and select tags do not support
       pseudoelements, which means they have to be wrapped.-->
 
-		<label title="Globally pause or unpause Oildrop. If paused, Oildrop will not inject any scripts. If unpaused, Oildrop will operate normally. This will not change which scripts are individually enabled or disabled.">
+		<label id="global-pause-wrapper" title="Globally pause or unpause Oildrop. If paused, Oildrop will not inject any scripts. If unpaused, Oildrop will operate normally. This will not change which scripts are individually enabled or disabled.">
 		    <input id="global-pause" class="wrapped-checkbox" type="checkbox">
 		    <div id="global-pause-icon" class="checkbox-proxy"></div>
 		</label>
@@ -59,11 +59,11 @@
 	    </footer>
 	</main>
 
-	<div class="panel" id="editor-wrapper">
-	    <section id="editor">
+	<div class="panel-wrapper" id="editor-wrapper">
+	    <section class="panel" id="editor">
 		<header>
 		    <h1>Edit script</h1>
-		    <button class="dismiss-icon dismiss-panels" title="Delete changes and and close editor"></button>
+		    <button class="dismiss-panels round-button" title="Delete changes and and close editor"></button>
 		</header>
 
 		<label for="editor-name" title="The name you want to associate with this script. It does not need to be unique.">Name</label>
@@ -95,8 +95,22 @@
 	    </section>
 	</div>
 
-	<div class="panel" id="settings-wrapper">
-	    <section id="settings">
+	<div class="panel-wrapper" id="settings-wrapper">
+	    <section class="panel" id="settings">
+		<header>
+		    <h1>Settings</h1>
+		    <button class="dismiss-panels round-button" title="Close settings"></button>
+		</header>
+
+		<div class="bar dense-bar">
+		    <button title="Export oildrop data">Export data</button>
+		    <button title="Export oildrop data">Export data</button>
+		</div>
+
+		<h1>About</h1>
+		<p>
+		    About oildrop
+		</p>
 	    </section>
 	</div>
 
