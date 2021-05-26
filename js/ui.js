@@ -33,8 +33,7 @@ const editor = (function() {
 const settings = {
 	wrapper: geid("settings-wrapper"),
 	openButton: geid("settings-button"),
-	exportButton: geid("settings-export"),
-	importButton: geid("settings-import")
+	manageButton: geid("manage-data")
 }
 
 const templates = {
@@ -67,9 +66,13 @@ const snackbar = (function() {
 	}
 })()
 
-function setTheme(isLight) {
+function setTheme(isLight, save) {
 	document.body.classList.toggle("light", isLight)
-	return updateSettings({isLight})
+	options.lightToggle.checked = isLight
+
+	if (save) {
+		return updateSettings({isLight})
+	}
 }
 
 // Marks a script as enabled or disabled, saves the change, and tells
@@ -115,7 +118,7 @@ function saveEditor() {
 	script.code = editor.code.value
 	script.name = editor.name.value
 	script.matches = editor.matches.value.split(",").map(el => el.trim())
-	script.date = new Date()
+	script.date = new Date().getTime()
 	script.language = editor.language.get()
 
 	return saveScript(script).then(() => {
@@ -143,10 +146,8 @@ function showOverview() {
 			name.innerText = script.name || "Unnamed Script"
 			name.classList.add(script.language + "-badge")
 
-			console.log(script.matches)
 			el.querySelector(".script-matches").innerText = script.matches.join(", ") || "(No domains)"
-			el.querySelector(".script-date").innerText = script.date.toLocaleDateString()
-
+			el.querySelector(".script-date").innerText = new Date(parseInt(script.date)).toLocaleDateString()
 			el.querySelector(".script-edit").addEventListener("click", () => {
 				showEditorViaUUID(script.uuid)
 					.catch(() => alert("Failed to open script"))
@@ -244,23 +245,22 @@ function showSettings() {
 }
 
 function downloadData() {
-				browser.storage.local.get().then(data => {
-								let file = new Blob([JSON.stringify(data)], {type: "text/plain"})
-								let url = URL.createObjectURL(file)
-								browser.downloads.download({url, filename: "oildrop.json", saveAs: true})
-				})
+	browser.storage.local.get().then(data => {
+		let file = new Blob([JSON.stringify(data)], {type: "text/plain"})
+		let url = URL.createObjectURL(file)
+		browser.downloads.download({url, filename: "oildrop.json", saveAs: true})
+	})
 }
 
 showOverview()
 
 getSettings().then(oSettings => {
 	setTheme(oSettings.isLight)
-	options.lightToggle.checked = oSettings.isLight
 	overview.globalPause.checked = !oSettings.active
 	snackbar.setActivity(oSettings.active)
 })
 
-options.lightToggle.addEventListener("change", e => setTheme(e.target.checked))
+options.lightToggle.addEventListener("change", e => setTheme(e.target.checked, true))
 
 document.querySelectorAll(".dismiss-panels").forEach(el => {
 	el.addEventListener("click", showOverview)
@@ -278,8 +278,8 @@ settings.openButton.addEventListener("click", () => {
 		.catch(() => alert("Failed to display settings"))
 })
 
-settings.importButton.addEventListener("click", () => {
-	browser.tabs.create({url: "/import.html"})
+settings.manageButton.addEventListener("click", () => {
+	browser.tabs.create({url: "/manage.html"})
 })
 
 // Allows the user to create a new script

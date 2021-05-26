@@ -1,0 +1,42 @@
+body {
+    display: flex;
+    justify-content: center;
+    padding-top: 2em;
+    background: var(--background-2);
+}
+
+main {
+    width: 700px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    gap: var(--gap);
+
+    h1 {
+        margin-left: calc(2 * var(--gap));
+    }
+}
+
+section {
+    background: var(--background-1);
+    border-radius: var(--control-radius);
+    padding: var(--gap);
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+
+    h2, p {
+        margin: 0;
+    }
+}
+
+// Unfortunately, input[type=file] is notoriously hard to style.
+// I don't want to add JS bloat, so I chose to just leave it with
+// its standard appearance.
+input[type=file] {
+    margin: 0;
+    padding: var(--gap);
+    padding-bottom: 0;
+    font-size: 1.35rem;
+    opacity: 0.7;
+}

@@ -1,0 +1,164 @@
+@font-face {
+    font-family: "Poppins";
+    src: url("./assets/poppins/Poppins-Regular.ttf");
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: "Poppins";
+    src: url("./assets/poppins/Poppins-Medium.ttf");
+    font-weight: bold;
+}
+
+:root {
+    --primary-1: #F3F3F3;
+    --primary-2: #E4E4E4;
+    --primary-3: #D0D0D0;
+    --primary-4: #A6A8B1;
+    --primary-5: #1A3C66;
+    --primary-6: #171C3A;
+    --primary-7: #090D28;
+    --accent-1: #FFD969;
+    --accent-2: #FFAB86;
+    --accent-text-mild: #52433F;
+    --accent-gradient: linear-gradient(120deg, var(--accent-1), var(--accent-2));
+
+    --width: 450px;
+    --height: 600px;
+    --unit: calc(var(--width) / 50);
+    --rounding-unit: calc(var(--unit) / 2);
+}
+
+* {
+    font-family: "Poppins";
+}
+
+html {
+    padding: 0px;
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+    overflow: hidden;
+    height: auto;
+    font-size: 10pt;
+}
+
+body {
+    width: var(--width);
+    height: var(--height);
+    background-image: url("./assets/background_dark.png");
+    background-position: center;
+    background-size: contain;
+    margin: 0;
+    border-radius: calc(2 * var(--rounding-unit));
+}
+
+#control-bar {
+    display: grid;
+    height: calc(4 * var(--unit));
+    grid-template-columns: 2fr 4fr            2fr  24fr   2fr 14fr        2fr;
+    grid-template-areas:  ".  resume-scripts  .   select  .   new-script  .";
+}
+
+button#new-script {
+    grid-area: new-script;
+}
+
+button#resume-scripts {
+    grid-area: resume-scripts;
+}
+
+select {
+    grid-area: select;
+}
+
+button {
+    border-radius: var(--rounding-unit);
+    border: none;
+    padding: 0px calc(3 * var(--unit));
+    box-sizing: border-box;
+    overflow-y: hidden;
+    font-size: 1.2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+button:active {
+    filter: brightness(0.9) saturate(1.1);
+}
+
+button#new-script {
+    background: var(--accent-gradient);
+    color: var(--accent-text-mild);
+    text-transform: uppercase;
+    font-weight: bold;
+    justify-content: space-between;
+}
+
+button#new-script:hover {
+    color: var(--primary-7);
+}
+
+button#new-script::before {
+    content: '';
+    display: block;
+    width: 0.8em;
+    height: 0.8em;
+    mask-image: url("./assets/new_script_icon.svg");
+    mask-size: contain;
+    mask-position: center;
+    margin-right: calc(1.5 * var(--unit));
+    margin-bottom: 0.1em; /* This just slightly tweaks vertical alignment. */
+    background: var(--accent-text-mild);
+}
+
+button#new-script:hover::before {
+    background: var(--primary-7);
+}
+
+button#resume-scripts {
+    padding: 0px;
+    width: 2.9rem;
+}
+
+button#resume-scripts::before {
+    content: '';
+    display: block;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin: 0px;
+    background: var(--primary-4);
+    mask-image: url("./assets/play_icon.svg");
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+}
+
+button#resume-scripts:hover::before {
+    background: var(--primary-2);
+}
+
+@media (prefers-color-scheme: dark) {
+    html {
+        /* TODO: This is only useful in the prototype */
+        background-color: var(--primary-3);
+    }
+
+    * {
+        color: var(--primary-3);
+    }
+
+    body {
+        background-color: var(--primary-7);
+    }
+    
+    button {
+        background: var(--primary-6);
+        color: var(--primary-3);
+    }
+    
+    button:hover {
+        color: var(--primary-2)
+    }
+}

@@ -1,0 +1,126 @@
+@font-face {
+  font-family: "Poppins";
+  src: url("./assets/poppins/Poppins-Regular.ttf");
+  font-weight: normal;
+}
+@font-face {
+  font-family: "Poppins";
+  src: url("./assets/poppins/Poppins-Medium.ttf");
+  font-weight: bold;
+}
+:root {
+  --primary-1: #F3F3F3;
+  --primary-2: #E4E4E4;
+  --primary-3: #D0D0D0;
+  --primary-4: #A6A8B1;
+  --primary-5: #1A3C66;
+  --primary-6: #171C3A;
+  --primary-7: #090D28;
+  --accent-1: #FFD969;
+  --accent-2: #FFAB86;
+  --accent-text-mild: #52433F;
+  --accent-gradient: linear-gradient(120deg, var(--accent-1), var(--accent-2));
+  --width: 450px;
+  --height: 585px;
+  --unit: calc(var(--width) / 50);
+  --rounding-unit: calc(var(--unit) / 2);
+}
+
+* {
+  font-family: "Poppins";
+}
+
+html {
+  padding: 0px;
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+  overflow: hidden;
+  height: auto;
+  font-size: 10pt;
+}
+
+body {
+  width: var(--width);
+  height: var(--height);
+  background-image: url("./assets/background_dark.png");
+  background-position: center;
+  background-size: contain;
+  position: relative;
+  margin: 0;
+}
+
+#home {
+  display: grid;
+  height: 100%;
+  grid-template-columns: 100%;
+  grid-template-rows: calc(var(--unit) * 7) auto calc(var(--unit) * 7);
+  grid-template: "#options #overview #footer";
+}
+
+#options {
+  display: grid;
+}
+
+#footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 calc(3 * var(--unit));
+}
+
+#editor-wrapper, #settings-wrapper {
+  z-index: 1;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 0px;
+  overflow: hidden;
+  transition: height 200ms ease;
+  visibility: hidden;
+}
+
+#editor-wrapper.visible, #settings-wrapper.visible {
+  height: calc(58 * var(--unit));
+  visibility: visible;
+}
+
+#home::after {
+  background: black;
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms ease;
+}
+
+#home.obscured {
+  position: relative;
+}
+
+#home.obscured::after {
+  opacity: 0.5;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    /* TODO: This is only useful in the prototype */
+    background-color: var(--primary-3);
+  }
+
+  * {
+    color: var(--primary-3);
+  }
+
+  body {
+    background-color: var(--primary-7);
+  }
+}
+
+/*# sourceMappingURL=layout.css.map */

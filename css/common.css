@@ -1,0 +1,194 @@
+@font-face {
+  font-family: "Poppins";
+  src: url("/assets/poppins/Poppins-Regular.ttf");
+  font-weight: normal;
+}
+@font-face {
+  font-family: "Poppins";
+  src: url("/assets/poppins/Poppins-Medium.ttf");
+  font-weight: semibold;
+}
+@font-face {
+  font-family: "Poppins";
+  src: url("/assets/poppins/Poppins-SemiBold.ttf");
+  font-weight: bold;
+}
+@font-face {
+  font-family: "Bebas Neue";
+  src: url("/assets/bebas_neue/BebasNeue-Regular.otf");
+}
+@font-face {
+  font-family: "Space Mono";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/assets/space_mono/SpaceMono-Regular.ttf");
+}
+:root {
+  --primary-0: #FFFFFF;
+  --primary-1: #F3F3F3;
+  --primary-2: #E4E4E4;
+  --primary-3: #D0D0D0;
+  --primary-4: #A6A8B1;
+  --primary-5: #1A3C66;
+  --primary-6: #171C3A;
+  --primary-7: #090D28;
+  --accent-dark: #FFD969;
+  --accent-bright: #FFAB86;
+  --accent-gradient: linear-gradient(120deg, var(--accent-dark), var(--accent-bright));
+  --accent-text: #52433F;
+  --accent-text-focus: var(--primary-7);
+  --text-normal: var(--primary-4);
+  --text-highlight: var(--primary-2);
+  --background-1: var(--primary-7);
+  --background-2: var(--primary-6);
+  --background-3: var(--primary-5);
+  --selection-color: black;
+  --selection-background: rgba(255, 255, 255, 0.5);
+  --focus-color: rgba(255, 255, 255, 0.5);
+  --hr-color: var(--primary-4);
+  --gap: 1rem;
+  --bar-height: 3rem;
+  --control-radius: 0.3rem;
+  --focus-weight: 0.15rem;
+  --anim-time: 200ms;
+}
+
+body.light {
+  --focus-color: rgba(0, 0, 0, 0.5);
+  --text-normal: var(--primary-5);
+  --text-highlight: var(--primary-6);
+  --background-1: var(--primary-0);
+  --background-2: var(--primary-1);
+  --background-3: var(--primary-2);
+  --hr-color: var(--primary-3);
+  --selection-color: white;
+  --selection-background: black;
+}
+
+::selection {
+  color: var(--selection-color);
+  background: var(--selection-background);
+}
+
+* {
+  font-family: "Poppins";
+  font-weight: normal;
+  color: var(--text-normal);
+}
+
+html {
+  padding: 0px;
+  font-size: 10pt;
+}
+
+body {
+  position: relative;
+  overflow: hidden;
+  background: var(--background-1);
+}
+
+button {
+  display: inline-flex;
+  padding: 0 1.3rem;
+  height: var(--bar-height);
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-size: 1.2rem;
+  border-radius: var(--control-radius);
+  border: none;
+  cursor: pointer;
+  background: var(--background-2);
+  color: var(--text-normal);
+}
+button:not(:disabled):hover {
+  background: var(--background-3);
+  color: var(--text-highlight);
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.accent-button {
+  background: var(--accent-gradient);
+  color: var(--accent-text);
+}
+.accent-button:not(:disabled):hover {
+  color: var(--accent-text-focus);
+  background: var(--accent-gradient);
+}
+
+input, .select-wrapper {
+  display: block;
+  height: var(--bar-height);
+}
+
+input, textarea {
+  appearance: none;
+  border: none;
+  padding: 0 0 0 1em;
+  background: var(--background-2);
+  border-radius: var(--control-radius);
+  resize: none;
+}
+
+h1 {
+  margin: 0;
+  margin-top: 0.3em;
+  font-weight: normal;
+}
+
+.select-wrapper {
+  position: relative;
+}
+.select-wrapper::before {
+  content: "";
+  display: block;
+  pointer-events: none;
+  mask-size: contain;
+  mask-position: center;
+  mask-image: url("/assets/dropdown_icon.svg");
+  mask-repeat: no-repeat;
+  position: absolute;
+  width: 1.4em;
+  height: 1.4em;
+  right: 1em;
+  top: calc(50% - 0.7em);
+  background: var(--text-normal);
+}
+.select-wrapper:hover::before {
+  background: var(--text-highlight);
+}
+.select-wrapper > select {
+  box-sizing: border-box;
+  padding-left: 1em;
+  width: 100%;
+  height: 100%;
+  appearance: none;
+  background: var(--background-2);
+  border: none;
+  border-radius: var(--control-radius);
+  font-weight: semibold;
+  font-size: 1em;
+}
+.select-wrapper > select:hover {
+  color: var(--text-highlight);
+  background: var(--background-3);
+}
+
+.bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: var(--bar-height);
+}
+
+.dense-bar > * {
+  flex-grow: 1;
+}
+.dense-bar > *:not(:first-child) {
+  margin-left: var(--gap);
+}
+
+/*# sourceMappingURL=common.css.map */
