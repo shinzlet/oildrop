@@ -28,6 +28,37 @@ body.light #home {
   background-image: url("/assets/background_light.png");
 }
 
+input, textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+@media (min-width: 500px), (min-height: 600px) {
+  :root {
+    --width: 100vw;
+    --height: 100vh;
+  }
+}
+@media (min-width: 1000px) {
+  :root {
+    --width: 80vw;
+    --height: 80vh;
+    font-size: 14pt;
+  }
+
+  body {
+    margin-top: calc(calc(100vh - var(--height)) / 2);
+  }
+
+  #home {
+    border-radius: var(--control-radius);
+    box-shadow: 0 0 2rem 1rem rgba(255, 255, 255, 0.1);
+  }
+
+  body.light #home {
+    box-shadow: 0 0 2rem 1rem rgba(0, 0, 0, 0.1);
+  }
+}
 #home {
   display: flex;
   flex-direction: column;
@@ -243,7 +274,7 @@ hr {
   padding: 0px;
   padding-right: calc(var(--gap) / 2);
   mask-image: url("/assets/vignette.svg");
-  mask-size: contain;
+  mask-size: cover;
   mask-position: center;
   mask-repeat: repeat-x;
 }
@@ -548,6 +579,10 @@ hr {
   margin-left: 0.5ch;
   margin-bottom: 0.3em;
   cursor: help;
+}
+
+#settings button {
+  margin-bottom: var(--gap);
 }
 
 /*# sourceMappingURL=ui.css.map */

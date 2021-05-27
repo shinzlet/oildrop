@@ -33,7 +33,8 @@ const editor = (function() {
 const settings = {
 	wrapper: geid("settings-wrapper"),
 	openButton: geid("settings-button"),
-	manageButton: geid("manage-data")
+	manageButton: geid("manage-data"),
+	newTabButton: geid("open-in-tab")
 }
 
 const templates = {
@@ -244,14 +245,6 @@ function showSettings() {
 	})
 }
 
-function downloadData() {
-	browser.storage.local.get().then(data => {
-		let file = new Blob([JSON.stringify(data)], {type: "text/plain"})
-		let url = URL.createObjectURL(file)
-		browser.downloads.download({url, filename: "oildrop.json", saveAs: true})
-	})
-}
-
 showOverview()
 
 getSettings().then(oSettings => {
@@ -280,6 +273,10 @@ settings.openButton.addEventListener("click", () => {
 
 settings.manageButton.addEventListener("click", () => {
 	browser.tabs.create({url: "/manage.html"})
+})
+
+settings.newTabButton.addEventListener("click", () => {
+	browser.tabs.create({url: "/ui.html"})
 })
 
 // Allows the user to create a new script
