@@ -51,7 +51,7 @@ const snackbar = (function() {
 
 		clearTimeout(timer) // This acts as a debouncer
 		timer = window.setTimeout(() => {
-			geid("snackbar-wrapper").classList.add("hidden")
+			wrapper.classList.add("hidden")
 		}, 2000)
 	}
 
@@ -281,7 +281,12 @@ settings.newTabButton.addEventListener("click", () => {
 
 // Allows the user to create a new script
 overview.createButton.addEventListener("click", () => {
-	showEditorViaScript(createScript("", true, [""], "js", ""))
+
+	browser.tabs.query({active: true, currentWindow: true})
+		.then(tab => {
+			showEditorViaScript(createScript("", true, [""], "js", ""))
+			editor.matches.value = tab[0].url
+		})
 })
 
 // Reloads the overview when filter option changed

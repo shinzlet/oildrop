@@ -566,6 +566,7 @@ hr {
   flex-grow: 1;
   font-family: "Space Mono";
   padding: 1ch;
+  font-variant-ligatures: none;
 }
 #editor .bar {
   margin-top: var(--gap);
