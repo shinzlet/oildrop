@@ -28,8 +28,8 @@ function loadScripts() {
             const sources = data.scripts || data || {}
             delete sources.oildrop // Get rid of the settings object
             Object.values(sources).forEach(s => {
-                if (s.name || s.matches || s.language || s.code) {
-                    saveScript(createScript(s.name, false, s.matches, s.language, s.code))
+                if (s.name || s.matches || s.language || s.code || s.runtime) {
+                    saveScript(createScript(s.name, false, s.matches, s.language, s.runtime, s.code))
                 }
             })
         })

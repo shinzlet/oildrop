@@ -15,17 +15,21 @@ const overview = {
 }
 
 const editor = (function() {
-	lang = geid("editor-language")
+	function select(id) {
+		const el = geid(id)
+		return {
+			get: () => el.value,
+			set: v => el.value = v
+		}
+	}
 
 	return {
 		wrapper: geid("editor-wrapper"),
 		name: geid("editor-name"),
 		matches: geid("editor-matches"),
 		code: geid("editor-code"),
-		language: {
-			get: () => lang.value,
-			set: v => lang.value = v
-		},
+		language: select("editor-language"),
+		runtime: select("editor-runtime"),
 		saveButton: geid("editor-save")
 	}
 })()
@@ -107,6 +111,7 @@ function showEditorViaScript(script) {
 	editor.matches.value = script.matches.join(", ")
 	editor.code.value = script.code
 	editor.language.set(script.language)
+	editor.runtime.set(script.runtime)
 	editor.currentScript = script
 
 	home.classList.add("grayout")
@@ -121,6 +126,7 @@ function saveEditor() {
 	script.matches = editor.matches.value.split(",").map(el => el.trim())
 	script.date = new Date().getTime()
 	script.language = editor.language.get()
+	script.runtime = editor.runtime.get()
 
 	return saveScript(script).then(() => {
 		browser.runtime.sendMessage({action: "register", script})
@@ -133,7 +139,7 @@ function showOverview() {
 		let url = undefined
 
 		browser.tabs.query({active: true, currentWindow: true}).then(tab => url = tab[0].url)
-		.then(() => getAllScripts())
+		.then(getAllScripts)
 		.then(scripts => filterScripts(scripts, overview.filter.value, url))
 		.then(filtered => sortScripts(filtered, url).forEach(script => {
 			let el = templates.script.cloneNode(true)
@@ -281,11 +287,10 @@ settings.newTabButton.addEventListener("click", () => {
 
 // Allows the user to create a new script
 overview.createButton.addEventListener("click", () => {
-
 	browser.tabs.query({active: true, currentWindow: true})
 		.then(tab => {
-			showEditorViaScript(createScript("", true, [""], "js", ""))
-			editor.matches.value = tab[0].url
+			showEditorViaScript(createScript("", true, [""], "js", "document_idle", ""))
+			editor.matches.value = tab[0].url.split('#')[0]
 		})
 })
 

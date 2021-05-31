@@ -7,8 +7,8 @@ function createUUID() {
 	);
 }
 
-function createScript(name, enabled, matches, language, code) {
-	return {name, enabled, matches, language, code, date: new Date().getTime(), uuid: createUUID()}
+function createScript(name, enabled, matches, language, runtime, code) {
+	return {name, enabled, matches, language, runtime, code, date: new Date().getTime(), uuid: createUUID()}
 }
 
 function saveScript(script) {
@@ -52,9 +52,7 @@ function urlComponentMatches(source, pattern) {
 	// /^.*\.domain\.com$/i, which will allow us to actually check.
 	const toEscape = ".?+^$()[]{}|".split('')
 	pattern = toEscape.reduce((str, esc) => str.replaceAll(esc, `\\${esc}`), pattern)
-	pattern.replace("*", ".*")
-	console.log(pattern)
-	console.log(source)
+	pattern = pattern.replace("*", ".*")
 
 	return source.match(new RegExp('^' + pattern + '$', "i"))
 }

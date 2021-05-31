@@ -25,7 +25,7 @@ function registerScript(script) {
         browser.userScripts.register({
             matches: script.matches,
             js: [{ code }],
-            runAt: "document_end"
+            runAt: script.runtime 
         }).then(registration => {
             registrations[uuid] = registration
             resolve()

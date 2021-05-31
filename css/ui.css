@@ -586,4 +586,8 @@ hr {
   margin-bottom: var(--gap);
 }
 
+.auto-height {
+  height: auto;
+}
+
 /*# sourceMappingURL=ui.css.map */
