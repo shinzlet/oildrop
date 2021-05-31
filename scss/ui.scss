@@ -622,3 +622,7 @@ hr {
 .auto-height {
     height: auto;
 }
+
+.third {
+    max-width: calc(100%/3);
+}
