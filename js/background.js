@@ -1,6 +1,7 @@
 let registrations = {}
 
 function registerScript(script) {
+    console.log(`trying to register ${script}`)
     return new Promise((resolve, reject) => {
         let uuid = script.uuid
         let code = script.code
@@ -9,7 +10,7 @@ function registerScript(script) {
             unregisterScript(uuid)
         }
 
-        if (script.type == "css") {
+        if (script.language == "css") {
             code = `
             (function() {
                 let link = document.createElement("link")
@@ -24,16 +25,19 @@ function registerScript(script) {
         browser.userScripts.register({
             matches: script.matches,
             js: [{ code }],
-            // runAt: "document_start"
+            runAt: script.runtime 
         }).then(registration => {
             registrations[uuid] = registration
             resolve()
+            console.log("registration successful")
         })
     })
 }
 
 function unregisterScript(uuid) {
+    console.log(`trying to unregister ${uuid}`)
     if (registrations[uuid]) {
+        console.log(`unregistering ${uuid}`)
         registrations[uuid].unregister()
         delete registrations[uuid]
     }
@@ -52,10 +56,14 @@ getAllScripts().then(scripts => {
 browser.runtime.onMessage.addListener(message => {
     switch (message.action) {
         case "register":
-            registerScript(message.script)
+            if(message.uuid) {
+                getScript(message.uuid).then(registerScript)
+            } else {
+                registerScript(message.script)
+            }
             break
         case "unregister":
-            unregisterScript(message.uuid)
+            unregisterScript(message.uuid || message.script.uuid)
             break
         case "debug":
             console.log(registrations)

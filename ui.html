@@ -1,92 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<link rel="stylesheet" href="ui.css" />
-	</head>
-	
-	<body>
-		<header>
-			<div id="uppermost">
-				<h1>Oildrop</h1>
+    <head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="/css/common.css" />
+	<link rel="stylesheet" href="/css/ui.css" />
+    </head>
+    
+    <body>
+	<main id="home">
+	    <header id="options">
+		<div id="logo" aria-hidden="true">Oildrop</div>
+		<div class="bar dense-bar">
+		    <label>
+			<input id="light-toggle" class="wrapped-checkbox" type="checkbox">
+			<div class="checkbox-proxy" id="light-toggle-icon"></div>
+		    </label>
+		    <button id="settings-button"></button>
+		</div>
+	    </header>
 
-				<input id="global-enable" title="Enable Oildrop" type="checkbox">
-			</div>
-			
-			<span id="global-error"></span>
+	    <hr>
+
+	    <section id="overview-controls" class="bar dense-bar">
+		<!-- I often use css masks and psuedoselectors to recolor SVG
+      icons throughout my work.  However, input and select tags do not support
+      pseudoelements, which means they have to be wrapped.-->
+
+		<label id="global-pause-wrapper" title="Globally pause or unpause Oildrop. If paused, Oildrop will not inject any scripts. If unpaused, Oildrop will operate normally. This will not change which scripts are individually enabled or disabled.">
+		    <input id="global-pause" class="wrapped-checkbox" type="checkbox">
+		    <div id="global-pause-icon" class="checkbox-proxy"></div>
+		</label>
+
+		<div class="select-wrapper">
+		    <select id="filter" title="Filter which scripts are listed. 'Active' scripts are ones which apply to this domain, regardless of if they are running.">
+			<option value="all" selected>All scripts</option>
+			<option value="active">Active scripts</option>
+			<option value="inactive">Inactive scripts</option>
+		    </select>
+		</div>
+
+		<button id="new-script" class="accent-button" title="Create a new script">New script</button>
+	    </section>
+
+	    <ul id="overview">
+	    </ul>
+
+	    <div id="snackbar-wrapper">
+		<div id="snackbar">
+		    Snackbar initialization failed
+		</div>
+	    </div>
+
+	    <footer id="footer">
+		<span>Oildrop version 0.2</span>
+
+		<a href="https://github.com/shinzlet/oildrop">
+		    <img src="github" alt="GitHub">
+		</a>
+	    </footer>
+	</main>
+
+	<div class="panel-wrapper" id="editor-wrapper">
+	    <section class="panel" id="editor">
+		<header>
+		    <h1>Edit script</h1>
+		    <button class="dismiss-panels round-button" title="Delete changes and and close editor"></button>
 		</header>
 
-		<!-- <button id="debug-button">Open in Window</button> -->
+		<label for="editor-name" title="The name you want to associate with this script. It does not need to be unique.">Name</label>
+		<input type="text" id="editor-name">
 
-		<main>
-			<!-- A panel that shows a list of sortable scripts -->
-			<section id="overview" class="active">
-				<select id="overview-filter" title="Filter which scripts are listed">
-					<option value="all" selected>All scripts</option>
-					<option value="active">Scripts for this domain</option>
-					<option value="inactive">Inactive scripts</option>
-				</select>
+		<label for="editor-matches" title="A comma separated list of web addresses. The most general is '*://*.*/*'.">Run on</label>
+		<input type="text" id="editor-matches">
 
-				<button id="overview-create-script">Create script</button>
+		<label for="editor-code" title="The JavaScript or CSS you want to run on the sites listed above. Because Oildrop is designed to be user-auditable, this is not a code editor - just a text box. Please write your code elsewhere and paste it in here.">Code</label>
+		<textarea id="editor-code"></textarea>
 
-				<ul id="overview-scripts">
-				</ul>
-			</section>
+		<div class="bar dense-bar auto-height">
+		    <div>
+			<label title="The language your script is written in. JavaScript is used to add function to a webpage, and CSS is used to style it.">Language</label>
+			<div class="select-wrapper">
+			    <select id="editor-language" title="Filter which scripts are listed. 'Active' scripts are ones which apply to this domain, regardless of if they are running.">
+				<option value="js" selected>JavaScript</option>
+				<option value="css">CSS</option>
+			    </select>
+			</div>
+		    </div>
+		    <div class="third">
+			<label title="Controls when your script should be loaded. If you aren't sure what to use, choose 'After content'. Choosing 'After DOM' will load your script sooner, but might cause the webpage to interfere with your code. 'Before DOM' is tricky to get right, but offers the most flexibility.">Runtime</label>
+			<div class="select-wrapper">
+			    <select id="editor-runtime" title="Filter which scripts are listed. 'Active' scripts are ones which apply to this domain, regardless of if they are running.">
+				<option value="document_start">Before DOM</option>
+				<option value="document_end">After DOM</option>
+				<option value="document_idle" selected>After content</option>
+			    </select>
+			</div>
+		    </div>
+		</div>
 
-			<!-- A panel that exposes script details and allows management -->
-			<section id="editor">
-				<button id="editor-exit">Back</button>
+		<div class="bar">
+		    <button class="dismiss-panels" title="Delete changes and and close editor">
+			Close
+		    </button>
 
-				<label for="editor-name" title="The name you want to associate with this script. It does not need to be unique.">Name</label>
-				<input type="text" id="editor-name">
+		    <button id="editor-save" class="accent-button" title="Save changes and and close editor">
+			Save
+		    </button>
+		</div>
+	    </section>
+	</div>
 
-				<label for="editor-matches" title="A comma separated list of web addresses. The most general is '*://*.*/*'.">Matches</label>
-				<input type="text" id="editor-matches">
+	<div class="panel-wrapper" id="settings-wrapper">
+	    <section class="panel" id="settings">
+		<header>
+		    <h1>Settings</h1>
+		    <button class="dismiss-panels round-button" title="Close settings"></button>
+		</header>
 
-				<label for="editor-code" title="The JavaScript or CSS you want to run on all pages that fit the matching pattern.">Code</label>
-				<textarea id="editor-code"></textarea>
+		<button id="manage-data" title="Import or export your oildrop data via the filesystem.">Import / Export data</button>
+		<button id="open-in-tab" title="Open oildrop in a tab, rather than a popup.">Open Oildrop in a new tab</button>
 
+		<h1>About</h1>
+		<p>
+		    Oildrop is a lightweight userscript/style manager designed to be easily
+		    audited by users.
+		</p>
+		<p>
+		    You are running version 0.2.0.
+		</p>
+	    </section>
+	</div>
 
-				<fieldset>
-					<legend title="The type of script you're writing - javascript or CSS.">Language</legend>
+	<template id="script-card-template">
+	    <li class="script-card">
+		<label class="script-enable-wrapper" title="Enable this script">
+		    <input class="wrapped-checkbox script-enable" type="checkbox">
+		    <div class="checkbox-proxy script-enable-icon"></div>
+		</label>
 
-					<label for="editor-type-js">JS</label>
-					<input type="radio" id="editor-type-js" name="editor-type" value="js">
+		<div class="script-description">
+		    <p class="script-name">Script Name</p>
+		    <p class="script-matches">*://crystal-lang.org/api/*</p>
+		    <p class="script-date">03/24/2021</p>
+		</div>
 
-					<label for="editor-type-css">CSS</label>
-					<input type="radio" id="editor-type-css" name="editor-type" value="css">
-				</fieldset>
+		<div class="script-actions">
+		    <button class="round-button script-edit" title="Edit this script"></button>
+		    <button class="round-button script-delete" title="Delete this script"></button>
+		</div>
+	    </li>
+	</template>
+		    
 
-
-				<button id="editor-save">Save</button>
-				<button id="editor-delete">Delete</button>
-			</section>
-		</main>
-
-		<footer>
-			Oildrop is currently alpha software.
-			Developed by <a href="https://github.com/shinzlet/oildrop">Seth Hinz</a>
-		</footer>
-
-		<!-- Template components for use in JS -->
-		<template id="template-script-overview">
-			<li>
-				<div class="overview-description">
-					<h3 class="overview-name">Script Name</h3>
-					<h4 class="overview-matches">*://*.org/*</h4>
-					<h4 class="overview-date">March 1 2021</h4>
-				</div>
-
-				<div class="overview-actions">
-					<input class="overview-enable" title="Enable this script" type="checkbox">
-
-					<button class="overview-edit" title="Edit this script">Edit</button>
-					<button class="overview-delete" title="Delete this script">Delete</button>
-				</div>
-			</li>
-		</template>
-
-		<script src="oildrop.js" type="text/javascript"></script>
-		<script src="ui.js" type="text/javascript"></script>
-	</body>
+	<script src="js/oildrop.js" type="text/javascript"></script>
+	<script src="js/ui.js" type="text/javascript"></script>
+    </body>
 </html>

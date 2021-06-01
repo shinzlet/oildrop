@@ -1,0 +1,39 @@
+body {
+  display: flex;
+  justify-content: center;
+  padding-top: 2em;
+  background: var(--background-2);
+}
+
+main {
+  width: 700px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  gap: var(--gap);
+}
+main h1 {
+  margin-left: calc(2 * var(--gap));
+}
+
+section {
+  background: var(--background-1);
+  border-radius: var(--control-radius);
+  padding: var(--gap);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+section h2, section p {
+  margin: 0;
+}
+
+input[type=file] {
+  margin: 0;
+  padding: var(--gap);
+  padding-bottom: 0;
+  font-size: 1.35rem;
+  opacity: 0.7;
+}
+
+/*# sourceMappingURL=manage.css.map */

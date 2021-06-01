@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Oildrop | Manage Data</title>
+        <link rel="stylesheet" href="/css/common.css">
+        <link rel="stylesheet" href="/css/manage.css">
+    </head>
+    <body>
+        <main>
+            <header>
+                <h1>Manage Data</h1>
+            </header>
+
+            <section>
+                <h2>Export your data</h2>
+                <p>
+                    By exporting your data, you can save your Oildrop scripts and settings to a file on your computer. This
+                    can later be imported to restore your configuration, or to share your scripts.
+                </p>
+                <button id="export" title="Download your oildrop configuration as a file.">Export</button>
+            </section>
+
+            <section>
+                <h2>Import</h2>
+                <p>
+                    Here, you can import data that was previously exported from Oildrop. "Overwrite" will
+                    replace your current configuration with the data file - erasing your scripts and settings in the process.
+                    "Load Scripts" will leave your existing data in place, and install scripts from the data file alongside
+                    your existing ones.
+                </p>
+                <input type="file" id="file-picker">
+                <div class="bar">
+                    <button id="overwrite" disabled title="Using the file selected, overwrite your Oildrop configuration. This is a destructive operation!">Overwrite</button>
+                    <button id="copy-scripts" class="accent-button" disabled title="Loads only script information from an oildrop config file, adding scripts to your browser.">Load Scripts</button>
+                </div>
+            </section>
+        </main>
+
+        <script src="js/oildrop.js" type="text/javascript"></script>
+        <script src="js/manage.js" type="text/javascript"></script>
+    </body>
+</html>

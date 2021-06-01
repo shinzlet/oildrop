@@ -1,13 +1,14 @@
 {
 	"manifest_version": 2,
 	"name": "Oildrop",
-	"version": "0.0.1",
+	"version": "0.2.1",
 	"description": "An open-source userscript manager that you can audit on your own.",
 	"permissions": [
 		"storage",
 		"tabs",
 		"webRequest",
 		"webRequestBlocking",
+		"downloads",
 		"<all_urls>"
 	],
 	"browser_action": {
@@ -15,13 +16,17 @@
 		"default_popup": "ui.html"
 	},
 	"background": {
-		"scripts": ["oildrop.js", "background.js"]
+		"scripts": ["js/oildrop.js", "js/background.js"]
 	},
 	"content_scripts": [
 		{
 			"matches": ["*://*/*.user.js"],
-			"js": ["prompt-install.js"]
+			"js": ["js/prompt-install.js"]
 		}
 	],
+	"icons": {
+		"48": "assets/oildrop_icon@48px.png",
+		"96": "assets/oildrop_icon@96px.png"
+	},
 	"user_scripts": {}
 }

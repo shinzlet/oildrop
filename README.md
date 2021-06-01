@@ -1,38 +1,22 @@
-# oildrop (still in alpha)
-**Browser extensions have access to all of your data.** So you should be very picky when choosing which ones you'll install.
+# Oildrop
 
-There are plenty of well-made, fully featured userscript managers that
-already exist. However, the number of features they offer mean that they are too
-big for a single end-user to easily audit (>> 10k sloc, typically). This means
-you have to trust that no malicious code has been slipped into them.
+Over the recent years, I've fallen out of love with browser extensions. Their
+permission lists always seem mysterious, and it's hard to know what they do with
+your data.
 
-Oildrop takes the alternative approach - it is designed to provide only the
-most essential features, while keeping a small, clean codebase. The core goal
-of Oildrop is that anyone who is slightly familiar with Javascript can read all
-of its code in less than ten minutes.
+Due to concerns like this, many popular browser extensions are open source and
+community built. I'm a fan of that, but I don't have the dedication needed
+to examine their codebases - many userscript and userstyle managers have
+tens of thousands of lines of code.
 
-## Demonstration (not final design, not complete)
-<img src="https://raw.githubusercontent.com/shinzlet/oildrop/media/preview.gif" width=512 height=512 alt="Preview of oildrop being used">
+As a response, I built Oildrop: a userscript manager designed to be audited by
+anyone in less than twenty minutes.
 
-## Project status
-- [x] Working prototype
-- [x] CSS Injection
-- [x] Javascript Injection
-- [x] Sort scripts
-- [ ] Clean, modern design
-- [ ] Dark / Light UI Toggle
-- [ ] Import / Export userscripts
-
-## Appearance
-Oildrop isn't pretty, yet. I do plan to do a full overhaul of all the styling, and I'm
-even considering bringing a real designer on board (good software is as pretty as it
-is free, and Oildrop is GPLv3, after all).
-
-## Compatibility
-Currently, Oildrop does not implement the `GM_` functions that are part of the
-GreaseMonkey API, nor does it use a metadata block. Although this is not very limiting for any new userscripts you write or port, it will likely break
-large GreaseMonkey userscripts.
-
-Because Oildrop's primary purpose is to help privacy-cautious users only run code
-they trust, fixing this is not a very high priority for me. I'm totally open to
-discussing this, however!
+## Features
+- Sleek, modern interface
+- Manage scripts and styles in one extension
+- Dark and light theme
+- Import / Export your scripts with JSON
+- GPLv3 Licence
+- Fewer than 500 lines of code
+- Easy to tweak to your needs

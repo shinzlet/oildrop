@@ -1,0 +1,19 @@
+// This sass partial is used to define general purpose mixins.
+
+// This is a set of rules that need to occur in pseudoelements
+// that only add visual elements.
+@mixin pseudo-vis() {
+    content: '';
+    display: block;
+    pointer-events: none;
+}
+
+// The icons in oildrop are implemented via svg masks over
+// elements. This allows icon color to be changed with the element's
+// `background-color` property.
+@mixin mask-icon($path) {
+    mask-size: contain;
+    mask-position: center;
+    mask-image: url($path);
+    mask-repeat: no-repeat;
+}
