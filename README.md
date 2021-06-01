@@ -22,3 +22,14 @@ anyone in less than twenty minutes.
 - GPLv3 Licence
 - Fewer than 500 lines of code
 - Easy to tweak to your needs
+
+## Contributors
+- [Seth Hinz](https://github.com/shinzlet), [sethhinz@me.com](mailto:sethhinz@me.com)
+    + Concept, programming
+- [Chiara Coangelo](https://dribbble.com/ChiaraColangelo), [chiara.coangelo@ninjabit.com](mailto:chiara.coangelo@ninjabit.com)
+    + UI Designer
+
+## Licensing
+All of Oildrop's source code is licensed under GPLv3. Some of the fonts and
+icons used are under different licenses.  Their respective licenses are stored
+in the assets folder.

@@ -137,8 +137,8 @@ input, textarea, select {
 
 #light-toggle-icon {
     --element-size: var(--bar-height);
-    --checked-icon: url("/assets/dark_mode_icon.svg");
-    --unchecked-icon: url("/assets/light_mode_icon.svg");
+    --checked-icon: url("/assets/material_icons/dark_mode_icon.svg");
+    --unchecked-icon: url("/assets/material_icons/light_mode_icon.svg");
     font-size: 2rem;
 }
 
@@ -158,7 +158,7 @@ input, textarea, select {
 
     &::before {
         @include pseudo-vis;
-        @include mask-icon("/assets/settings_icon.svg");
+        @include mask-icon("/assets/material_icons/settings_icon.svg");
         background: var(--text-normal);
         width: 2rem;
         height: 2rem;
@@ -424,11 +424,11 @@ hr {
 }
 
 .script-edit::before {
-    @include mask-icon("/assets/edit_icon.svg");
+    @include mask-icon("/assets/material_icons/edit_icon.svg");
 }
 
 .script-delete::before {
-    @include mask-icon("/assets/delete_icon.svg");
+    @include mask-icon("/assets/material_icons/delete_icon.svg");
 }
 
 .script-enable-wrapper {
@@ -438,7 +438,7 @@ hr {
 
 .script-enable-icon {
     --element-size: 2em;
-    --checked-icon: url("/assets/check_icon.svg");
+    --checked-icon: url("/assets/material_icons/check_icon.svg");
     --element-background: transparent;
     box-shadow: 0 0 0 0.15em var(--text-normal);
     margin-right: var(--gap);
@@ -561,7 +561,7 @@ hr {
             }
 
             &::before {
-                @include mask-icon("/assets/dismiss_icon.svg");
+                @include mask-icon("/assets/material_icons/dismiss_icon.svg");
             }
         }
 
