@@ -281,7 +281,9 @@ select {
 hr {
     width: 100%;
     opacity: 0.5;
-    color: var(--hr-color);
+    background: var(--hr-color);
+    height: 1px;
+    border: none;
 }
 
 #overview {
@@ -625,4 +627,19 @@ hr {
 
 .third {
     max-width: calc(100%/3);
+}
+
+#github-logo {
+    height: 1.2em;
+    width: 1.2em;
+    background-image: url("/assets/github/github_white.png");
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.5;
+    margin-right: 0.2em;
+}
+
+body.light #github-logo {
+    background-image: url("/assets/github/github_black.png");
 }

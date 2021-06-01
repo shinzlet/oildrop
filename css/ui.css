@@ -128,8 +128,8 @@ input, textarea, select {
 
 #light-toggle-icon {
   --element-size: var(--bar-height);
-  --checked-icon: url("/assets/dark_mode_icon.svg");
-  --unchecked-icon: url("/assets/light_mode_icon.svg");
+  --checked-icon: url("/assets/material_icons/dark_mode_icon.svg");
+  --unchecked-icon: url("/assets/material_icons/light_mode_icon.svg");
   font-size: 2rem;
 }
 
@@ -151,7 +151,7 @@ input, textarea, select {
   pointer-events: none;
   mask-size: contain;
   mask-position: center;
-  mask-image: url("/assets/settings_icon.svg");
+  mask-image: url("/assets/material_icons/settings_icon.svg");
   mask-repeat: no-repeat;
   background: var(--text-normal);
   width: 2rem;
@@ -262,7 +262,9 @@ select {
 hr {
   width: 100%;
   opacity: 0.5;
-  color: var(--hr-color);
+  background: var(--hr-color);
+  height: 1px;
+  border: none;
 }
 
 #overview {
@@ -411,14 +413,14 @@ hr {
 .script-edit::before {
   mask-size: contain;
   mask-position: center;
-  mask-image: url("/assets/edit_icon.svg");
+  mask-image: url("/assets/material_icons/edit_icon.svg");
   mask-repeat: no-repeat;
 }
 
 .script-delete::before {
   mask-size: contain;
   mask-position: center;
-  mask-image: url("/assets/delete_icon.svg");
+  mask-image: url("/assets/material_icons/delete_icon.svg");
   mask-repeat: no-repeat;
 }
 
@@ -429,7 +431,7 @@ hr {
 
 .script-enable-icon {
   --element-size: 2em;
-  --checked-icon: url("/assets/check_icon.svg");
+  --checked-icon: url("/assets/material_icons/check_icon.svg");
   --element-background: transparent;
   box-shadow: 0 0 0 0.15em var(--text-normal);
   margin-right: var(--gap);
@@ -538,7 +540,7 @@ hr {
 .panel > header:first-of-type > .dismiss-panels::before {
   mask-size: contain;
   mask-position: center;
-  mask-image: url("/assets/dismiss_icon.svg");
+  mask-image: url("/assets/material_icons/dismiss_icon.svg");
   mask-repeat: no-repeat;
 }
 .panel > header:first-of-type::after {
@@ -592,6 +594,21 @@ hr {
 
 .third {
   max-width: calc(100%/3);
+}
+
+#github-logo {
+  height: 1.2em;
+  width: 1.2em;
+  background-image: url("/assets/github/github_white.png");
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.5;
+  margin-right: 0.2em;
+}
+
+body.light #github-logo {
+  background-image: url("/assets/github/github_black.png");
 }
 
 /*# sourceMappingURL=ui.css.map */
