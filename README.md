@@ -1,5 +1,7 @@
 # Oildrop
 
+<img src="https://raw.githubusercontent.com/shinzlet/oildrop/media/oildrop-hero.png" alt="An image showing Oildrop in light and dark mode. Several scripts are listed in its overview panel.">
+
 Over the recent years, I've fallen out of love with browser extensions. Their
 permission lists always seem mysterious, and it's hard to know what they do with
 your data.
