@@ -39,9 +39,26 @@ function loadScripts() {
 function overwriteConfig() {
     if (confirm("Overwriting your configuration will permanently delete your current scripts and settings. Additionally, loading configuration that you do not absolutely trust will compromise the security of your personal information. Press 'OK' if you still want to continue.")) {
         getData().then(data => {
+            getAllScripts()
+                .then(Object.values)
+                .then(scripts => {
+                    scripts.forEach(script => {
+                        if (script.enabled) {
+                            browser.runtime.sendMessage({action: "unregister", script})
+                        }
+                    })
+                })
+
             browser.storage.local.clear()
-                .then(() => {
-                    browser.storage.local.set(data)
+                .then(() => browser.storage.local.set(data))
+                .then(getAllScripts)
+                .then(Object.values)
+                .then(scripts => {
+                    scripts.forEach(script => {
+                        if (script.enabled) {
+                            browser.runtime.sendMessage({action: "register", script})
+                        }
+                    })
                 })
         })
     }
