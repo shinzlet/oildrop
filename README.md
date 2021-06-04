@@ -12,7 +12,9 @@ to examine their codebases - many userscript and userstyle managers have
 tens of thousands of lines of code.
 
 As a response, I built Oildrop: a userscript manager designed to be audited by
-anyone in less than twenty minutes.
+anyone in less than twenty minutes. It currently only supports modern Firefox,
+(due to the use of the `userscripts` API), but could be shimmed to other browsers
+without much hassle.
 
 ## Features
 - Sleek, modern interface
@@ -20,8 +22,18 @@ anyone in less than twenty minutes.
 - Dark and light theme
 - Import / Export your scripts with JSON
 - GPLv3 Licence
-- Fewer than 500 lines of code
+- Only 500 lines of code
 - Easy to tweak to your needs
+
+## Development
+Oildrop is written in plain HTML and JavaScript, but uses sass to accelerate styling.
+In order to work on Oildrop, ensure you've installed dart-sass, then run `make watch`.
+This will automatically watch and compile your scss into the `css` folder.
+
+To test the extension, you should have `web-ext` installed. Then, you can run `make run`
+to open a development browser with Oildrop loaded.
+
+TODO: Add instructions for building / signing
 
 ## Contributors
 - [Seth Hinz](https://github.com/shinzlet), [sethhinz@me.com](mailto:sethhinz@me.com)
