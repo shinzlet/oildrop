@@ -217,3 +217,62 @@ h1 {
         }
     }
 }
+
+// In Oildrop, I use checkboxes wrapped in labels
+// in order to style them. A label that contains a checkbox
+// will, when clicked, toggle the checkbox, which lets us
+// style a div instead of the checkbox itself.
+label > input[type=checkbox].wrapped-checkbox {
+    // This is effectively just doing a display:none, but
+    // it allows the element to still be focused on.
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    inset: 0;
+}
+
+.checkbox-proxy {
+    --element-size: var(--bar-height);
+    --element-background: var(--background-2);
+    --checked-icon: url("/assets/material_icons/check_icon.svg");
+    --icon-size: 80%;
+
+    height: var(--element-size);
+    width: var(--element-size);
+
+    background: var(--element-background);
+    border-radius: var(--control-radius);
+    box-shadow: 0 0 0 0.15em var(--text-normal);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    &::before {
+        @include pseudo-vis;
+        @include mask-icon("");
+        mask-image: var(--unchecked-icon);
+
+        width: var(--icon-size);
+        height: var(--icon-size);
+        background: transparent;
+    }
+
+    &:hover {
+        background: var(--background-3);
+
+        .wrapped-checkbox:checked + &::before {
+            background: var(--text-highlight);
+        }
+    }
+
+    .wrapped-checkbox:checked + &::before {
+        mask-image: var(--checked-icon);
+        background: var(--text-normal);
+    }
+
+    .wrapped-checkbox:focus + & {
+        outline: var(--focus-weight) var(--focus-color) solid;
+    }
+}

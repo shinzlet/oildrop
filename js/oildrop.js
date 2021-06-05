@@ -43,7 +43,7 @@ function getScript(uuid) {
 // Returns Oildrop's saved settings (or the default settings if unavailable),
 // wrapped in a promise.
 function getSettings() {
-	return browser.storage.local.get("oildrop").then(data => Object.assign(data.oildrop || {}, defaultSettings))
+	return browser.storage.local.get("oildrop").then(data => Object.assign(defaultSettings, data.oildrop || {}))
 }
 
 // Merges the `newSettings` object with Oildrop's existing settings, then saves them to disk.

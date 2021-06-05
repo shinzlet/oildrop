@@ -127,7 +127,7 @@ input, textarea, select {
 }
 
 #light-toggle-icon {
-  --element-size: var(--bar-height);
+  --element-background: var(--background-1);
   --checked-icon: url("/assets/material_icons/dark_mode_icon.svg");
   --unchecked-icon: url("/assets/material_icons/light_mode_icon.svg");
   font-size: 2rem;
@@ -165,52 +165,6 @@ input, textarea, select {
   flex-grow: 1;
 }
 
-label > input[type=checkbox].wrapped-checkbox {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-}
-
-.checkbox-proxy {
-  height: var(--element-size);
-  width: var(--element-size);
-  background: var(--element-background);
-  border-radius: var(--control-radius);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-}
-.checkbox-proxy::before {
-  content: "";
-  display: block;
-  pointer-events: none;
-  mask-size: contain;
-  mask-position: center;
-  mask-image: url("");
-  mask-repeat: no-repeat;
-  mask-image: var(--unchecked-icon);
-  width: 1em;
-  height: 1em;
-  background: var(--text-normal);
-}
-.checkbox-proxy:hover {
-  background: var(--background-3);
-}
-.checkbox-proxy:hover::before {
-  background: var(--text-highlight);
-}
-.wrapped-checkbox:checked + .checkbox-proxy::before {
-  mask-image: var(--checked-icon);
-}
-.wrapped-checkbox:focus + .checkbox-proxy {
-  outline: var(--focus-weight) var(--focus-color) solid;
-}
-
 *:focus {
   outline: var(--focus-weight) var(--focus-color) solid;
 }
@@ -220,10 +174,16 @@ label > input[type=checkbox].wrapped-checkbox {
 }
 
 #global-pause-icon {
-  --element-size: var(--bar-height);
-  --element-background: var(--background-2);
   --checked-icon: url("/assets/play_icon.svg");
   --unchecked-icon: url("/assets/pause_icon.svg");
+}
+
+#global-pause-icon, #light-toggle-icon {
+  --icon-size: 1em;
+  box-shadow: unset;
+}
+#global-pause-icon::before, #light-toggle-icon::before {
+  background: var(--text-normal);
 }
 
 select {
@@ -431,7 +391,6 @@ hr {
 
 .script-enable-icon {
   --element-size: 2em;
-  --checked-icon: url("/assets/material_icons/check_icon.svg");
   --element-background: transparent;
   box-shadow: 0 0 0 0.15em var(--text-normal);
   margin-right: var(--gap);
@@ -440,18 +399,6 @@ hr {
   width: 80%;
   height: 80%;
   background: transparent;
-}
-.script-enable-icon:hover {
-  box-shadow: 0 0 0 0.15em var(--text-highlight);
-}
-.script-enable-icon:hover::before {
-  background: transparent;
-}
-.wrapped-checkbox:checked + .script-enable-icon::before {
-  background: var(--text-normal);
-}
-.wrapped-checkbox:checked + .script-enable-icon:hover::before {
-  background: var(--text-highlight);
 }
 
 #snackbar-wrapper {
@@ -584,8 +531,24 @@ hr {
   cursor: help;
 }
 
-#settings button {
-  margin-bottom: var(--gap);
+#settings {
+  gap: var(--gap);
+}
+#settings > * {
+  margin: 0;
+}
+
+#scalar-settings {
+  display: grid;
+  width: 100%;
+  gap: var(--gap);
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-rows: var(--bar-height);
+}
+#scalar-settings > label[for] {
+  font-size: 1.4rem;
+  padding-top: 0.4em;
+  margin: 0;
 }
 
 .auto-height {

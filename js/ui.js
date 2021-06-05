@@ -64,7 +64,8 @@ const settings = {
 	wrapper: geid("settings-wrapper"),
 	openButton: geid("settings-button"),
 	manageButton: geid("manage-data"),
-	newTabButton: geid("open-in-tab")
+	newTabButton: geid("open-in-tab"),
+	toggleIndent: geid("enable-indent")
 }
 
 const templates = {
@@ -333,6 +334,11 @@ function bindListeners() {
 		browser.tabs.create({url: "/ui.html"})
 	})
 
+	settings.toggleIndent.addEventListener("change", event => {
+		editor.enableIndent = event.target.checked
+		updateSettings({enableIndent: event.target.checked})
+	})
+
 	document.querySelectorAll(".dismiss-panels").forEach(el => {
 		el.addEventListener("click", showOverview)
 	})
@@ -344,6 +350,8 @@ getSettings().then(oSettings => {
 	overview.globalPause.checked = !oSettings.active
 	snackbar.setActivity(oSettings.active)
 	editor.enableIndent = oSettings.enableIndent
+	settings.toggleIndent.checked = oSettings.enableIndent
+	console.log(oSettings.enableIndent)
 })
 
 bindListeners()
