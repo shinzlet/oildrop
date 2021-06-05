@@ -54,7 +54,9 @@ const editor = (function() {
 		code: geid("editor-code"),
 		language: select("editor-language"),
 		runtime: select("editor-runtime"),
-		saveButton: geid("editor-save")
+		saveButton: geid("editor-save"),
+		// Using a default of false allows the visually impaired to still edit scripts if settings fail to load.
+		enableIndent: false
 	}
 })()
 
@@ -341,6 +343,7 @@ getSettings().then(oSettings => {
 	setTheme(oSettings.isLight)
 	overview.globalPause.checked = !oSettings.active
 	snackbar.setActivity(oSettings.active)
+	editor.enableIndent = oSettings.enableIndent
 })
 
 bindListeners()
