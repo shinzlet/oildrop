@@ -5,4 +5,4 @@ run:
 sign:
 	web-ext sign
 
-.PHONY: watch test
+.PHONY: watch test sign
