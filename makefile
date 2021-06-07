@@ -3,6 +3,6 @@ watch:
 run:
 	web-ext run
 sign:
-	web-ext sign --api-key=$$AMO_JWT_ISSUER --api-secret=$$AMO_JWT_SECRET
+	web-ext sign
 
 .PHONY: watch test

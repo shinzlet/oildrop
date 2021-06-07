@@ -19,17 +19,43 @@ Oildrop is a userscript manager for Firefox. It was designed to be audited by an
 Oildrop can be installed via several means, the easiest of which is the
 [Firefox Addon Store](https://addons.mozilla.org/en-CA/firefox/addon/oildrop/).
 
-You can also download the latest signed release from GitHub, which is easier to
-audit - this is what I'd reccommend doing. Unlike the first method, you will not
-receive automatic updates. If you go this route, see
-["How to Audit Oildrop"](#how-to-audit-oildrop).
+You can also [download the latest signed release from GitHub](https://github.com/shinzlet/oildrop/releases),
+which is easier to audit. this is what I'd reccommend doing. Unlike the first
+method, you will not receive automatic updates. If you go this route, see
+["How to Audit Oildrop"](#how-to-audit-oildrop). Once you audit the release,
+you can install it by typing `about:addons` in the address bar, clicking the
+gear next to "Manage Your Extensions", and then selecting "Install Add-on From
+File..." in the context menu. From there, navigate to the `.xpi` file you
+downloaded, and click `Open`.
 
 If you want to modify Oildrop for your needs, instructions are available below for
 [development](#development), [building, and self-signing](#building-and-signing) the
 extension.
 
 ## How to Audit Oildrop
-TODO
+Understanding how a peice of software functions can be daunting, and this section aims
+to help guide you through Oildrop's internals.
+
+To start, a little exposition. The `.xpi` file you downloaded in the releases
+section is a compressed archive of Oildrop's source code which was signed by Mozilla.
+In order to audit the code within, we'll first have to decompress that archive.
+
+Once you've done this (either at the command line, or by using an archive manager),
+you'll see a carbon copy of this repository. The one difference is the addition of
+a `META-INF` folder, which is what Mozilla added.
+
+Now that you've opened up Oildrop, you can feel free to inspect any files you'd like.
+The only executable code that Oildrop includes is in the `js` folder. Here's a rundown
+of what you'll find there:
+
+- `oildrop.js`: Contains helper functions that are used everywhere throughout Oildrop.
+- `background.js`: Interfaces with Firefox's `userScripts` api, which is what actually injects your userscripts into websites.
+- `ui.js`: Connects Oildrop's main user interface to the background script, which allows you to create, edit, and view your scripts.
+- `code_editor.js`: Allows indenting and un-indenting in Oildrop's code editor.
+- `manage.js`: Implements data management functions and connects them to the `Import / Export Data` page (accessible via Oildrop's settings).
+
+This should be enough help to get started, but I hope to make a full walkthrough
+of the source code soon.
 
 ## Development
 Oildrop is written in plain HTML and JavaScript, but uses sass to accelerate styling.
@@ -43,6 +69,8 @@ installed](https://extensionworkshop.com/documentation/develop/getting-started-w
 Then, invoke `make run` to open a development browser with Oildrop loaded.
 
 ## Building and Signing
+Oildrop can be built and signed using the `web-ext` CLI. For documentation about this process,
+see https://extensionworkshop.com/documentation/develop/getting-started-with-web-ext/.
 
 ## Limitations
 - Oildrop only works in Firefox. Adding the neccessary polyfills to make it cross-platform would have easily doubled the codebase. That being said, porting it would not be a monumental challenge, and forks are welcomed.
