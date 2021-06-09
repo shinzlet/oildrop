@@ -1,13 +1,11 @@
 {
 	"manifest_version": 2,
 	"name": "Oildrop",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "An open-source userscript manager that you can audit on your own.",
 	"permissions": [
 		"storage",
 		"tabs",
-		"webRequest",
-		"webRequestBlocking",
 		"downloads",
 		"<all_urls>"
 	],

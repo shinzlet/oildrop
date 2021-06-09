@@ -52,7 +52,7 @@
 	    </div>
 
 	    <footer id="footer">
-		<span>Version 1.0.1</span>
+		<span>Version 1.0.2</span>
 
 		<a href="https://github.com/shinzlet/oildrop">
 		    <div id="github-logo" title="Link to Oildrop's GitHub repository"></div>
@@ -70,7 +70,7 @@
 		<label for="editor-name" title="The name you want to associate with this script. It does not need to be unique.">Name</label>
 		<input type="text" id="editor-name">
 
-		<label for="editor-matches" title="A comma separated list of web addresses. The most general is '*://*.*/*'.">Run on</label>
+		<label for="editor-matches" title="A comma separated list of web addresses. Each web adress must specify the scheme (like https), host (like www.github.com), and path (everything after the slash). For example, to match any google domain, use '*://*.google.*/*'. To match any site using insecure http, use 'http://*/*'. The most general form is '*://*/*', which also has the special identifier '<all_urls>'.">Run on</label>
 		<input type="text" id="editor-matches">
 
 		<label for="editor-code" title="The JavaScript or CSS you want to run on the sites listed above. Because Oildrop is designed to be user-auditable, this is not a code editor - just a text box. Please write your code elsewhere and paste it in here.">Code</label>

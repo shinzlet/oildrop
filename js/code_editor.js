@@ -1,7 +1,6 @@
 // By default, tab-indenting doesn't work in textareas. We have to fix it
 // in javascript, because this is a really fundamental code editing feature.
-editor.code.addEventListener("keydown", e => {
-        if (!editor.enableIndent) {
+editor.code.addEventListener("keydown", e => { if (!editor.enableIndent) {
                 return
         }
 
@@ -29,9 +28,9 @@ editor.code.addEventListener("keydown", e => {
                         rstring = src.slice(after)
 
                 if (e.shiftKey) {
-                        middle = middle.replaceAll(/^\$/gm, "")
+                        middle = middle.replaceAll(/^\t/gm, "")
                 } else {
-                        middle = middle.replaceAll(/^/gm, "$") 
+                        middle = middle.replaceAll(/^/gm, "\t") 
                 }
 
                 
