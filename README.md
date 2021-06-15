@@ -58,11 +58,13 @@ to help guide you through Oildrop's internals.
 
 To start, a little exposition. The `.xpi` file you downloaded in the releases
 section is a compressed archive of Oildrop's source code which was signed by Mozilla.
-In order to audit the code within, we'll first have to decompress that archive.
+In order to audit the code within, we'll first have to decompress that archive. You can
+do this either by renaming it from `oildrop-xxx.xpi` to `oildrop-xxx.zip` (where `xxx`
+is a version number), or by running `unzip oildrop-xxx.xpi -d oildrop` at the command
+line.
 
-Once you've done this (either at the command line, or by using an archive manager),
-you'll see a carbon copy of this repository. The one difference is the addition of
-a `META-INF` folder, which is what Mozilla added.
+Once you've done this, you'll see a carbon copy of this repository. The one difference
+is the addition of a `META-INF` folder, which is what Mozilla added.
 
 Now that you've opened up Oildrop, you can feel free to inspect any files you'd like.
 The only executable code that Oildrop includes is in the `js` folder. Here's a rundown
@@ -74,8 +76,12 @@ of what you'll find there:
 - `code_editor.js`: Allows indenting and un-indenting in Oildrop's code editor.
 - `manage.js`: Implements data management functions and connects them to the `Import / Export Data` page (accessible via Oildrop's settings).
 
+Additionally, feel free to make sure that the HTML and CSS do not reference any remote
+files. As far as I'm aware, HTML and CSS cannot be used maliciously when only local
+assets are used, which is the case in Oildrop.
+
 This should be enough help to get started, but I hope to make a full walkthrough
-of the source code soon.
+of the source code soon. If you have any questions, feel free to open an issue!
 
 ## Development
 Oildrop is written in plain HTML and JavaScript, but uses sass to accelerate styling.
