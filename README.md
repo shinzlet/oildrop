@@ -1,9 +1,16 @@
 # Oildrop
-
-<img src="https://raw.githubusercontent.com/shinzlet/oildrop/media/oildrop-hero.png" alt="An image showing Oildrop in light and dark mode. Several scripts are listed in its overview panel.">
-
 Oildrop is a userscript manager for Firefox. It was designed to be audited by anyone in less than
-30 minutes, does not communicate with a server, and is easily modifiable to suit your needs.
+30 minutes, does not communicate with a server, and can be easily modified to suit your needs.
+
+## Table of Contents
+- [Features](#features)
+- [Screenshots](#screenshots)
+- [Installation Instructions](#installation)
+- [How to Audit Oildrop](#how-to-audit-oildrop)
+- [Development Instructions](#development)
+- [Limitations](#limitations)
+- [Contributors](#contributors)
+- [Licensing Info](#licensing)
 
 ## Features
 - Sleek, modern interface
@@ -14,6 +21,19 @@ Oildrop is a userscript manager for Firefox. It was designed to be audited by an
 - Less than 600 lines of code (no golfing required)
 - Easy to tweak to your needs
 - Designed with accessibility in mind
+
+## Screenshots
+### Main UI
+<img src="https://raw.githubusercontent.com/shinzlet/oildrop/media/oildrop-hero.png" alt="An image showing Oildrop in light and dark mode. Several scripts are listed in its overview panel.">
+Oildrop is invoked via the browser icon by default. Shown here is the script overview in both light and dark mode, which can be toggled easily.
+
+### Full-page View
+<img src="https://raw.githubusercontent.com/shinzlet/oildrop/media/fullscreen_windows.png" alt="Oildrop's data management window and full-screen popup shown in a browser.">
+Oildrop can be opened in a full page for ease-of-use if a popup is not desirable. Also shown is Oildrop's data management page, which allows you to import and export scripts.
+
+### Editor and Settings Menu
+<img src="https://raw.githubusercontent.com/shinzlet/oildrop/media/menu_demos.png" alt="A preview showing the editor and settings menu in oildrop.">
+This preview shows a script being edited in Oildrop on the left, and the settings menu on the right.
 
 ## Installation
 Oildrop can be installed via several means, the easiest of which is the
@@ -38,11 +58,13 @@ to help guide you through Oildrop's internals.
 
 To start, a little exposition. The `.xpi` file you downloaded in the releases
 section is a compressed archive of Oildrop's source code which was signed by Mozilla.
-In order to audit the code within, we'll first have to decompress that archive.
+In order to audit the code within, we'll first have to decompress that archive. You can
+do this either by renaming it from `oildrop-xxx.xpi` to `oildrop-xxx.zip` (where `xxx`
+is a version number), or by running `unzip oildrop-xxx.xpi -d oildrop` at the command
+line.
 
-Once you've done this (either at the command line, or by using an archive manager),
-you'll see a carbon copy of this repository. The one difference is the addition of
-a `META-INF` folder, which is what Mozilla added.
+Once you've done this, you'll see a carbon copy of this repository. The one difference
+is the addition of a `META-INF` folder, which is what Mozilla added.
 
 Now that you've opened up Oildrop, you can feel free to inspect any files you'd like.
 The only executable code that Oildrop includes is in the `js` folder. Here's a rundown
@@ -54,8 +76,12 @@ of what you'll find there:
 - `code_editor.js`: Allows indenting and un-indenting in Oildrop's code editor.
 - `manage.js`: Implements data management functions and connects them to the `Import / Export Data` page (accessible via Oildrop's settings).
 
+Additionally, feel free to make sure that the HTML and CSS do not reference any remote
+files. As far as I'm aware, HTML and CSS cannot be used maliciously when only local
+assets are used, which is the case in Oildrop.
+
 This should be enough help to get started, but I hope to make a full walkthrough
-of the source code soon.
+of the source code soon. If you have any questions, feel free to open an issue!
 
 ## Development
 Oildrop is written in plain HTML and JavaScript, but uses sass to accelerate styling.
@@ -68,7 +94,7 @@ To test the extension, you will need to have [`web-ext`
 installed](https://extensionworkshop.com/documentation/develop/getting-started-with-web-ext/).
 Then, invoke `make run` to open a development browser with Oildrop loaded.
 
-## Building and Signing
+### Building and Signing
 Oildrop can be built and signed using the `web-ext` CLI. For documentation about this process,
 see https://extensionworkshop.com/documentation/develop/getting-started-with-web-ext/.
 
