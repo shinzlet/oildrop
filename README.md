@@ -106,7 +106,7 @@ see https://extensionworkshop.com/documentation/develop/getting-started-with-web
 ## Contributors
 - [Seth Hinz](https://github.com/shinzlet), [sethhinz@me.com](mailto:sethhinz@me.com)
     + Concept, programming
-- [Chiara Coangelo](https://dribbble.com/ChiaraColangelo), [chiara.coangelo@ninjabit.com](mailto:chiara.coangelo@ninjabit.com)
+- [Chiara Colangelo](https://dribbble.com/ChiaraColangelo), [chiara.colangelo@ninjabit.com](mailto:chiara.colangelo@ninjabit.com)
     + UI Designer
 
 ## Licensing
