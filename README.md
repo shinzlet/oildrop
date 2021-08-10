@@ -6,6 +6,7 @@ Oildrop is a userscript manager for Firefox. It was designed to be audited by an
 - [Features](#features)
 - [Screenshots](#screenshots)
 - [Installation Instructions](#installation)
+- [Usage Instructions](#usage)
 - [How to Audit Oildrop](#how-to-audit-oildrop)
 - [Development Instructions](#development)
 - [Limitations](#limitations)
@@ -51,6 +52,89 @@ downloaded, and click `Open`.
 If you want to modify Oildrop for your needs, instructions are available below for
 [development](#development), [building, and self-signing](#building-and-signing) the
 extension.
+
+## Usage
+### Opening Oildrop
+Once you have Oildrop installed, you will be able to access it via the icon in your
+browser's toolbar. If you can't see it, you can drag it onto your toolbar by right
+clicking on the toolbar, then selecting `Customize Toolbar`.
+
+### Main UI Overview
+Almost every UI element in Oildrop has an informative tooltip, which you can see
+by holding your mouse cursor still atop it. A description of the user interface
+is offered below, if you'd prefer.
+
+When the popup opens, you'll see Oildrop's main interface. At the top right corner,
+buttons are present which allow you to toggle between colorschemes and open settings,
+left to right.
+
+Just below is the main overview panel. Clicking the play/pause button to the left allows you
+to control Oildrop's behaviour at a global level - by pausing Oildrop, all scripts
+will be temporarily disabled. By re-enabling Oildrop, scripts with a checkmark to the
+left of their name will be enabled. You can tell if Oildrop is enabled or disabled
+by the bar at the bottom of the interface, which will be red if paused, and green
+if enabled. Hovering over the bar with a mouse cursor will display a message with
+that same information.
+
+To the left of the play/pause button is the filter dropdown. By changing the setting
+displayed, you'll be able to show or hide scripts depending on their current relevance.
+Here is a key to what the options mean:
+- "All Scripts": Every script that Oildrop has saved will be shown.
+- "Active Scripts": Every script whose url matches the current page will be
+   shown. For example, if the current tab is open to `https://google.com`, a
+   script that matches `<all_urls>` will be displayed, but a script that matches
+   `*://*youtube.com/*` will not.
+- "Inactive Scripts": This is the opposite of the "Active Scripts" option. Only
+  scripts that are not able to run on the current page will be shown.
+
+Note that "activity" is not an indicator of wether a script actually *is* running. A
+script will only run on a page if it has a checkmark next to its name, and if Oildrop
+is globally enabled with the play/pause button described above.
+
+To the right of the filter bar is the self-explanatory "new script" button, which will
+open the script editor. By default, the script will match the current tab's URL.
+
+Below the filter bar is the main overview, which shows all scripts matching the filter
+rule. They can be enabled or disabled by checking the box to the left of their name.
+Each script item will show some information about itself, like its name, the pages
+it matches, wether it is CSS (has a blue badge to the left of the name) or JavaScript
+(which has a red badge), and when it was made. Additionally, each script has a button
+that allows you to edit or delete it.
+
+### Editor Overview
+The editor, which can be opened via the "new script" button or an edit button next
+to an existing script, allows you to modify userscripts. Each field has a tooltip,
+which can be displayed by mousing over the question mark to the right of the field
+label. These fields are mostly unsurprising, so only a brief rundown is included here:
+- Name: The name of the script. This is only used for display purposes, so you can put
+  whatever you'd like here.
+- Run On: A comma-separated list of [match patterns](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Match_patterns).
+- Code: The code (be it JavaScript or CSS) that the userscript will run.
+- Language: The langauge your code is written in.
+- Runtime: When, during page load, your script should be injected. See the
+  `run_at` field [here](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/content_scripts) for more info.
+
+Pressing the "Save" button will save your changes and close the editor. Pressing
+"Close" will discard your changes and close the editor.
+
+### Settings Overview
+The settings menu has a few important things within. The first is a checkbox that
+allows you to enable or disable tab-key indentation in the code editor. This may seem
+trivial, but is important for accessibility purposes. If you rely on the tab key
+for form navigation, I advise you to turn this checkbox off, which will allow you
+to exit the code editor by pressing the tab key.
+
+Next are two buttons that will open a new tab. The first one takes you to the
+data management page, which allows you to import or export Oildrop's configuration
+and scripts.
+
+Secondly is a button that opens the Oildrop window itself in a new tab. This is useful
+when you're developing a longer script, or just don't want the popup to go away when you
+click outside of it (as is the default behaviour for browser extensions).
+
+### Questions?
+If you have a question about Oildrop, need usage help, or have a feature request,
+feel free to open an [issue](https://github.com/shinzlet/oildrop/issues/new).
 
 ## How to Audit Oildrop
 Understanding how a peice of software functions can be daunting, and this section aims
